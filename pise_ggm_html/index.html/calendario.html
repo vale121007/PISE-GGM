@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calendario Escolar</title>
+
+<style>
+body { 
+  font-family: Arial; 
+  margin:0;   
+
+  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
+  position: relative;
+}
+
+/* OSCURECER FONDO */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+
+/* HEADER */
+header {
+  background: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  color: #285900;
+  font-size: 20px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* CONTENEDOR */
+.container {
+  padding:40px;
+  text-align:center;
+}
+
+.container h1{
+  color: yellow;
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+/* TABLA */
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  background: #5a7fb5;
+  color: white;
+  padding: 15px;
+  font-size: 18px;
+}
+
+td {
+  padding: 15px;
+  text-align: center;
+  font-size: 16px;
+  border-top: 1px solid #ddd;
+}
+
+/* FILAS ALTERNAS */
+tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+/* FOOTER */
+footer {
+  background: #29860a;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  margin-top: 80px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>PISE-GGM</h1>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="oferta.html">Oferta Academica</a>
+    <a href="quienessomos.html">¿Quienes somos?</a>
+    <a href="calendario.html">Calendario</a>
+    <a href="matriculas.html">Matriculas</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h1>CALENDARIO ESCOLAR - 2026</h1>
+
+  <div class="table-container">
+    <table>
+      <tr>
+        <th>FECHA</th>
+        <th>ACTIVIDAD</th>
+      </tr>
+
+      <tr>
+        <td>Febrero 02 al 10 de Abril</td>
+        <td>Primer periodo académico</td>
+      </tr>
+
+      <tr>
+        <td>Marzo 30 al 03 de Abril</td>
+        <td>Receso de Semana Santa</td>
+      </tr>
+
+      <tr>
+        <td>13 de Abril al 12 de Junio</td>
+        <td>Segundo periodo académico</td>
+      </tr>
+
+      <tr>
+        <td>22 de Junio al 06 de Julio</td>
+        <td>Receso académico de mitad de año</td>
+      </tr>
+
+      <tr>
+        <td>06 de Julio al 11 de Septiembre</td>
+        <td>Tercer periodo académico</td>
+      </tr>
+
+      <tr>
+        <td>05 de Octubre al 11 de Octubre</td>
+        <td>Semana de receso estudiantil</td>
+      </tr>
+
+      <tr>
+        <td>14 de Septiembre al 27 de Noviembre</td>
+        <td>Cuarto periodo académico</td>
+      </tr>
+
+    </table>
+  </div>
+</div>
+
+<footer>
+  <p>©2026 PISE-GGM</p>
+</footer>
+
+</body>
+</html>

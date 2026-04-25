@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Login PISE-GGM</title>
+
+<style>
+body { 
+  font-family: Arial; 
+  margin:0;   
+  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+
+/* HEADER */
+header {
+  background: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  color: #285900;
+  font-size: 20px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: #ff4d4d;
+}
+
+/* CONTENEDOR */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* CAJA LOGIN */
+.login-box {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  color: #1f4d1f;
+}
+
+/* TITULOS */
+.login-box h1 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.login-box h3 {
+  margin-bottom: 20px;
+  font-weight: normal;
+  color: #ffffff;
+}
+
+/* LOGO */
+.logo {
+  width: 80px;
+  margin: 10px 0;
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.493);
+  color: #000;
+}
+
+/* SELECT (ROL) */
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.493);
+  color: #000;
+}
+
+/* BOTÓN */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #1b5e20;
+}
+
+/* LINKS */
+.links {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.links a {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>PISE-GGM</h1>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="oferta.html">Oferta Academica</a>
+    <a href="noticias.html">Noticias</a>
+    <a href="quienessomos.html">¿Quienes somos?</a>
+    <a href="calendario.html">Calendario</a>
+    <a href="matriculas.html">Matriculas</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="login-box">
+
+    <h1>PISE-GGM</h1>
+    <h3>INGRESO USUARIOS</h3>
+
+    <img src="ESCUDOGGMSINFONDO.png" class="logo">
+
+    <form onsubmit="return login()">
+      <input type="text" id="user" placeholder="Usuario" required>
+      <input type="password" id="pass" placeholder="Contraseña" required>
+
+      <!-- SELECT ROL -->
+      <select id="rol" required>
+        <option value="">Selecciona tu rol</option>
+        <option value="maestro">Maestro</option>
+        <option value="estudiante">Estudiante</option>
+        <option value="acudiente">Acudiente</option>
+      </select>
+
+      <a href="logindocente.html">
+  <button>INGRESAR</button>
+</a>
+    </form>
+
+    <div class="links">
+      <a href="#">¿Olvidé mi contraseña?</a>
+      <a href="#">Registrarse</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function login(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+  let rol = document.getElementById("rol").value;
+
+  if(rol === ""){
+    alert("Selecciona un rol");
+    return false;
+  }
+
+  if(u === "admin" && p === "1234"){
+    alert("Bienvenido " + rol);
+
+    if(rol === "maestro"){
+      window.location.href = "docente.html";
+    } else if(rol === "estudiante"){
+      window.location.href = "estudiante.html";
+    } else if(rol === "acudiente"){
+      window.location.href = "acudiente.html";
+    }
+
+  } else {
+    alert("Datos incorrectos");
+  }
+
+  return false;
+}
+</script>
+
+</body>
+</html>
