@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi Perfil | PISE-GGM</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  :root { --verde:#198754; --verde-osc:#14532d; }
+  body { background:#f6f8f7; }
+
+  .bienvenida {
+    background: linear-gradient(135deg, #198754, #14532d);
+    color: #fff;
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+
+  .caja {
+    background:#fff;
+    border:none;
+    border-radius:14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding:1.5rem;
+  }
+
+  .dato-label { color:#6c757d; font-size:.85rem; margin-bottom:.2rem; }
+  .dato-valor { font-weight:600; margin-bottom:1rem; }
+  .avatar-perfil {
+    width:72px; height:72px; border-radius:50%;
+    background: linear-gradient(135deg, #198754, #14532d);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem; font-weight:700;
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <img src="ESCUDOGGM.jpg" alt="Escudo del colegio" width="50">
+      <a class="navbar-brand ms-2" href="acudiente.html">PISE-GGM</a>
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <span id="nombreUsuario" class="fw-semibold"></span>
+        <button class="btn btn-outline-danger btn-sm" id="btnCerrarSesion">
+          <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+
+    <div class="bienvenida">
+      <a href="acudiente.html" class="text-white text-decoration-none d-inline-flex align-items-center gap-2 mb-2">
+        <i class="bi bi-arrow-left"></i> <span class="small">Volver al panel</span>
+      </a>
+      <h1 class="h3 mb-1">Mi Perfil</h1>
+      <p class="mb-0">Tus datos personales — Colegio Gabriel García Márquez</p>
+    </div>
+
+    <div id="aviso" class="alert d-none"></div>
+
+    <div class="caja">
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <div class="avatar-perfil" id="iniciales">--</div>
+        <div>
+          <h4 class="mb-0" id="perfilNombreCompleto">—</h4>
+          <span class="text-muted">Acudiente</span>
+        </div>
+      </div>
+
+      <div class="row" id="perfilDatos">
+        <!-- Se llena por JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container">
+      <p class="text-muted small mb-0">© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ============================================================
+  // AJUSTA AQUÍ si tienes un endpoint específico para el perfil.
+  // Se asume opcional: GET /api/acudiente/{idUsuario}/perfil
+  // Si no existe o falla, se usan los datos que ya están en localStorage
+  // (guardados en el login), que normalmente incluyen: nombre, apellido,
+  // documento, correo, telefono.
+  // ============================================================
+  const API = "http://localhost:8082/api/acudiente";
+
+  // Guardia de sesión
+  const token = localStorage.getItem("token");
+  const usuarioRaw = localStorage.getItem("usuario");
+  if (!token || !usuarioRaw) { window.location.href = "login.html"; }
+
+  const usuario = JSON.parse(usuarioRaw);
+  const rol = ((usuario.rol && usuario.rol.nombreRol) || usuario.rol || "").trim();
+  if (rol.toUpperCase() !== "ACUDIENTE") { window.location.href = "login.html"; }
+
+  document.getElementById("nombreUsuario").textContent = usuario.nombre + " " + usuario.apellido;
+
+  document.getElementById("btnCerrarSesion").addEventListener("click", function () {
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("idPerfil");
+    window.location.href = "login.html";
+  });
+
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+  function avisar(msg, tipo = "warning") {
+    const a = document.getElementById("aviso");
+    a.className = `alert alert-${tipo}`;
+    a.textContent = msg;
+    a.classList.remove("d-none");
+  }
+
+  function pintarDato(col, label, valor) {
+    return `
+      <div class="col-md-6">
+        <div class="dato-label">${esc(label)}</div>
+        <div class="dato-valor">${valor ? esc(valor) : '<span class="text-muted fw-normal">No registrado</span>'}</div>
+      </div>`;
+  }
+
+  function pintarPerfil(datos) {
+    document.getElementById("perfilNombreCompleto").textContent = `${datos.nombre || ""} ${datos.apellido || ""}`.trim();
+    const iniciales = ((datos.nombre || "")[0] || "") + ((datos.apellido || "")[0] || "");
+    document.getElementById("iniciales").textContent = iniciales.toUpperCase() || "--";
+
+    document.getElementById("perfilDatos").innerHTML = [
+      pintarDato("col", "Nombre completo", `${datos.nombre || ""} ${datos.apellido || ""}`.trim()),
+      pintarDato("col", "Documento", datos.documento),
+      pintarDato("col", "Correo electrónico", datos.correo || datos.email),
+      pintarDato("col", "Teléfono", datos.telefono),
+    ].join("");
+  }
+
+  async function cargarPerfil() {
+    // 1) Se muestra primero lo que ya está guardado localmente (respuesta inmediata)
+    pintarPerfil(usuario);
+
+    // 2) Si existe un endpoint de perfil en el backend, se intenta refrescar con datos más completos
+    try {
+      const r = await fetch(`${API}/${usuario.idUsuario}/perfil`, {
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token }
+      });
+      if (r.ok) {
+        const datos = await r.json();
+        pintarPerfil({ ...usuario, ...datos });
+      }
+    } catch (e) {
+      // Si el endpoint no existe todavía, no es un error crítico: se deja lo que ya se mostró.
+    }
+  }
+
+  cargarPerfil();
+</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notas | PISE-GGM</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  :root { --verde:#198754; --verde-osc:#14532d; }
+  body { background:#f6f8f7; }
+
+  .bienvenida {
+    background: linear-gradient(135deg, #198754, #14532d);
+    color: #fff;
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+
+  .caja {
+    background:#fff;
+    border:none;
+    border-radius:14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding:1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .val-EXCELENTE { background:#d1f0df; color:#0d5c33; }
+  .val-ALTO      { background:#dcefc9; color:#3d6a12; }
+  .val-MEDIO     { background:#fdf0c4; color:#7a5c00; }
+  .val-BAJO      { background:#fde0c4; color:#8a4300; }
+  .val-BASICO    { background:#f9d0d0; color:#8a1c1c; }
+  .val-badge     { padding:.35em .75em; border-radius:999px; font-weight:600; font-size:.85rem; }
+
+  
+</style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <img src="ESCUDOGGM.jpg" alt="Escudo del colegio" width="50">
+      <a class="navbar-brand ms-2" href="acudiente.html">PISE-GGM</a>
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <span id="nombreUsuario" class="fw-semibold"></span>
+        <button class="btn btn-outline-danger btn-sm" id="btnCerrarSesion">
+          <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+
+    <div class="bienvenida">
+      <a href="acudiente.html" class="text-white text-decoration-none d-inline-flex align-items-center gap-2 mb-2">
+        <i class="bi bi-arrow-left"></i> <span class="small">Volver al panel</span>
+      </a>
+      <h1 class="h3 mb-1">Notas de mis Acudidos</h1>
+      <p class="mb-0">Consulta de calificaciones — Colegio Gabriel García Márquez</p>
+    </div>
+
+    <div id="aviso" class="alert d-none"></div>
+
+    <!-- Aquí se inserta una "caja" por cada acudido, con su propia tabla de notas -->
+    <div id="contenedorNotas">
+      <div class="caja text-muted">Cargando...</div>
+    </div>
+
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container">
+      <p class="text-muted small mb-0">© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ============================================================
+  // AJUSTA AQUÍ si tu backend usa otras rutas
+  // Se asume:
+  //  GET /api/acudiente/{idUsuario}/acudidos
+  //      -> [{ idEstudiante, nombre, apellido, curso }, ...]
+  //  GET /api/acudiente/{idUsuario}/acudidos/{idEstudiante}/notas
+  //      -> [{ asignatura, docente, promedio }, ...]
+  //      donde promedio es uno de: EXCELENTE | ALTO | MEDIO | BAJO | BASICO
+  // ============================================================
+  const API = "http://localhost:8082/api/acudiente";
+  const ETIQUETA_VAL = { EXCELENTE:"Excelente", ALTO:"Alto", MEDIO:"Medio", BAJO:"Bajo", BASICO:"Básico" };
+
+  // Guardia de sesión
+  const token = localStorage.getItem("token");
+  const usuarioRaw = localStorage.getItem("usuario");
+  if (!token || !usuarioRaw) { window.location.href = "login.html"; }
+
+  const usuario = JSON.parse(usuarioRaw);
+  const rol = ((usuario.rol && usuario.rol.nombreRol) || usuario.rol || "").trim();
+  if (rol.toUpperCase() !== "ACUDIENTE") { window.location.href = "login.html"; }
+
+  document.getElementById("nombreUsuario").textContent = usuario.nombre + " " + usuario.apellido;
+
+  document.getElementById("btnCerrarSesion").addEventListener("click", function () {
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("idPerfil");
+    window.location.href = "login.html";
+  });
+
+  const BASE = `${API}/${usuario.idUsuario}`;
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+  function avisar(msg, tipo = "danger") {
+    const a = document.getElementById("aviso");
+    a.className = `alert alert-${tipo}`;
+    a.textContent = msg;
+    a.classList.remove("d-none");
+  }
+
+  async function obtenerJSON(url) {
+    const r = await fetch(url, { headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token } });
+    if (!r.ok) throw new Error("Error " + r.status);
+    return r.json();
+  }
+
+  function badgeValoracion(v) {
+    if (!v) return `<span class="text-muted">Sin nota</span>`;
+    const clase = "val-" + v;
+    return `<span class="val-badge ${clase}">${esc(ETIQUETA_VAL[v] || v)}</span>`;
+  }
+
+  // Pinta una "caja" por cada acudido con su tabla de notas debajo
+  async function cargarNotas() {
+    const cont = document.getElementById("contenedorNotas");
+    try {
+      const acudidos = await obtenerJSON(`${BASE}/acudidos`);
+
+      if (!acudidos.length) {
+        cont.innerHTML = `<div class="caja text-muted">No tienes estudiantes a cargo registrados.</div>`;
+        return;
+      }
+
+      // Si hay más de un acudido, se muestra la información de cada uno en su propia caja
+      const bloques = await Promise.all(acudidos.map(async (e) => {
+        let notas = [];
+        let error = null;
+        try {
+          notas = await obtenerJSON(`${BASE}/acudidos/${e.idEstudiante}/notas`);
+        } catch (err) {
+          error = "No se pudieron cargar las notas de este estudiante.";
+        }
+
+        const filas = error
+          ? `<tr><td colspan="3" class="text-muted">${esc(error)}</td></tr>`
+          : (notas.length
+              ? notas.map(n => `
+                  <tr>
+                    <td>${esc(n.asignatura)}</td>
+                    <td>${esc(n.docente)}</td>
+                    <td>${badgeValoracion(n.promedio)}</td>
+                  </tr>`).join("")
+              : `<tr><td colspan="3" class="text-muted">Aún no hay notas registradas.</td></tr>`);
+
+        return `
+          <div class="caja">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">${esc(e.nombre)} ${esc(e.apellido)}</h5>
+              <span class="badge bg-success">${esc(e.curso)}</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead><tr><th>Asignatura</th><th>Docente</th><th>Promedio</th></tr></thead>
+                <tbody>${filas}</tbody>
+              </table>
+            </div>
+          </div>`;
+      }));
+
+      cont.innerHTML = bloques.join("");
+    } catch (e) {
+      cont.innerHTML = `<div class="caja text-muted">No se pudo cargar la información.</div>`;
+      avisar(e.message);
+    }
+  }
+
+  cargarNotas();
+</script>
+</body>
+</html>

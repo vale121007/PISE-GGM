@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docente | PISE-GGM</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+  :root { --verde:#198754; --verde-osc:#14532d; }
+  body { background:#f6f8f7; }
+
+  .bienvenida {
+    background: linear-gradient(135deg, #198754, #14532d);
+    color: #fff;
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+
+  .nav-pills .nav-link { color:var(--verde-osc); font-weight:500; }
+  .nav-pills .nav-link.active { background:var(--verde); }
+
+  .btn-verde { background:var(--verde); color:#fff; border:0; }
+  .btn-verde:hover { background:var(--verde-osc); color:#fff; }
+
+  .caja {
+    background:#fff;
+    border:none;
+    border-radius:14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding:1.5rem;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+
+  .periodo-actual { border:2px solid var(--verde); }
+
+  .val-EXCELENTE { background:#d1f0df; color:#0d5c33; }
+  .val-ALTO      { background:#dcefc9; color:#3d6a12; }
+  .val-MEDIO     { background:#fdf0c4; color:#7a5c00; }
+  .val-BAJO      { background:#fde0c4; color:#8a4300; }
+  .val-BASICO    { background:#f9d0d0; color:#8a1c1c; }
+</style>
+</head>
+<body>
+
+  <!-- NAVBAR (igual que docente.html) -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <img src="ESCUDOGGM.jpg" alt="Escudo del colegio" width="50">
+      <a class="navbar-brand ms-2" href="docente.html">PISE-GGM</a>
+
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <span id="nombreDocente" class="fw-semibold"></span>
+        <button class="btn btn-outline-danger btn-sm" onclick="cerrarSesion()">
+          <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+
+    <!-- BANNER (mismo estilo que "Bienvenido, Daniel") -->
+    <div class="bienvenida">
+      <h1 class="h3 mb-1" id="tituloModulo">Mis asignaciones</h1>
+      <p class="mb-0">Panel del Docente — Colegio Gabriel García Márquez</p>
+    </div>
+
+    <!-- Pestañas de navegación entre módulos -->
+    <ul class="nav nav-pills mb-4">
+      <li class="nav-item"><a class="nav-link" href="docenteModulos.html#asignaciones">Mis Asignaciones</a></li>
+      <li class="nav-item"><a class="nav-link" href="docenteModulos.html#estudiantes">Mis Estudiantes</a></li>
+      <li class="nav-item"><a class="nav-link" href="docenteModulos.html#notas">Registrar Notas</a></li>
+      <li class="nav-item"><a class="nav-link" href="docenteModulos.html#periodos">Periodo Académico</a></li>
+    </ul>
+
+    <div id="aviso" class="alert d-none"></div>
+
+    <!-- ASIGNACIONES -->
+    <div class="modulo d-none" id="asignaciones">
+      <div class="caja">
+        <h4 class="mb-1">Mis asignaciones</h4>
+        <p class="text-muted">Cursos y dimensiones que tienes a cargo.</p>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead><tr><th>Curso</th><th>Año</th><th>Asignatura</th><th>Dimensión</th><th class="text-end">Acciones</th></tr></thead>
+            <tbody id="tbAsignaciones"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESTUDIANTES -->
+    <div class="modulo d-none" id="estudiantes">
+      <div class="caja">
+        <h4 class="mb-3">Mis estudiantes</h4>
+        <select id="selEstudiantes" class="form-select mb-3" style="max-width:420px"></select>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead><tr><th>Estudiante</th><th>Documento</th></tr></thead>
+            <tbody id="tbEstudiantes"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTAS -->
+    <div class="modulo d-none" id="notas">
+      <div class="caja">
+        <h4 class="mb-3">Registrar notas</h4>
+        <div class="row g-2 mb-3">
+          <div class="col-md-6"><label class="form-label">Curso y dimensión</label><select id="selAsigNotas" class="form-select"></select></div>
+          <div class="col-md-6"><label class="form-label">Periodo</label><select id="selPeriodoNotas" class="form-select"></select></div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead><tr><th>Estudiante</th><th style="width:220px">Valoración</th><th style="width:200px" class="text-end">Acciones</th></tr></thead>
+            <tbody id="tbNotas"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERIODOS -->
+    <div class="modulo d-none" id="periodos">
+      <div class="caja">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="mb-0">Periodo académico</h4>
+          <select id="selAnio" class="form-select" style="width:auto"></select>
+        </div>
+        <div class="row g-3" id="listaPeriodos"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer mt-5 mb-4">
+    <div class="container">
+      <p class="text-muted small mb-0">© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const API = "http://localhost:8082/api/docente";
+const VALORACIONES = [
+  ["EXCELENTE", "Excelente"], ["ALTO", "Alto"], ["MEDIO", "Medio"], ["BAJO", "Bajo"], ["BASICO", "Básico"]
+];
+
+// Guardia de sesión (igual que docente.html)
+const token = localStorage.getItem("token");
+const usuarioRaw = localStorage.getItem("usuario");
+if (!token || !usuarioRaw) { location.href = "login.html"; }
+
+const usuario = JSON.parse(usuarioRaw);
+const rol = ((usuario.rol && usuario.rol.nombreRol) || "").trim();
+if (rol.toUpperCase() !== "DOCENTE") { location.href = "login.html"; }
+
+const BASE = `${API}/${usuario.idUsuario}`;
+
+let asignaciones = [];
+let periodos = [];
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+async function api(ruta, opciones = {}) {
+  const r = await fetch(BASE + ruta, {
+    headers: { "Content-Type": "application/json" }, ...opciones
+  });
+  const texto = await r.text();
+  let cuerpo = null;
+  try { cuerpo = texto ? JSON.parse(texto) : null; } catch { /* no era JSON */ }
+  if (!r.ok) throw new Error((cuerpo && (cuerpo.message || cuerpo.error)) || "Error " + r.status);
+  return cuerpo;
+}
+
+function avisar(msg, tipo = "success") {
+  const a = document.getElementById("aviso");
+  a.className = `alert alert-${tipo}`;
+  a.textContent = msg;
+  a.classList.remove("d-none");
+  clearTimeout(avisar.t);
+  avisar.t = setTimeout(() => a.classList.add("d-none"), 3500);
+}
+
+function cerrarSesion() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("usuario");
+  localStorage.removeItem("idPerfil");
+  location.href = "login.html";
+}
+
+const etiquetaAsig = a => `${a.grado} ${a.anio} — ${a.asignatura || a.dimension}${a.asignatura && a.dimension ? " (" + a.dimension + ")" : ""}`;
+
+// ---------- Asignaciones ----------
+async function cargarAsignaciones() {
+  asignaciones = await api("/asignaciones");
+  const tb = document.getElementById("tbAsignaciones");
+  tb.innerHTML = asignaciones.length ? asignaciones.map(a => `
+    <tr>
+      <td>${esc(a.grado)}</td><td>${esc(a.anio)}</td><td>${esc(a.asignatura)}</td><td>${esc(a.dimension)}</td>
+      <td class="text-end">
+        <button class="btn btn-outline-success btn-sm" onclick="irA('estudiantes', ${a.idAsignacion})">Ver estudiantes</button>
+        <button class="btn btn-verde btn-sm" onclick="irA('notas', ${a.idAsignacion})">Registrar notas</button>
+      </td>
+    </tr>`).join("")
+    : `<tr><td colspan="5" class="text-muted">Aún no tienes asignaciones. Pide al administrador que te asigne un curso.</td></tr>`;
+
+  const opciones = asignaciones.map(a => `<option value="${a.idAsignacion}">${esc(etiquetaAsig(a))}</option>`).join("");
+  document.getElementById("selEstudiantes").innerHTML = opciones;
+  document.getElementById("selAsigNotas").innerHTML = opciones;
+}
+
+function irA(tab, idAsignacion) {
+  const sel = tab === "estudiantes" ? "selEstudiantes" : "selAsigNotas";
+  document.getElementById(sel).value = idAsignacion;
+  location.hash = tab;
+  tab === "estudiantes" ? cargarEstudiantes() : cargarNotas();
+}
+
+// ---------- Estudiantes ----------
+async function cargarEstudiantes() {
+  const id = document.getElementById("selEstudiantes").value;
+  const tb = document.getElementById("tbEstudiantes");
+  if (!id) { tb.innerHTML = ""; return; }
+  try {
+    const lista = await api(`/asignaciones/${id}/estudiantes`);
+    tb.innerHTML = lista.length
+      ? lista.map(e => `<tr><td>${esc(e.nombre)}</td><td>${esc(e.documento)}</td></tr>`).join("")
+      : `<tr><td colspan="2" class="text-muted">Este curso no tiene estudiantes matriculados.</td></tr>`;
+  } catch (e) { avisar(e.message, "danger"); }
+}
+
+// ---------- Notas ----------
+async function cargarNotas() {
+  const idAsig = document.getElementById("selAsigNotas").value;
+  const idPer = document.getElementById("selPeriodoNotas").value;
+  const tb = document.getElementById("tbNotas");
+  if (!idAsig || !idPer) { tb.innerHTML = `<tr><td colspan="3" class="text-muted">Elige un curso y un periodo.</td></tr>`; return; }
+  try {
+    const lista = await api(`/asignaciones/${idAsig}/estudiantes?periodo=${idPer}`);
+    tb.innerHTML = lista.length ? lista.map(e => `
+      <tr data-mat="${e.idMatricula}" data-nota="${e.idNota ?? ""}">
+        <td>${esc(e.nombre)}</td>
+        <td>
+          <select class="form-select form-select-sm val ${e.promedio ? "val-" + e.promedio : ""}" onchange="this.className='form-select form-select-sm val val-'+this.value">
+            <option value="">Sin nota</option>
+            ${VALORACIONES.map(([v, t]) => `<option value="${v}" ${e.promedio === v ? "selected" : ""}>${t}</option>`).join("")}
+          </select>
+        </td>
+        <td class="text-end">
+          <button class="btn btn-verde btn-sm" onclick="guardarNota(this)">${e.idNota ? "Actualizar" : "Guardar"}</button>
+          <button class="btn btn-outline-danger btn-sm" ${e.idNota ? "" : "disabled"} onclick="eliminarNota(this)">Eliminar</button>
+        </td>
+      </tr>`).join("")
+      : `<tr><td colspan="3" class="text-muted">Este curso no tiene estudiantes matriculados.</td></tr>`;
+  } catch (e) { avisar(e.message, "danger"); }
+}
+
+async function guardarNota(btn) {
+  const tr = btn.closest("tr");
+  const promedio = tr.querySelector(".val").value;
+  if (!promedio) { avisar("Elige una valoración antes de guardar.", "warning"); return; }
+  const idNota = tr.dataset.nota;
+  try {
+    if (idNota) {
+      await api(`/notas/${idNota}`, { method: "PUT", body: JSON.stringify({ promedio }) });
+    } else {
+      await api("/notas", { method: "POST", body: JSON.stringify({
+        idAsignacion: +document.getElementById("selAsigNotas").value,
+        idPeriodo: +document.getElementById("selPeriodoNotas").value,
+        idMatricula: +tr.dataset.mat, promedio
+      })});
+    }
+    avisar("Nota guardada.");
+    cargarNotas();
+  } catch (e) { avisar(e.message, "danger"); }
+}
+
+async function eliminarNota(btn) {
+  const tr = btn.closest("tr");
+  if (!confirm("¿Eliminar la nota de este estudiante?")) return;
+  try {
+    await api(`/notas/${tr.dataset.nota}`, { method: "DELETE" });
+    avisar("Nota eliminada.");
+    cargarNotas();
+  } catch (e) { avisar(e.message, "danger"); }
+}
+
+// ---------- Periodos ----------
+const anioDe = p => String(p.anio ?? (p.fechaInicio ? p.fechaInicio.slice(0, 4) : "Sin año"));
+
+async function cargarPeriodos() {
+  periodos = await api("/periodos");
+  const anios = [...new Set(periodos.map(anioDe))];
+  const actual = periodos.find(p => p.actual);
+  const anioSel = actual ? anioDe(actual) : (anios.includes(String(new Date().getFullYear())) ? String(new Date().getFullYear()) : anios[anios.length - 1]);
+
+  document.getElementById("selAnio").innerHTML = anios.map(a => `<option ${a === anioSel ? "selected" : ""}>${a}</option>`).join("");
+
+  const selP = document.getElementById("selPeriodoNotas");
+  selP.innerHTML = periodos.map(p => `<option value="${p.idPeriodo}" ${p.actual ? "selected" : ""}>${esc(p.nombre)} (${anioDe(p)})</option>`).join("");
+  pintarPeriodos();
+}
+
+function pintarPeriodos() {
+  const anio = document.getElementById("selAnio").value;
+  const lista = periodos.filter(p => anioDe(p) === anio);
+  document.getElementById("listaPeriodos").innerHTML = lista.length ? lista.map(p => `
+    <div class="col-md-6">
+      <div class="caja h-100 ${p.actual ? "periodo-actual" : ""}">
+        <div class="d-flex justify-content-between">
+          <h5>${esc(p.nombre)}</h5>
+          ${p.actual ? '<span class="badge bg-success align-self-start">En curso</span>' : ""}
+        </div>
+        <p class="text-muted small mb-2">${esc(p.fechaInicio)} a ${esc(p.fechaFin)}</p>
+        <textarea class="form-control mb-2" rows="3" id="desc${p.idPeriodo}" placeholder="Describe lo que se desarrolla en este periodo">${esc(p.descripcion)}</textarea>
+        <button class="btn btn-verde btn-sm" onclick="guardarDescripcion(${p.idPeriodo})">Guardar descripción</button>
+      </div>
+    </div>`).join("")
+    : `<p class="text-muted">No hay periodos registrados para este año.</p>`;
+}
+
+async function guardarDescripcion(id) {
+  try {
+    const descripcion = document.getElementById("desc" + id).value.trim();
+    await api(`/periodos/${id}`, { method: "PUT", body: JSON.stringify({ descripcion }) });
+    periodos.find(p => p.idPeriodo === id).descripcion = descripcion;
+    avisar("Descripción guardada.");
+  } catch (e) { avisar(e.message, "danger"); }
+}
+
+// ---------- Inicio ----------
+document.getElementById("selEstudiantes").addEventListener("change", cargarEstudiantes);
+document.getElementById("selAsigNotas").addEventListener("change", cargarNotas);
+document.getElementById("selPeriodoNotas").addEventListener("change", cargarNotas);
+document.getElementById("selAnio").addEventListener("change", pintarPeriodos);
+
+const TITULOS = { asignaciones: "Mis asignaciones", estudiantes: "Mis estudiantes", notas: "Registrar notas", periodos: "Periodo académico" };
+
+// Muestra solo el módulo que pide la URL (#asignaciones, #estudiantes, #notas, #periodos)
+function mostrarModulo() {
+  const validos = ["asignaciones", "estudiantes", "notas", "periodos"];
+  const m = validos.includes(location.hash.slice(1)) ? location.hash.slice(1) : "asignaciones";
+
+  document.querySelectorAll(".modulo").forEach(p => p.classList.toggle("d-none", p.id !== m));
+  document.getElementById("tituloModulo").textContent = TITULOS[m];
+  document.title = TITULOS[m] + " | PISE-GGM";
+
+  // Resalta la pestaña activa
+  document.querySelectorAll(".nav-pills .nav-link").forEach(link => {
+    link.classList.toggle("active", link.getAttribute("href") === `docenteModulos.html#${m}`);
+  });
+}
+window.addEventListener("hashchange", mostrarModulo);
+
+(async function iniciar() {
+  mostrarModulo();
+  document.getElementById("nombreDocente").textContent = `${usuario.nombre} ${usuario.apellido || ""}`;
+  try {
+    await Promise.all([cargarAsignaciones(), cargarPeriodos()]);
+    cargarEstudiantes();
+    cargarNotas();
+  } catch (e) { avisar(e.message, "danger"); }
+})();
+</script>
+</body>
+</html>
