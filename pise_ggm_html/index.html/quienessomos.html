@@ -1,148 +1,327 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Nosotros</title>
-</head>
-<body>
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>PISE-GGM</title>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-        <a href="index.html">Inicio</a>
-        <a href="oferta.html">Oferta Academica</a>
-        <a href="calendario.html">Calendario</a>
-        <a href="matriculas.html">Matriculas</a>
-        <a href="contacto.html">Contacto</a>
-         <a href="noticias.html">Noticias</a>
-        <a href="login.html">Login</a>
-        <main>
-  </nav>
-</header>
-<div class="container">
-  <h1>¿Quiénes somos?</h1>
-  <p>Somos una institución educativa comprometida con la formación integral de niños y jóvenes, con más de 26 años de experiencia formando generaciones en valores, conocimiento y sentido humano. En el Colegio Gabriel García Márquez nos destacamos por ser un colegio técnico en sistemas y programación, brindando a nuestros estudiantes herramientas clave para enfrentar los retos del mundo actual.
-
-Nuestra propuesta educativa se complementa con una sólida formación musical y cultural, que fortalece la sensibilidad, la creatividad y la expresión artística, contribuyendo al desarrollo equilibrado de nuestros estudiantes.
-
-Trabajamos de manera articulada entre docentes, directivos y familias para garantizar procesos educativos de calidad, promoviendo el pensamiento crítico, el uso responsable de la tecnología y el crecimiento personal. Nuestro compromiso es formar ciudadanos íntegros, autónomos y comprometidos con una cultura de paz y bien, capaces de aportar positivamente a la sociedad.</p>
-  <div class="cards">
-
-    <div class="card">
-      <h2>Misión</h2>
-      <p>
-        El COLEGIO GABRIEL GARCÍA MÁRQUEZ es un Colegio de iniciativa privada, mixto, que desarrolla y presta servicios académicos integrados, de excelente calidad,  cuyo objetivo es la formación educativa y humana de niños y jóvenes;  fundamentado en los valores religiosos, éticos, morales, tecnológicos, inclusivos, sociales y ambientales; afirma su identidad a través de la permanente innovación pedagógica, la investigación científica, las humanidades, el deporte, las habilidades artísticas, la tecnología, la resolución de problemas, el inglés como segunda lengua y la confluencia de cinco principios básicos: Amor, servicio, fraternidad, efectividad, mejoramiento continuo y oración. Todo lo anterior, desde el enfoque de formación ciudadana y una perspectiva del desarrollo humano que respeta la diversidad y las diferencias.
-      </p>
-    </div>
-
-    <div class="card">
-      <h2>Visión</h2>
-      <p>
-        VISIÓN
-Para el 2026 EL COLEGIO GABRIEL GARCÍA MÀRQUEZ desea consolidarse como una Institución de alta calidad Educativa, que se caracteriza por educar en el amor por la vida, la justicia, la paz, la libertad, el servicio a los demás (especialmente las personas más desprotegidas), la atención a la diversidad, e enfoque técnico en sistemas y por la protección y preservación del medio ambiente. Todo lo anterior conllevará a la renovación y actualización del currículo, donde aspectos relevantes para la institución como: la espiritualidad, el bilingüismo, la inclusión y formación ciudadana, la alta calidad académica,  la tecnología, lo ético y moral, desarrollados desde una política interna de gestión de calidad, harán la diferencia, consiguiendo, como efecto, el posicionamiento del colegio, a nivel regional y nacional, y el reconocimiento del mismo, en todo el sector educativo y social, como una de las instituciones educativas más exitosas.
-      </p>
-    </div>
-
-  </div>
-</div>
-<img src="niñosggm.png" alt=Imagen de estudiantes>
-<footer>
-  <p>©2026 PISE-GGM</p>
-</footer>
-
-</body>
-</html>
-<style>
-body { 
-  font-family: Arial; 
-  margin:0;   
-  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
-  position: relative;
+    <style>
+        .btn-primary{
+            background-color: green !important;
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 7px;
+            text-align: center;
+            text-decoration: none !important;
+        }
+       .navbar {
+  background: white;
+  padding: 15px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
+.navbar-brand {
+  color: #198754 !important;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
- header {
-    background: white;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
- header h1 {
-    color: #285900;
-    font-size: 20px;
+.nav-link {
+  color: #333 !important;
+  transition: 0.3s;
+  font-weight: 500;
 }
 
-nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-    }
+.nav-link:hover {
+  color: #198754 !important;
+}
+        
+        .card-body{
+            border-radius: 30px;
+            background: #f4faf6;
+            color: black !important;
+            border: 1px solid #e2e8f0;
+            padding: 30px;
+        }
 
-nav a:hover {
+        .card-body:h2{      /*mejorar los titulos de las cards */
+            background: #475569;
+            color: #475569;
+            font-size: 24px;      /*tamaño de la letra */
+            font-weight: 700;     /*grosor de la letra */
+            margin-bottom: 15 px;  /*separa titulo del parrafo */
+
+        }
+
+        
+
+        .btn-primary{
+            background: #BFEFE6 !important;
+            color: black !important;
+        }
+
+footer {
+  background: #146c43;
+  color: white;
+  padding: 40px 20px;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
   text-decoration: underline;
 }
 
-.container { 
-  padding:40px; 
-  text-align:center; 
-}
-.container h1{
-    color:#ffffff;
-}
-.container p{
-    color:#ffffff;
-}
-.cards {
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin-top:30px;
-  flex-wrap: wrap;
-}
+         
 
-.card {
-  background:white;
-  padding:25px;
-  width:300px;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
+      
+       
 
-.card:hover {
-  transform: scale(1.05);
-}
+        
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
 
-.card h2 {
-  color:#0a861b;
-}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-.card p {
-  color:#000000;
-}
-img {
-  
-   height:250px;
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-}
-footer {
-      background: #29860a;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      margin-top: 80px;
-    }
-</style>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+     </head>
+    <body>
+       <nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+       <img src="ESCUDOGGMSINFONDO.png" alt="Escudo PISE-GGM" width="50">
+      <a class="navbar-brand" href="#">
+        PISE-GGM
+      </a>
+      <button class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav">
+
+        <span class="navbar-toggler-icon"></span>
+
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item">
+            <a class="nav-link" href="quienessomos.html">
+              ¿Quiénes somos?
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="oferta.html">
+              Oferta Académica
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="noticias.html">
+              Noticias
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="calendario.html">
+              Calendario
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="matriculas.html">
+              Aspirante
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="contacto.html">
+              Contacto
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="btn btn-success ms-2" href="login.html">
+              Login
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </nav>
+          
+        <main>
+            <section>
+                <div class="contenedor mt-5">
+                <div class="row">
+                    <div class="col-md-4 bg-succes text-white p-3">
+                        Quienes somos
+                    </div>
+                    <div class="col-md-4 bg-succes text-white p-3">
+                        Misión
+                    </div>
+                    <div class="col-md-4 bg-succes text-white p-3">
+                        Visión
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="container mt-5">
+                    <div class="row">
+
+                 <div class="col-md-4">
+                 <div class="card">
+                 <div class="card-body">      
+                <h2 class="card-titlee">Quienes somos</h2>
+
+                <p class="card-text">Somos una institución educativa comprometida con la formación integral de niños y jóvenes, con más de 26 años de experiencia formando generaciones en valores, conocimiento y sentido humano. 
+                    En el Colegio Gabriel García Márquez nos destacamos por ser un colegio técnico en sistemas y programación, brindando a nuestros estudiantes herramientas clave para enfrentar los retos del mundo actual.
+                    Nuestra propuesta educativa se complementa con una sólida formación musical y cultural, que fortalece la sensibilidad, la creatividad y la expresión artística, contribuyendo al desarrollo equilibrado de nuestros estudiantes.
+
+                    <!--El span es para ocultar parte del texto y no sea muy largo-->
+                   <span class="texto-oculto d-none">
+                     Trabajamos de manera articulada entre docentes, directivos y familias para garantizar procesos educativos de calidad, promoviendo el pensamiento crítico, el uso responsable de la tecnología y el crecimiento personal. 
+                    Nuestro compromiso es formar ciudadanos íntegros, autónomos y comprometidos con una cultura de paz y bien, capaces de aportar positivamente a la sociedad.
+                   </span>
+                  
+                    <button type="button" class="btn-primary btn-ver-mas">Ver más</button>
+                     </p>
+                    </div>
+                    </div>
+                    </div>
+
+
+                     <div class="col-md-4">
+                    <div class="card">
+                    <div class="card-body"> 
+                    <h2 class="card-titlee">Misión</h2>
+                        <p class="card-text">El COLEGIO GABRIEL GARCÍA MÁRQUEZ es un Colegio de iniciativa privada, mixto, que desarrolla y presta servicios académicos integrados, de excelente calidad,  cuyo objetivo es la formación educativa y humana de niños y jóvenes;  fundamentado en los valores religiosos, éticos, morales, tecnológicos, inclusivos, sociales y ambientales;
+
+                        <!--El span es para ocultar parte del texto y no sea muy largo-->
+                             <span class="texto-oculto d-none">
+                                 afirma su identidad a través de la permanente innovación pedagógica, la investigación científica, las humanidades, el deporte, las habilidades artísticas, la tecnología, la resolución de problemas, el inglés como segunda lengua y la confluencia de cinco principios básicos: Amor, servicio, fraternidad, efectividad, mejoramiento continuo y oración. Todo lo anterior, desde el enfoque de formación ciudadana y una perspectiva del desarrollo humano que respeta la diversidad y las diferencias.
+                                </span>
+                              
+                        <button  type="button" class="btn-primary btn-ver-mas" >Ver más</button>
+                          </p>
+                    </div>
+                    </div>
+                    </div>
+                      
+
+                     <div class="col-md-4">
+                    <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-titlee">Vision</h2>
+                        <p class="card-text">Para el 2026 EL COLEGIO GABRIEL GARCÍA MÀRQUEZ desea consolidarse como una Institución de alta calidad Educativa, que se caracteriza por educar en el amor por la vida, la justicia, la paz, la libertad, el servicio a los demás (especialmente las personas más desprotegidas), la atención a la diversidad, e enfoque técnico en sistemas y por la protección y preservación del medio ambiente. 
+
+                             <!--El span es para ocultar parte del texto y no sea muy largo-->
+                            <span class="texto-oculto d-none">
+                                Todo lo anterior conllevará a la renovación y actualización del currículo, donde aspectos relevantes para la institución como: la espiritualidad, el bilingüismo, la inclusión y formación ciudadana, la alta calidad académica,  la tecnología, lo ético y moral, desarrollados desde una política interna de gestión de calidad, harán la diferencia, consiguiendo, como efecto, el posicionamiento del colegio, a nivel regional y nacional, y el reconocimiento del mismo, en todo el sector educativo y social, como una de las instituciones educativas más exitosas.
+                                </span>
+                                
+                        
+                                
+                        <button  type="button" class="btn-primary btn-ver-mas">Ver más</button>
+                         </p>
+                    </div>
+                    </div>
+                    </div>
+
+            </section>
+
+            <button class="btn btn-primary" type="button" onclick="window.location.href='index.html'">Volver al inicio</button>
+        </main>
+         <footer>
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-md-4 mb-4">
+
+          <h4>PISE-GGM</h4>
+
+          <p>
+            Plataforma de Información y Servicios Educativos.
+          </p>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+          <h4>Síguenos</h4>
+          <a href="https://www.facebook.com/colggmtunja/?locale=es_LA" target="_blank">
+            <i class="bi bi-facebook fs-3 me-3"></i>
+          </a>
+          <a href="https://www.instagram.com/colggmtunja/" target="_blank">
+            <i class="bi bi-instagram fs-3 me-3"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <p class="text-center">
+        © 2026 PISE-GGM
+      </p>
+
+    </div>
+
+  </footer>
+
+        <script>
+            //Busca las tarjetas 
+            document.querySelectorAll(".card").forEach(tarjeta =>{
+               //suavidad al movimiento
+              tarjeta.style.transition= "transform 0.3s ease";
+
+              //crece un poco cuando el mouse esta encima
+              tarjeta.addEventListener("mouseenter", () =>tarjeta.style.transform = "scale(1.04)");
+              //el mouse sale si vuelve al tamaño normal
+              tarjeta.addEventListener("mouseleave", () => tarjeta.style.transform = "scale(1)");
+            })
+
+
+            //JS PARA EL BOTON VER MAS
+            //-----
+            //se busca los botones de ver mas
+            document.querySelectorAll(".btn-ver-mas").forEach(boton =>{
+                boton.addEventListener("click", () => {
+
+                    //Busca el texto oculto
+                      const texto = boton.parentElement.querySelector(".texto-oculto");
+
+                      //El "toggle" es como un interrumptor: si tiene d-none se lo quita y si no se lo pone
+                      texto.classList.toggle("d-none");
+                      
+                      //Se cambia el texto del boton dependiendo si el texto esta oculto o no
+                      if (texto.classList.contains("d-none")){
+                        boton.textContent = "Ver más";
+                      } else {
+                        boton.textContent = "Ver menos";
+                      }
+                });
+            });
+
+        </script>
+    </body>
+
+
+</html>

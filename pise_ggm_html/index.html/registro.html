@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registro PISE-GGM</title>
+
+    <link rel="stylesheet" href="registro.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>PISE-GGM</h1>
+
+    <nav>
+
+        <a href="index.html">Inicio</a>
+
+        <a href="oferta.html">Oferta Académica</a>
+
+        <a href="noticias.html">Noticias</a>
+
+        <a href="quienessomos.html">¿Quiénes somos?</a>
+
+        <a href="calendario.html">Calendario</a>
+
+        <a href="matriculas.html">Matrículas</a>
+
+        <a href="contacto.html">Contacto</a>
+
+        <a href="login.html">Login</a>
+
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+    <div class="registro-box">
+
+        <h1>PISE-GGM</h1>
+
+        <h3>REGISTRO DE USUARIO</h3>
+
+        <img
+            src="ESCUDOGGMSINFONDO.png"
+            class="logo"
+            alt="Escudo Colegio Gabriel García Márquez"
+        >
+
+
+        <form id="registroForm">
+
+
+            <!-- TIPO DOCUMENTO -->
+
+            <select id="tipoDocumento" required>
+
+                <option value="">
+                    Selecciona tipo de documento
+                </option>
+
+                <option value="CC">
+                    Cédula de Ciudadanía
+                </option>
+
+                <option value="TI">
+                    Tarjeta de Identidad
+                </option>
+
+                <option value="CE">
+                    Cédula de Extranjería
+                </option>
+
+                <option value="PPT">
+                    Permiso por Protección Temporal
+                </option>
+
+            </select>
+
+
+            <!-- DOCUMENTO -->
+
+            <input
+                type="text"
+                id="documento"
+                placeholder="Número de documento"
+                required
+            >
+
+
+            <!-- NOMBRE -->
+
+            <input
+                type="text"
+                id="nombre"
+                placeholder="Nombre"
+                required
+            >
+
+
+            <!-- APELLIDO -->
+
+            <input
+                type="text"
+                id="apellido"
+                placeholder="Apellido"
+                required
+            >
+
+
+            <!-- TELEFONO -->
+
+            <input
+                type="tel"
+                id="telefono"
+                placeholder="Teléfono"
+                required
+            >
+
+
+            <!-- EMAIL -->
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Correo electrónico"
+                required
+            >
+
+
+            <!-- PASSWORD -->
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Contraseña"
+                required
+            >
+
+
+            <!-- ROL -->
+
+            <select id="rol" required>
+
+                <option value="">
+                    Selecciona tu rol
+                </option>
+
+                <option value="4">
+                    Administrador
+                </option>
+
+                <option value="1">
+                    Maestro
+                </option>
+
+                <option value="2">
+                    Estudiante
+                </option>
+
+                <option value="3">
+                    Acudiente
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                REGISTRARME
+            </button>
+
+        </form>
+
+
+        <!-- MENSAJE -->
+
+        <div id="mensaje"></div>
+
+
+        <div class="links">
+
+            <a href="login.html">
+                ¿Ya tienes una cuenta? Iniciar sesión
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="registro.js"></script>
+
+</body>
+
+</html>

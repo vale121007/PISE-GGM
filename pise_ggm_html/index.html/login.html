@@ -1,229 +1,807 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<title>Login PISE-GGM</title>
 
-<style>
-body { 
-  font-family: Arial; 
-  margin:0;   
-  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
-  position: relative;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login PISE-GGM</title>
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-/* HEADER */
-header {
-  background: white;
-  padding: 15px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+    <style>
 
-header h1 {
-  color: #285900;
-  font-size: 20px;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-nav a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-size: 14px;
-}
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
 
-nav a:hover {
-  color: #ff4d4d;
-}
+            background: url("ANIMADOCOLGGM.png")
+            no-repeat center center/cover;
 
-/* CONTENEDOR */
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+            position: relative;
+        }
 
-/* CAJA LOGIN */
-.login-box {
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  padding: 40px;
-  border-radius: 20px;
-  width: 320px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  color: #1f4d1f;
-}
 
-/* TITULOS */
-.login-box h1 {
-  margin: 0;
-  color: #ffffff;
-}
+        body::before {
 
-.login-box h3 {
-  margin-bottom: 20px;
-  font-weight: normal;
-  color: #ffffff;
-}
+            content: "";
 
-/* LOGO */
-.logo {
-  width: 80px;
-  margin: 10px 0;
-}
+            position: fixed;
 
-/* INPUTS */
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255, 255, 255, 0.493);
-  color: #000;
-}
+            top: 0;
+            left: 0;
 
-/* SELECT (ROL) */
-select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255, 255, 255, 0.493);
-  color: #000;
-}
+            width: 100%;
+            height: 100%;
 
-/* BOTÓN */
-button {
-  width: 100%;
-  padding: 12px;
-  background: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-weight: bold;
-}
+            /* overlay un poco más oscuro para mejorar el contraste del texto */
+            background: rgba(0,0,0,0.6);
 
-button:hover {
-  background: #1b5e20;
-}
+            z-index: -1;
+        }
 
-/* LINKS */
-.links {
-  margin-top: 10px;
-  font-size: 14px;
-}
 
-.links a {
-  display: block;
-  color: #ffffff;
-  text-decoration: none;
-  margin-top: 5px;
-}
+        header {
 
-.links a:hover {
-  text-decoration: underline;
-}
-</style>
+            background: white;
+
+            padding: 15px 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+            0 2px 5px rgba(0,0,0,0.1);
+        }
+
+
+        header h1 {
+
+            color: #285900;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+
+        nav a {
+
+            margin: 0 10px;
+
+            text-decoration: none;
+
+            color: #333;
+
+            font-size: 14px;
+
+            transition: color 0.2s ease;
+        }
+
+
+        nav a:hover {
+
+            color: #ff4d4d;
+        }
+
+
+        .container {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: calc(100vh - 70px);
+
+            padding: 40px 20px;
+        }
+
+
+        /* animación de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .login-box {
+
+            background:
+            rgba(255,255,255,0.14);
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            padding: 40px;
+
+            border-radius: 22px;
+
+            width: 320px;
+
+            text-align: center;
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            box-shadow:
+                0 20px 45px rgba(0,0,0,0.45),
+                0 0 0 1px rgba(255,255,255,0.05) inset;
+
+            color: #1f4d1f;
+
+            animation: fadeInUp 0.6s ease both;
+        }
+
+
+        .login-box h1 {
+
+            margin: 0;
+
+            color: #ffffff;
+
+            letter-spacing: 0.5px;
+
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+
+        .login-box h3 {
+
+            margin-bottom: 20px;
+
+            font-weight: 400;
+
+            color: #eafbea;
+
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+
+            letter-spacing: 0.3px;
+        }
+
+
+        .logo {
+
+            width: 80px;
+
+            margin: 10px 0 20px 0;
+
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+        }
+
+
+        .campo,
+        select {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            margin: 8px 0;
+
+            border-radius: 12px;
+
+            border: 1.5px solid transparent;
+
+            background:
+            rgba(255,255,255,0.6);
+
+            color: #000;
+
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 14px;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .campo::placeholder {
+
+            color: #555;
+        }
+
+
+        .campo:focus,
+        select:focus {
+
+            outline: none;
+
+            background: rgba(255,255,255,0.92);
+
+            border-color: #2e7d32;
+
+            box-shadow: 0 0 0 4px rgba(46,125,50,0.25);
+        }
+
+
+        button {
+
+            width: 100%;
+
+            padding: 13px;
+
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 22px;
+
+            cursor: pointer;
+
+            margin-top: 14px;
+
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+
+            box-shadow: 0 8px 20px rgba(27,94,32,0.4);
+
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+        }
+
+
+        button:hover {
+
+            background: linear-gradient(135deg, #34944a, #1b5e20);
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 12px 26px rgba(27,94,32,0.5);
+        }
+
+
+        button:active {
+
+            transform: translateY(0);
+        }
+
+
+        button:disabled {
+
+            background: #777;
+
+            cursor: not-allowed;
+
+            box-shadow: none;
+
+            transform: none;
+        }
+
+
+        #mensaje {
+
+            margin-top: 15px;
+
+            font-size: 14px;
+
+            min-height: 20px;
+
+            color: white;
+
+            font-weight: 500;
+        }
+
+
+        .links {
+
+            margin-top: 12px;
+
+            font-size: 13.5px;
+        }
+
+
+        .links a {
+
+            display: block;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            margin-top: 6px;
+
+            opacity: 0.9;
+
+            transition: opacity 0.2s ease;
+        }
+
+
+        .links a:hover {
+
+            opacity: 1;
+
+            text-decoration: underline;
+        }
+
+
+        @media (max-width: 900px) {
+
+            header {
+
+                padding: 15px 20px;
+            }
+
+            nav {
+
+                display: none;
+            }
+        }
+
+
+        @media (max-width: 450px) {
+
+            .login-box {
+
+                width: 100%;
+
+                padding: 30px 20px;
+            }
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="oferta.html">Oferta Academica</a>
-    <a href="noticias.html">Noticias</a>
-    <a href="quienessomos.html">¿Quienes somos?</a>
-    <a href="calendario.html">Calendario</a>
-    <a href="matriculas.html">Matriculas</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="login.html">Login</a>
-  </nav>
-</header>
 
-<div class="container">
-  <div class="login-box">
+<header>
 
     <h1>PISE-GGM</h1>
-    <h3>INGRESO USUARIOS</h3>
 
-    <img src="ESCUDOGGMSINFONDO.png" class="logo">
+    <nav>
 
-    <form onsubmit="return login()">
-      <input type="text" id="user" placeholder="Usuario" required>
-      <input type="password" id="pass" placeholder="Contraseña" required>
+        <a href="index.html">
+            Inicio
+        </a>
 
-      <!-- SELECT ROL -->
-      <select id="rol" required>
-        <option value="">Selecciona tu rol</option>
-        <option value="maestro">Maestro</option>
-        <option value="estudiante">Estudiante</option>
-        <option value="acudiente">Acudiente</option>
-      </select>
+        <a href="oferta.html">
+            Oferta Academica
+        </a>
 
-      <a href="logindocente.html">
-  <button>INGRESAR</button>
-</a>
-    </form>
+        <a href="noticias.html">
+            Noticias
+        </a>
 
-    <div class="links">
-      <a href="#">¿Olvidé mi contraseña?</a>
-      <a href="#">Registrarse</a>
+        <a href="quienessomos.html">
+            ¿Quienes somos?
+        </a>
+
+        <a href="calendario.html">
+            Calendario
+        </a>
+
+        <a href="matriculas.html">
+            Matriculas
+        </a>
+
+        <a href="contacto.html">
+            Contacto
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<div class="container">
+
+    <div class="login-box">
+
+
+        <h1>
+            PISE-GGM
+        </h1>
+
+
+        <h3>
+            INGRESO USUARIOS
+        </h3>
+
+
+        <img
+            src="ESCUDOGGMSINFONDO.png"
+            class="logo"
+            alt="Escudo Colegio Gabriel García Márquez"
+        >
+
+
+        <form id="loginForm">
+
+
+            <input
+
+                type="text"
+
+                id="documento"
+
+                class="campo"
+
+                placeholder="Número de documento"
+
+                required
+
+                autocomplete="username"
+
+            >
+
+
+
+            <input
+
+                type="password"
+
+                id="password"
+
+                class="campo"
+
+                placeholder="Contraseña"
+
+                required
+
+                autocomplete="current-password"
+
+            >
+
+
+
+<select id="rol" required>
+    <option value="">Selecciona tu rol</option>
+    <option value="ADMINISTRADOR">Administrador</option>
+    <option value="DOCENTE">Docente</option>
+    <option value="ESTUDIANTE">Estudiante</option>
+    <option value="ACUDIENTE">Acudiente</option>
+</select>
+
+
+
+            <button
+                type="submit"
+                id="btnIngresar"
+            >
+
+                INGRESAR
+
+            </button>
+
+
+        </form>
+
+
+
+        <div id="mensaje"></div>
+
+
+
+        <div class="links">
+
+            <a href="#">
+                ¿Olvidé mi contraseña?
+            </a>
+
+            <a href="registro.html">
+                Registrarse
+            </a>
+
+        </div>
+
+
     </div>
 
-  </div>
 </div>
 
+
+
 <script>
-function login(){
-  let u = document.getElementById("user").value;
-  let p = document.getElementById("pass").value;
-  let rol = document.getElementById("rol").value;
 
-  if(rol === ""){
-    alert("Selecciona un rol");
-    return false;
-  }
 
-  if(u === "admin" && p === "1234"){
-    alert("Bienvenido " + rol);
+/* =====================================================
+   LOGIN PISE-GGM
+===================================================== */
 
-    if(rol === "maestro"){
-      window.location.href = "docente.html";
-    } else if(rol === "estudiante"){
-      window.location.href = "estudiante.html";
-    } else if(rol === "acudiente"){
-      window.location.href = "acudiente.html";
+
+const API_LOGIN =
+    "http://localhost:8082/api/auth/login";
+
+
+const loginForm =
+    document.getElementById("loginForm");
+
+
+const mensaje =
+    document.getElementById("mensaje");
+
+
+const btnIngresar =
+    document.getElementById("btnIngresar");
+
+
+loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const documento =
+            document
+            .getElementById("documento")
+            .value
+            .trim();
+
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        const rol =
+            document
+            .getElementById("rol")
+            .value;
+
+
+        if (
+            documento === "" ||
+            password === "" ||
+            rol === ""
+        ) {
+
+            mostrarMensaje(
+                "Por favor completa todos los campos.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const datosLogin = {
+
+            documento: documento,
+
+            password: password,
+
+            rol: rol
+
+        };
+
+
+        console.log(
+            "Datos enviados:",
+            datosLogin
+        );
+
+
+        btnIngresar.disabled = true;
+
+        btnIngresar.textContent =
+            "VERIFICANDO...";
+
+
+        try {
+
+            const respuesta =
+                await fetch(
+                    API_LOGIN,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                datosLogin
+                            )
+                    }
+                );
+
+
+            /*
+                El backend SIEMPRE responde JSON,
+                tanto en éxito como en error, así
+                que lo parseamos una sola vez aquí.
+            */
+
+            const datos =
+                await respuesta.json();
+
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+                    datos.error ||
+                    "Datos incorrectos."
+                );
+            }
+
+
+            /*
+                LA RESPUESTA REAL DEL BACKEND ES:
+                { mensaje, usuario, token, idPerfil }
+                El usuario de verdad está DENTRO de "usuario".
+            */
+
+            const usuario = datos.usuario;
+            const token = datos.token;
+            const idPerfil = datos.idPerfil;
+
+
+            console.log(
+                "Usuario autenticado:",
+                usuario
+            );
+
+
+            /*
+                GUARDAR SESIÓN
+                (token es necesario para las
+                siguientes peticiones al backend)
+            */
+
+            localStorage.setItem("token", token);
+
+            localStorage.setItem(
+                "usuario",
+                JSON.stringify(usuario)
+            );
+
+            localStorage.setItem("idPerfil", idPerfil);
+
+
+            mostrarMensaje(
+                "¡Bienvenido " +
+                usuario.nombre +
+                "!",
+                "exito"
+            );
+
+
+            /*
+                EL ROL VIENE ANIDADO:
+                usuario.rol.nombreRol (no usuario.rol directo)
+
+                Se le agrega .trim() por seguridad, en caso de que
+                vuelva a colarse un espacio en blanco desde la BD.
+            */
+
+            const nombreRol =
+                ((usuario.rol && usuario.rol.nombreRol) || "").trim();
+
+
+            setTimeout(
+                function() {
+
+                    switch (nombreRol.toUpperCase()) {
+
+                        case "ADMINISTRADOR":
+                            window.location.href =
+                                "administrador.html";
+                            break;
+
+
+                        /* ajusta el nombre si tu archivo se llama distinto */
+                        case "DOCENTE":
+                            window.location.href =
+                                "docente.html";
+                            break;
+
+
+                        /* ajusta el nombre si tu archivo se llama distinto */
+                        case "ESTUDIANTE":
+                            window.location.href =
+                                "estudiante.html";
+                            break;
+
+
+                        /* ajusta el nombre si tu archivo se llama distinto */
+                        case "ACUDIENTE":
+                            window.location.href =
+                                "acudiente.html";
+                            break;
+
+
+                        default:
+                            alert(
+                                "Rol no reconocido: [" + nombreRol + "]"
+                            );
+                    }
+
+                },
+                800
+            );
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Error:",
+                error
+            );
+
+
+            mostrarMensaje(
+
+                error.message ||
+                "No fue posible iniciar sesión.",
+
+                "error"
+
+            );
+
+        }
+
+        finally {
+
+            btnIngresar.disabled =
+                false;
+
+            btnIngresar.textContent =
+                "INGRESAR";
+        }
+
+    }
+);
+
+
+function mostrarMensaje(
+    texto,
+    tipo
+) {
+
+
+    mensaje.textContent =
+        texto;
+
+
+    if (tipo === "exito") {
+
+        mensaje.style.color =
+            "#90ee90";
+
     }
 
-  } else {
-    alert("Datos incorrectos");
-  }
+    else {
 
-  return false;
+        mensaje.style.color =
+            "#ffaaaa";
+
+    }
+
 }
+
 </script>
 
+
 </body>
+
 </html>

@@ -1,0 +1,6 @@
+services:
+  web:
+    build: .
+    container_name: pagina-andrea
+    ports:
+      - "8081:80"

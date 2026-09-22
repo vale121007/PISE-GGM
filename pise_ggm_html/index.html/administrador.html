@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrador | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .panel-card {
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transition: transform .15s ease, box-shadow .15s ease;
+      height: 100%;
+    }
+    .panel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
+    .panel-card i {
+      font-size: 2rem;
+      color: #198754;
+    }
+    .bienvenida {
+      background: linear-gradient(135deg, #198754, #14532d);
+      color: #fff;
+      border-radius: 14px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <img src="ESCUDOGGM.jpg" alt="Escudo del colegio" width="50">
+      <a class="navbar-brand ms-2" href="index.html">PISE-GGM</a>
+
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <span id="nombreUsuario" class="fw-semibold"></span>
+        <button class="btn btn-outline-danger btn-sm" id="btnCerrarSesion">
+          <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+
+    <div class="bienvenida">
+      <h1 class="h3 mb-1">Bienvenido, <span id="nombreBienvenida">Administrador</span></h1>
+      <p class="mb-0">Panel de administración — Colegio Gabriel García Márquez</p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-people-fill mb-2"></i>
+          <h5>Usuarios</h5>
+          <p class="text-muted small mb-3">Gestionar cuentas de usuario y roles</p>
+          <a href="reporteUsuarios.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-person-workspace mb-2"></i>
+          <h5>Docentes</h5>
+          <p class="text-muted small mb-3">Ver y administrar docentes</p>
+          <a href="reportesDocente.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-mortarboard-fill mb-2"></i>
+          <h5>Estudiantes</h5>
+          <p class="text-muted small mb-3">Ver y administrar estudiantes</p>
+          <a href="reporteEstudiantes.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-diagram-3-fill mb-2"></i>
+          <h5>Cursos</h5>
+          <p class="text-muted small mb-3">Gestionar cursos del colegio</p>
+          <a href="reporteCursos.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-journal-bookmark-fill mb-2"></i>
+          <h5>Asignaturas</h5>
+          <p class="text-muted small mb-3">Gestionar asignaturas y dimensiones</p>
+          <a href="reporteAsignaturas.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-person-lines-fill mb-2"></i>
+          <h5>Asignaciones</h5>
+          <p class="text-muted small mb-3">Asignar docentes a cursos</p>
+          <a href="reporteAsignaciones.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-clipboard-data-fill mb-2"></i>
+          <h5>Notas</h5>
+          <p class="text-muted small mb-3">Consultar y gestionar notas</p>
+          <a href="reporteNotas.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card panel-card text-center p-4">
+          <i class="bi bi-people mb-2"></i>
+          <h5>Acudientes</h5>
+          <p class="text-muted small mb-3">Ver y administrar acudientes</p>
+          <a href="reporteAcudiente.html" class="btn btn-success btn-sm">Ir</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Guardia de sesión: si no hay token o el rol no es Administrador, de vuelta al login.
+    (function () {
+      const token = localStorage.getItem("token");
+      const usuarioRaw = localStorage.getItem("usuario");
+
+      // --- Logs de diagnóstico: revisa la consola (F12) para ver qué está fallando ---
+      console.log("[guard] token presente:", !!token);
+      console.log("[guard] usuarioRaw:", usuarioRaw);
+
+      if (!token || !usuarioRaw) {
+        console.warn("[guard] Falta token o usuario en localStorage. Redirigiendo a login.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      let usuario;
+      try {
+        usuario = JSON.parse(usuarioRaw);
+      } catch (e) {
+        console.error("[guard] Error al parsear 'usuario' desde localStorage:", e);
+        window.location.href = "login.html";
+        return;
+      }
+
+      console.log("[guard] usuario parseado:", usuario);
+      console.log("[guard] usuario.rol:", usuario ? usuario.rol : undefined);
+
+      // Soporta un par de formas comunes en que el backend podría devolver el rol,
+      // por si el campo no se llama exactamente "rol.nombreRol".
+      // .trim() por seguridad: evita que un espacio en blanco guardado en la BD
+      // (o quedado en localStorage de una sesión anterior) rompa la comparación.
+      const rol = (
+        (usuario.rol && usuario.rol.nombreRol) ||
+        (usuario.rol && usuario.rol.nombre) ||
+        usuario.rol ||
+        ""
+      ).trim();
+
+      if (String(rol).toUpperCase() !== "ADMINISTRADOR") {
+        console.warn(`[guard] Rol detectado ("${rol}") no coincide con ADMINISTRADOR. Redirigiendo a login.`);
+        window.location.href = "login.html";
+        return;
+      }
+
+      document.getElementById("nombreUsuario").textContent = usuario.nombre + " " + usuario.apellido;
+      document.getElementById("nombreBienvenida").textContent = usuario.nombre;
+    })();
+
+    document.getElementById("btnCerrarSesion").addEventListener("click", function () {
+      localStorage.removeItem("token");
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("idPerfil");
+      window.location.href = "login.html";
+    });
+  </script>
+
+</body>
+</html>
