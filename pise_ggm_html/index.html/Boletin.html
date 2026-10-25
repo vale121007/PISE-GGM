@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boletín | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+  body.pn-body { background: var(--blanco); min-height: 100vh; display: flex; flex-direction: column; }
+  .pn-main { flex: 1; }
+  .pn-oculto { display: none !important; }
+
+  /* ---------- Barra superior ---------- */
+  .pn-usuario {
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .92rem; color: var(--verde-900);
+    background: var(--verde-100); border: 1px solid var(--borde); padding: 7px 14px; border-radius: 4px 14px 4px 14px;
+  }
+  .pn-usuario i { color: var(--dorado-600); }
+  :root[data-tema="noche"] .pn-usuario { color: var(--amarillo-300); }
+
+  .nav-links a.nav-volver,
+  .nav-links a.nav-volver:link,
+  .nav-links a.nav-volver:visited {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 700;
+    background: var(--verde-700); color: #FFFFFF !important; padding: .6rem 1.2rem; border-radius: 30px; margin-left: 8px;
+    text-decoration: none; transition: background .2s ease, transform .15s ease;
+  }
+  .nav-links a.nav-volver i { color: #FFFFFF !important; }
+  .nav-links a.nav-volver:hover { background: var(--verde-900); transform: translateY(-1px); }
+
+  .pn-salir {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 700; font-family: inherit;
+    background: transparent; color: #c0392b; border: 2px solid #c0392b; padding: .5rem 1.1rem; border-radius: 30px;
+    margin-left: 8px; cursor: pointer; transition: background .2s ease, color .2s ease;
+  }
+  .pn-salir:hover { background: #c0392b; color: #fff; }
+  @media (max-width: 880px) {
+    .nav-links a.nav-volver, .nav-links .pn-salir { margin: 10px 4px 0; align-self: flex-start; }
+    .nav-links .pn-usuario { margin: 6px 4px 0; align-self: flex-start; }
+  }
+
+  /* ---------- Encabezado ---------- */
+  .pn-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 38px 24px 50px;
+    background: radial-gradient(circle at 88% 15%, rgba(242,194,48,.25), transparent 45%),
+                linear-gradient(135deg, var(--verde-900), var(--verde-700));
+  }
+  .pn-hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+  }
+  .pn-hero-caja { max-width: 1180px; margin: 0 auto; }
+  .pn-migas { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--amarillo-500); margin: 0 0 6px; }
+  .pn-migas i { font-size: .65rem; }
+  .pn-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.15; color: #fff; margin: 0; }
+  .pn-hero p.pn-sub { margin: 8px 0 0; max-width: 560px; color: #e8f1e9; }
+
+  .pn-contenido { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; width: 100%; box-sizing: border-box; }
+
+  .pn-msg { padding: 11px 16px; border-radius: 4px 14px 4px 14px; margin-bottom: 16px; font-weight: 600; font-size: .9rem; }
+  .pn-msg.error { background: #f9d0d0; color: #8a1c1c; }
+  .pn-msg.aviso { background: #fdf0c4; color: #7a5c00; }
+
+  /* ---------- Controles ---------- */
+  .bl-controles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: end; max-width: 860px; margin: 0 auto 22px; }
+  .pn-label { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--verde-900); margin-bottom: 6px; }
+  :root[data-tema="noche"] .pn-label { color: var(--amarillo-300); }
+  .pn-input {
+    width: 100%; box-sizing: border-box; padding: 11px 12px; border-radius: 4px 14px 4px 14px; border: 2px solid var(--borde);
+    background: var(--blanco); color: var(--tinta); font-family: inherit; font-size: .95rem;
+  }
+  .pn-input:focus { outline: none; border-color: var(--amarillo-500); box-shadow: 0 0 0 4px rgba(242,194,48,.25); }
+  .pn-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 30px; font-family: inherit; font-size: .92rem; font-weight: 700;
+    cursor: pointer; padding: 11px 20px; background: var(--verde-700); color: #fff; border: 2px solid var(--verde-700); transition: background .2s ease;
+  }
+  .pn-btn:hover:not(:disabled) { background: var(--verde-900); border-color: var(--verde-900); }
+  .pn-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+  /* ---------- Hoja del boletín (siempre clara, también en modo noche, para que el PDF salga igual) ---------- */
+  .bl-papel { max-width: 860px; margin: 0 auto; background: #ffffff; color: #17241B; border: 1px solid #cfd8d0; padding: 30px 32px 34px; box-shadow: 0 8px 20px rgba(15,61,46,.1); }
+  .bl-cab { display: flex; align-items: center; gap: 18px; padding-bottom: 14px; border-bottom: 3px solid #F2C230; }
+  .bl-cab img { width: 78px; height: 78px; object-fit: contain; flex-shrink: 0; }
+  .bl-cab-txt { text-align: center; flex: 1; line-height: 1.35; font-size: .72rem; color: #17241B; }
+  .bl-cab-txt strong { display: block; font-size: 1rem; color: #0F3D2E; }
+  .bl-cab-txt b { display: block; margin-top: 4px; font-size: .9rem; letter-spacing: .06em; color: #0F3D2E; }
+  .bl-cab-txt em { display: block; font-style: italic; }
+
+  .bl-datos { width: 100%; border-collapse: collapse; margin: 16px 0 18px; font-size: .88rem; }
+  .bl-datos td { border: 1px solid #b9c7bc; padding: 7px 10px; color: #17241B; }
+  .bl-datos td.k { background: #eaf3ec; font-weight: 700; width: 18%; color: #0F3D2E; }
+
+  .bl-materia { border: 1px solid #b9c7bc; border-left: 5px solid #F2C230; padding: 12px 14px; margin-bottom: 12px; break-inside: avoid; page-break-inside: avoid; }
+  .bl-m-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .bl-m-cab strong { display: block; font-size: 1rem; color: #0F3D2E; text-transform: uppercase; }
+  .bl-m-cab small { display: block; color: #4B5C4E; font-size: .8rem; margin-top: 2px; }
+  .bl-des { flex-shrink: 0; padding: 4px 14px; border-radius: 14px; font-size: .78rem; font-weight: 700; letter-spacing: .05em; }
+  .des-Superior { background: #d1f0df; color: #0d5c33; }
+  .des-Alto { background: #dcefc9; color: #3d6a12; }
+  .des-Basico { background: #fdf0c4; color: #7a5c00; }
+  .des-Bajo { background: #f9d0d0; color: #8a1c1c; }
+  .bl-desc { margin: 10px 0 0; font-size: .9rem; line-height: 1.5; color: #17241B; white-space: pre-line; }
+  .bl-vacio { text-align: center; color: #4B5C4E; padding: 28px 10px; }
+
+  .pn-pie { background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+  .pn-pie p { margin: 0; }
+
+  @media (max-width: 600px) {
+    .pn-hero { padding: 30px 20px 42px; }
+    .pn-contenido { padding: 24px 12px 56px; }
+    .bl-papel { padding: 18px 14px 22px; }
+    .bl-cab { flex-direction: column; text-align: center; }
+    .bl-m-cab { flex-direction: column; }
+  }
+  </style>
+</head>
+<body class="pn-body">
+
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" id="lnkMarca" href="estudiante.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>PISE-GGM<br id="rolMarca">Boletín</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <span class="pn-usuario"><i class="bi bi-person-circle"></i><span id="nombreUsuario"></span></span>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a href="estudiante.html" class="nav-volver" id="lnkVolver"><i class="bi bi-arrow-left"></i> Volver al panel</a>
+        <button class="pn-salir" id="btnCerrarSesion"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="pn-hero">
+    <div class="pn-hero-caja">
+      <p class="pn-migas">Panel <i class="bi bi-chevron-right"></i> Boletín</p>
+      <h1>Boletín de evaluación</h1>
+      <p class="pn-sub">Desempeño y observaciones de cada asignatura, por periodo.</p>
+    </div>
+  </header>
+
+  <main class="pn-main">
+    <div class="pn-contenido">
+
+      <div id="aviso" class="pn-msg pn-oculto"></div>
+
+      <div class="bl-controles">
+        <div id="campoHijo" class="pn-oculto">
+          <label class="pn-label" for="selHijo">Estudiante</label>
+          <select id="selHijo" class="pn-input"></select>
+        </div>
+        <div>
+          <label class="pn-label" for="selPeriodo">Periodo</label>
+          <select id="selPeriodo" class="pn-input"></select>
+        </div>
+        <div>
+          <button class="pn-btn" id="btnPdf" disabled style="width:100%"><i class="bi bi-file-earmark-pdf"></i> Descargar PDF</button>
+        </div>
+      </div>
+
+      <div class="bl-papel" id="boletin">
+        <p class="bl-vacio">Cargando boletín...</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="pn-pie">
+    <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+  (function () {
+
+    const API = "http://localhost:8081/api/boletin";
+
+    // ---- Guardia de sesión: estudiante o acudiente ----
+    const token = localStorage.getItem("token");
+    const usuarioRaw = localStorage.getItem("usuario");
+    if (!token || !usuarioRaw) { window.location.href = "login.html"; return; }
+
+    let usuario;
+    try { usuario = JSON.parse(usuarioRaw); } catch (e) { window.location.href = "login.html"; return; }
+
+    const rol = String((usuario.rol && usuario.rol.nombreRol) || usuario.rol || "").trim().toUpperCase();
+    if (rol !== "ESTUDIANTE" && rol !== "ACUDIENTE") { window.location.href = "login.html"; return; }
+    const esAcudiente = rol === "ACUDIENTE";
+
+    const $ = function (id) { return document.getElementById(id); };
+    const esc = function (s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    };
+    const sinTildes = function (s) { return String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, ""); };
+
+    $("nombreUsuario").textContent = usuario.nombre + " " + (usuario.apellido || "");
+    const panel = esAcudiente ? "acudiente.html" : "estudiante.html";
+    $("lnkVolver").href = panel;
+    $("lnkMarca").href = panel;
+    if (esAcudiente) $("campoHijo").classList.remove("pn-oculto");
+
+    let ultimo = null;   // el boletín que se está mostrando (para el nombre del PDF)
+
+    async function api(ruta) {
+      const r = await fetch(API + ruta, { headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token } });
+      const texto = await r.text();
+      let cuerpo = null;
+      try { cuerpo = texto ? JSON.parse(texto) : null; } catch (e) { /* no era JSON */ }
+      if (!r.ok) throw new Error((cuerpo && (cuerpo.message || cuerpo.error)) || "Error " + r.status);
+      return cuerpo;
+    }
+
+    function avisar(msg, tipo) {
+      const a = $("aviso");
+      a.className = "pn-msg " + (tipo || "error");
+      a.textContent = msg;
+      clearTimeout(avisar.t);
+      avisar.t = setTimeout(function () { a.classList.add("pn-oculto"); }, 5000);
+    }
+
+    // Ruta base según quién entra: el estudiante ve el suyo, el acudiente elige a uno de sus estudiantes
+    function rutaBase() {
+      return esAcudiente
+        ? "/acudiente/" + usuario.idUsuario + "/hijos/" + $("selHijo").value
+        : "/estudiante/" + usuario.idUsuario;
+    }
+
+    function hoja(html) { $("boletin").innerHTML = html; }
+    function vacio(texto) { ultimo = null; $("btnPdf").disabled = true; hoja('<p class="bl-vacio">' + esc(texto) + "</p>"); }
+
+    // ---------- Periodos ----------
+    async function cargarPeriodos() {
+      try {
+        const lista = await api(rutaBase() + "/periodos");
+        $("selPeriodo").innerHTML = lista.map(function (p) {
+          return '<option value="' + p.idPeriodo + '">' + esc(p.nombre) + (p.anio ? " (" + p.anio + ")" : "") + "</option>";
+        }).join("");
+        if (!lista.length) { vacio("Todavía no hay notas publicadas."); return; }
+        cargarBoletin();
+      } catch (e) { avisar(e.message); vacio("No se pudo cargar el boletín."); }
+    }
+
+    // ---------- Boletín ----------
+    async function cargarBoletin() {
+      const periodo = $("selPeriodo").value;
+      if (!periodo) return;
+      try {
+        const b = await api(rutaBase() + "?periodo=" + periodo);
+        pintar(b);
+      } catch (e) { avisar(e.message); vacio("No se pudo cargar el boletín."); }
+    }
+
+    const claseDes = function (d) { return "des-" + sinTildes(d); };
+
+    function pintar(b) {
+      if (!b.materias.length) { vacio("Todavía no hay notas publicadas para este periodo."); return; }
+      ultimo = b;
+
+      const materias = b.materias.map(function (m) {
+        return '<div class="bl-materia">' +
+          '<div class="bl-m-cab"><div><strong>' + esc(m.asignatura) + "</strong>" +
+          (m.docente ? "<small>Docente: " + esc(m.docente) + "</small>" : "") + "</div>" +
+          '<span class="bl-des ' + claseDes(m.desempeno) + '">' + esc(m.desempeno.toUpperCase()) + "</span></div>" +
+          (m.descripcion ? '<p class="bl-desc">' + esc(m.descripcion) + "</p>" : "") +
+          "</div>";
+      }).join("");
+
+      hoja(
+        '<div class="bl-cab">' +
+          '<img src="ESCUDOGGM.jpg" alt="Escudo">' +
+          '<div class="bl-cab-txt">' +
+            "<strong>COLEGIO GABRIEL GARCÍA MÁRQUEZ</strong>" +
+            "RESOLUCIÓN N° 00974 DEL 27 DE DICIEMBRE DE 2011 Y 007823 DE NOVIEMBRE 02 DE 2016<br>" +
+            "CONTAMOS CON PROCESOS DE CALIDAD BAJO LA NORMA ISO 9001:2015" +
+            "<em>“26 años Construyendo una Cultura de Paz y Bien”</em>" +
+            "TUNJA - BOYACÁ<b>INFORME DE EVALUACIÓN</b>" +
+          "</div>" +
+        "</div>" +
+        '<table class="bl-datos"><tr>' +
+          '<td class="k">Estudiante</td><td colspan="3">' + esc(b.estudiante) + "</td></tr><tr>" +
+          '<td class="k">Documento</td><td>' + esc(b.documento || "—") + '</td><td class="k">Curso</td><td>' + esc(b.grado || "—") + "</td></tr><tr>" +
+          '<td class="k">Vigencia</td><td>' + esc(b.anio || "—") + '</td><td class="k">Periodo</td><td>' + esc(b.periodo) + "</td></tr></table>" +
+        materias
+      );
+      $("btnPdf").disabled = false;
+    }
+
+    // ---------- PDF ----------
+    $("btnPdf").addEventListener("click", function () {
+      if (!ultimo) return;
+      if (typeof html2pdf === "undefined") { avisar("No se pudo cargar el generador de PDF. Revisa tu conexión a internet.", "aviso"); return; }
+
+      const nombre = "Boletin_" + sinTildes(ultimo.estudiante).replace(/[^\w]+/g, "_") + "_" + sinTildes(ultimo.periodo).replace(/[^\w]+/g, "_") + ".pdf";
+      $("btnPdf").disabled = true;
+      html2pdf().set({
+        margin: [10, 10, 10, 10],
+        filename: nombre,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
+        pagebreak: { mode: ["css", "legacy"], avoid: ".bl-materia" }
+      }).from($("boletin")).save().then(function () {
+        $("btnPdf").disabled = false;
+      }).catch(function () {
+        $("btnPdf").disabled = false;
+        avisar("No se pudo generar el PDF.");
+      });
+    });
+
+    // ---------- Eventos ----------
+    $("selPeriodo").addEventListener("change", cargarBoletin);
+    $("selHijo").addEventListener("change", cargarPeriodos);
+
+    $("btnCerrarSesion").addEventListener("click", function () {
+      localStorage.removeItem("token");
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("idPerfil");
+      window.location.href = "login.html";
+    });
+
+    // ---------- Inicio ----------
+    (async function iniciar() {
+      if (!esAcudiente) { cargarPeriodos(); return; }
+      try {
+        const hijos = await api("/acudiente/" + usuario.idUsuario + "/hijos");
+        if (!hijos.length) { vacio("No tienes estudiantes a tu cargo."); return; }
+        $("selHijo").innerHTML = hijos.map(function (h) {
+          return '<option value="' + h.idEstudiante + '">' + esc(h.nombre) + "</option>";
+        }).join("");
+        // Si llega desde "Mis acudidos" (?est=10), se deja ese estudiante seleccionado
+        const est = new URLSearchParams(window.location.search).get("est");
+        if (est && hijos.some(function (h) { return String(h.idEstudiante) === est; })) $("selHijo").value = est;
+        cargarPeriodos();
+      } catch (e) { avisar(e.message); vacio("No se pudo cargar el boletín."); }
+    })();
+
+  })();
+  </script>
+</body>
+</html>

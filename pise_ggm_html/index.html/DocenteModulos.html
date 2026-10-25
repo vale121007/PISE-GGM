@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docente | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+  /* ============================================================
+     MÓDULOS DEL DOCENTE: estilos propios de la página.
+     Colores, tipografía, navbar y modo noche vienen de style.css.
+  ============================================================ */
+
+  body.pn-body { background: var(--blanco); min-height: 100vh; display: flex; flex-direction: column; }
+  .pn-main { flex: 1; }
+  .pn-oculto { display: none !important; }
+
+  /* ---------- Barra superior ---------- */
+  .pn-usuario {
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .92rem; color: var(--verde-900);
+    background: var(--verde-100); border: 1px solid var(--borde); padding: 7px 14px; border-radius: 4px 14px 4px 14px;
+  }
+  .pn-usuario i { color: var(--dorado-600); }
+  :root[data-tema="noche"] .pn-usuario { color: var(--amarillo-300); }
+
+  .nav-links a.nav-volver,
+  .nav-links a.nav-volver:link,
+  .nav-links a.nav-volver:visited {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 700;
+    background: var(--verde-700); color: #FFFFFF !important; padding: .6rem 1.2rem; border-radius: 30px; margin-left: 8px;
+    text-decoration: none; transition: background .2s ease, transform .15s ease;
+  }
+  .nav-links a.nav-volver i { color: #FFFFFF !important; }
+  .nav-links a.nav-volver:hover,
+  .nav-links a.nav-volver:focus { background: var(--verde-900); color: #FFFFFF !important; transform: translateY(-1px); }
+
+  .pn-salir {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 700; font-family: inherit;
+    background: transparent; color: #c0392b; border: 2px solid #c0392b; padding: .5rem 1.1rem; border-radius: 30px;
+    margin-left: 8px; cursor: pointer; transition: background .2s ease, color .2s ease;
+  }
+  .pn-salir:hover { background: #c0392b; color: #fff; }
+  @media (max-width: 880px) {
+    .nav-links a.nav-volver, .nav-links .pn-salir { margin: 10px 4px 0; align-self: flex-start; }
+    .nav-links .pn-usuario { margin: 6px 4px 0; align-self: flex-start; }
+  }
+
+  /* ---------- Encabezado ---------- */
+  .pn-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 38px 24px 50px;
+    background: radial-gradient(circle at 88% 15%, rgba(242,194,48,.25), transparent 45%),
+                linear-gradient(135deg, var(--verde-900), var(--verde-700));
+  }
+  .pn-hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+  }
+  .pn-hero-caja { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .pn-migas { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--amarillo-500); margin: 0 0 6px; }
+  .pn-migas a { color: var(--amarillo-300); text-decoration: none; }
+  .pn-migas a:hover { text-decoration: underline; }
+  .pn-migas i { font-size: .65rem; }
+  .pn-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.15; color: #fff; margin: 0; }
+  .pn-hero p.pn-sub { margin: 8px 0 0; max-width: 560px; color: #e8f1e9; }
+  .pn-rol {
+    display: inline-flex; align-items: center; gap: 14px; padding: 16px 22px; background: rgba(255,253,248,.1);
+    border: 1px solid rgba(247,219,122,.4); border-radius: 6px 28px 6px 28px; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .pn-rol i { font-size: 2rem; color: var(--amarillo-500); }
+  .pn-rol strong { display: block; font-family: var(--f-display); font-size: 1.15rem; color: var(--amarillo-300); line-height: 1.1; }
+  .pn-rol span { font-size: .78rem; color: #cfe3d3; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ---------- Contenido ---------- */
+  .pn-contenido { max-width: 1180px; margin: 0 auto; padding: 36px 24px 64px; width: 100%; box-sizing: border-box; }
+
+  /* ---------- Pestañas ---------- */
+  .pn-tabs { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 4px; }
+  .pn-tabs a {
+    flex-shrink: 0; padding: 9px 16px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: .88rem;
+    color: var(--verde-900); background: var(--blanco); border: 1px solid var(--borde); transition: background .2s ease;
+  }
+  .pn-tabs a:hover { background: var(--verde-100); }
+  .pn-tabs a.activa { background: var(--verde-700); color: #fff; border-color: var(--verde-700); }
+  :root[data-tema="noche"] .pn-tabs a:not(.activa) { color: var(--amarillo-300); }
+
+  /* ---------- Avisos ---------- */
+  .pn-msg { padding: 11px 16px; border-radius: 4px 14px 4px 14px; margin-bottom: 16px; font-weight: 600; font-size: .9rem; }
+  .pn-msg.ok { background: #d1f0df; color: #0d5c33; }
+  .pn-msg.error { background: #f9d0d0; color: #8a1c1c; }
+  .pn-msg.aviso { background: #fdf0c4; color: #7a5c00; }
+
+  /* ---------- Caja de módulo ---------- */
+  .pn-caja { background: var(--blanco); border: 1px solid var(--borde); border-radius: 6px 24px 6px 24px; box-shadow: 0 8px 20px rgba(15,61,46,.08); padding: 22px; }
+  .pn-caja h2 { font-family: var(--f-display); font-size: 1.3rem; color: var(--verde-900); margin: 0 0 4px; }
+  :root[data-tema="noche"] .pn-caja h2 { color: var(--amarillo-300); }
+  .pn-suave { color: var(--tinta-suave); font-size: .88rem; margin: 0 0 14px; }
+  .pn-campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 14px 0 18px; }
+
+  /* ---------- Formularios ---------- */
+  .pn-label { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--verde-900); margin-bottom: 6px; }
+  :root[data-tema="noche"] .pn-label { color: var(--amarillo-300); }
+  .pn-input {
+    width: 100%; box-sizing: border-box; padding: 11px 12px; border-radius: 4px 14px 4px 14px; border: 2px solid var(--borde);
+    background: var(--blanco); color: var(--tinta); font-family: inherit; font-size: .95rem;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .pn-input:focus { outline: none; border-color: var(--amarillo-500); box-shadow: 0 0 0 4px rgba(242,194,48,.25); }
+  textarea.pn-input { resize: vertical; }
+
+  /* Promedio y observación de cada estudiante */
+  .pn-num { width: 92px; text-align: center; font-weight: 700; }
+  .pn-obs { min-width: 280px; }
+  .pn-chip { display: inline-block; min-width: 84px; text-align: center; padding: 5px 12px; border-radius: 14px; font-size: .8rem; font-weight: 700; background: var(--verde-100); color: var(--tinta-suave); }
+  .des-Superior { background: #d1f0df; color: #0d5c33; }
+  .des-Alto { background: #dcefc9; color: #3d6a12; }
+  .des-Basico { background: #fdf0c4; color: #7a5c00; }
+  .des-Bajo { background: #f9d0d0; color: #8a1c1c; }
+
+  /* ---------- Botones ---------- */
+  .pn-btn, .pn-btn-claro, .pn-btn-peligro {
+    display: inline-block; border-radius: 30px; font-family: inherit; font-size: .85rem; font-weight: 700; cursor: pointer;
+    padding: 8px 16px; text-decoration: none; transition: background .2s ease, color .2s ease;
+  }
+  .pn-btn { background: var(--verde-700); color: #fff; border: 2px solid var(--verde-700); }
+  .pn-btn:hover { background: var(--verde-900); border-color: var(--verde-900); }
+  .pn-btn-claro { background: transparent; color: var(--verde-700); border: 2px solid var(--verde-700); }
+  .pn-btn-claro:hover { background: var(--verde-100); }
+  :root[data-tema="noche"] .pn-btn-claro { color: var(--amarillo-300); border-color: var(--amarillo-300); }
+  .pn-btn-peligro { background: transparent; color: #c0392b; border: 2px solid #c0392b; }
+  .pn-btn-peligro:hover { background: #c0392b; color: #fff; }
+  .pn-btn:disabled, .pn-btn-peligro:disabled { opacity: .4; cursor: not-allowed; }
+  .pn-acciones { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+  /* ---------- Tabla ---------- */
+  .pn-tabla-caja { background: var(--blanco); border: 1px solid var(--borde); border-radius: 6px 24px 6px 24px; box-shadow: 0 8px 20px rgba(15,61,46,.08); overflow-x: auto; }
+  .pn-tabla { width: 100%; border-collapse: collapse; }
+  .pn-tabla th { text-align: left; padding: 12px 14px; background: var(--verde-900); color: var(--amarillo-300); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+  .pn-tabla td { padding: 10px 14px; border-bottom: 1px solid var(--borde); color: var(--tinta); font-size: .9rem; vertical-align: middle; }
+  .pn-tabla tbody tr:hover { background: var(--verde-100); }
+  .pn-tabla .pn-th-der { text-align: right; }
+  .pn-vacio { text-align: center; color: var(--tinta-suave); padding: 24px !important; }
+
+  /* ---------- Periodos ---------- */
+  .pn-periodos { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
+  .pn-periodo { border: 1px solid var(--borde); border-radius: 4px 18px 4px 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--blanco); }
+  .pn-periodo.actual { border: 2px solid var(--amarillo-500); box-shadow: 0 0 0 4px rgba(242,194,48,.18); }
+  .pn-periodo-cab { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .pn-periodo h3 { font-family: var(--f-display); font-size: 1.1rem; color: var(--verde-900); margin: 0; }
+  :root[data-tema="noche"] .pn-periodo h3 { color: var(--amarillo-300); }
+  .pn-etiqueta { background: var(--amarillo-500); color: var(--verde-900); border-radius: 12px; padding: 2px 10px; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+
+  /* ---------- Pie ---------- */
+  .pn-pie { background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+  .pn-pie p { margin: 0; }
+
+  /* ---------- Celular: cada fila se vuelve tarjeta ---------- */
+  @media (max-width: 860px) {
+    .pn-tabla { display: block; }
+    .pn-tabla thead { display: none; }
+    .pn-tabla tbody { display: block; }
+    .pn-tabla tr { display: block; padding: 10px 14px; border-bottom: 6px solid var(--verde-100); }
+    .pn-tabla td { display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 0; padding: 6px 0; text-align: right; word-break: break-word; }
+    .pn-tabla td::before { content: attr(data-label); font-weight: 700; font-size: .75rem; letter-spacing: .05em; text-transform: uppercase; color: var(--verde-700); text-align: left; flex-shrink: 0; }
+    .pn-tabla td[colspan] { display: block; text-align: center; }
+    .pn-tabla td[colspan]::before { content: none; }
+    .pn-obs { min-width: 0; }
+  }
+  @media (max-width: 600px) {
+    .pn-hero { padding: 30px 20px 42px; }
+    .pn-contenido { padding: 28px 16px 56px; }
+    .pn-caja { padding: 16px; }
+  }
+  </style>
+</head>
+<body class="pn-body">
+
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="docente.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>PISE-GGM<br>Docente</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <span class="pn-usuario"><i class="bi bi-person-circle"></i><span id="nombreUsuario"></span></span>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a href="docente.html" class="nav-volver"><i class="bi bi-arrow-left"></i> Volver al panel</a>
+        <button class="pn-salir" id="btnCerrarSesion"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ENCABEZADO -->
+  <header class="pn-hero">
+    <div class="pn-hero-caja">
+      <div>
+        <p class="pn-migas"><a href="docente.html">Panel</a> <i class="bi bi-chevron-right"></i> <span id="migaModulo">Mis asignaciones</span></p>
+        <h1 id="tituloModulo">Mis asignaciones</h1>
+        <p class="pn-sub">Panel del Docente — Colegio Gabriel García Márquez</p>
+      </div>
+      <div class="pn-rol">
+        <i class="bi bi-person-workspace"></i>
+        <div><strong>Docente</strong><span>Gestión académica</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pn-main">
+    <div class="pn-contenido">
+
+      <div class="pn-tabs" id="pestanas">
+        <a href="docenteModulos.html#asignaciones" data-m="asignaciones">Mis Asignaciones</a>
+        <a href="docenteModulos.html#estudiantes" data-m="estudiantes">Mis Estudiantes</a>
+        <a href="docenteModulos.html#notas" data-m="notas">Registrar Notas</a>
+        <a href="docenteModulos.html#periodos" data-m="periodos">Periodo Académico</a>
+      </div>
+
+      <div id="aviso" class="pn-msg pn-oculto"></div>
+
+      <!-- ASIGNACIONES -->
+      <section class="pn-caja modulo pn-oculto" id="asignaciones">
+        <h2>Mis asignaciones</h2>
+        <p class="pn-suave">Cursos y dimensiones que tienes a cargo.</p>
+        <div class="pn-tabla-caja">
+          <table class="pn-tabla">
+            <thead><tr><th>Curso</th><th>Año</th><th>Asignatura</th><th>Dimensión</th><th class="pn-th-der">Acciones</th></tr></thead>
+            <tbody id="tbAsignaciones"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ESTUDIANTES -->
+      <section class="pn-caja modulo pn-oculto" id="estudiantes">
+        <h2>Mis estudiantes</h2>
+        <div class="pn-campos">
+          <div><label class="pn-label" for="selEstudiantes">Curso y dimensión</label><select id="selEstudiantes" class="pn-input"></select></div>
+        </div>
+        <div class="pn-tabla-caja">
+          <table class="pn-tabla">
+            <thead><tr><th>Estudiante</th><th>Documento</th></tr></thead>
+            <tbody id="tbEstudiantes"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- NOTAS -->
+      <section class="pn-caja modulo pn-oculto" id="notas">
+        <h2>Registrar notas</h2>
+        <p class="pn-suave">Escribe el promedio (de 1.0 a 5.0) y una observación para cada estudiante, y presiona <strong>Subir</strong>. El estudiante y su acudiente verán en el boletín solo el desempeño (Bajo, Básico, Alto o Superior) y tu observación, nunca el número.</p>
+        <div class="pn-campos">
+          <div><label class="pn-label" for="selAsigNotas">Curso y asignatura</label><select id="selAsigNotas" class="pn-input"></select></div>
+          <div><label class="pn-label" for="selPeriodoNotas">Periodo</label><select id="selPeriodoNotas" class="pn-input"></select></div>
+        </div>
+        <div class="pn-tabla-caja">
+          <table class="pn-tabla">
+            <thead><tr><th>Estudiante</th><th>Promedio</th><th>Desempeño</th><th>Observación</th><th class="pn-th-der">Acciones</th></tr></thead>
+            <tbody id="tbNotas"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PERIODOS -->
+      <section class="pn-caja modulo pn-oculto" id="periodos">
+        <h2>Periodo académico</h2>
+        <div class="pn-campos">
+          <div><label class="pn-label" for="selAnio">Año</label><select id="selAnio" class="pn-input"></select></div>
+        </div>
+        <div class="pn-periodos" id="listaPeriodos"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="pn-pie">
+    <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="script.js"></script>
+  <script>
+  (function () {
+
+    const API = "http://localhost:8081/api/docente";
+    const API_BOLETIN = "http://localhost:8081/api/docente-boletin";
+    const TITULOS = { asignaciones: "Mis asignaciones", estudiantes: "Mis estudiantes", notas: "Registrar notas", periodos: "Periodo académico" };
+
+    // ---- Guardia de sesión: solo Docente ----
+    const token = localStorage.getItem("token");
+    const usuarioRaw = localStorage.getItem("usuario");
+    if (!token || !usuarioRaw) { window.location.href = "login.html"; return; }
+
+    let usuario;
+    try { usuario = JSON.parse(usuarioRaw); } catch (e) { window.location.href = "login.html"; return; }
+
+    const rol = ((usuario.rol && usuario.rol.nombreRol) || "").trim();
+    if (rol.toUpperCase() !== "DOCENTE") { window.location.href = "login.html"; return; }
+
+    document.getElementById("nombreUsuario").textContent = usuario.nombre + " " + (usuario.apellido || "");
+
+    const BASE = API + "/" + usuario.idUsuario;
+    const BASE_BOLETIN = API_BOLETIN + "/" + usuario.idUsuario;
+    let asignaciones = [];
+    let periodos = [];
+
+    const $ = function (id) { return document.getElementById(id); };
+    const esc = function (s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    };
+
+    async function api(ruta, opciones, base) {
+      const r = await fetch((base || BASE) + ruta, Object.assign({
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token }
+      }, opciones || {}));
+      const texto = await r.text();
+      let cuerpo = null;
+      try { cuerpo = texto ? JSON.parse(texto) : null; } catch (e) { /* no era JSON */ }
+      if (!r.ok) throw new Error((cuerpo && (cuerpo.message || cuerpo.error)) || "Error " + r.status);
+      return cuerpo;
+    }
+
+    function avisar(msg, tipo) {
+      const a = $("aviso");
+      a.className = "pn-msg " + (tipo || "ok");
+      a.textContent = msg;
+      clearTimeout(avisar.t);
+      avisar.t = setTimeout(function () { a.classList.add("pn-oculto"); }, 3500);
+    }
+
+    const etiquetaAsig = function (a) {
+      return a.grado + " " + a.anio + " — " + (a.asignatura || a.dimension) +
+        (a.asignatura && a.dimension ? " (" + a.dimension + ")" : "");
+    };
+    const anioDe = function (p) { return String(p.anio != null ? p.anio : (p.fechaInicio ? p.fechaInicio.slice(0, 4) : "Sin año")); };
+    const filaVacia = function (cols, texto) { return '<tr><td colspan="' + cols + '" class="pn-vacio">' + texto + "</td></tr>"; };
+
+    // Desempeño según el promedio (solo para que el docente lo vea mientras escribe)
+    //   Superior 4.6 a 5.0 · Alto 4.0 a 4.5 · Básico 3.5 a 3.9 · Bajo 3.4 hacia abajo
+    function desempenoDe(valor) {
+      const n = parseFloat(String(valor).replace(",", "."));
+      if (isNaN(n) || n < 1 || n > 5) return "";
+      const r = Math.round(n * 10) / 10;
+      if (r >= 4.6) return "Superior";
+      if (r >= 4.0) return "Alto";
+      if (r >= 3.5) return "Básico";
+      return "Bajo";
+    }
+    const claseDes = function (d) { return d ? "des-" + d.replace("á", "a") : ""; };
+
+    // ---------- Asignaciones ----------
+    async function cargarAsignaciones() {
+      asignaciones = await api("/asignaciones");
+      $("tbAsignaciones").innerHTML = asignaciones.length ? asignaciones.map(function (a) {
+        return "<tr>" +
+          '<td data-label="Curso">' + esc(a.grado) + "</td>" +
+          '<td data-label="Año">' + esc(a.anio) + "</td>" +
+          '<td data-label="Asignatura">' + (esc(a.asignatura) || "—") + "</td>" +
+          '<td data-label="Dimensión">' + (esc(a.dimension) || "—") + "</td>" +
+          '<td data-label="Acciones"><div class="pn-acciones">' +
+            '<button class="pn-btn-claro" data-accion="ver-est" data-id="' + a.idAsignacion + '">Ver estudiantes</button>' +
+            '<button class="pn-btn" data-accion="reg-notas" data-id="' + a.idAsignacion + '">Registrar notas</button>' +
+          "</div></td></tr>";
+      }).join("") : filaVacia(5, "Aún no tienes asignaciones. Pide al administrador que te asigne un curso.");
+
+      const opciones = asignaciones.map(function (a) {
+        return '<option value="' + a.idAsignacion + '">' + esc(etiquetaAsig(a)) + "</option>";
+      }).join("");
+      $("selEstudiantes").innerHTML = opciones;
+      $("selAsigNotas").innerHTML = opciones;
+    }
+
+    function irA(tab, idAsignacion) {
+      $(tab === "estudiantes" ? "selEstudiantes" : "selAsigNotas").value = idAsignacion;
+      location.hash = tab;
+      if (tab === "estudiantes") cargarEstudiantes(); else cargarNotas();
+    }
+
+    // ---------- Estudiantes ----------
+    async function cargarEstudiantes() {
+      const id = $("selEstudiantes").value;
+      const tb = $("tbEstudiantes");
+      if (!id) { tb.innerHTML = ""; return; }
+      try {
+        const lista = await api("/asignaciones/" + id + "/estudiantes");
+        tb.innerHTML = lista.length ? lista.map(function (e) {
+          return '<tr><td data-label="Estudiante">' + esc(e.nombre) + '</td><td data-label="Documento">' + (esc(e.documento) || "—") + "</td></tr>";
+        }).join("") : filaVacia(2, "Este curso no tiene estudiantes matriculados.");
+      } catch (e) { avisar(e.message, "error"); }
+    }
+
+    // ---------- Notas (promedio + observación) ----------
+    async function cargarNotas() {
+      const idAsig = $("selAsigNotas").value;
+      const idPer = $("selPeriodoNotas").value;
+      const tb = $("tbNotas");
+      if (!idAsig || !idPer) { tb.innerHTML = filaVacia(5, "Elige un curso y un periodo."); return; }
+      try {
+        const lista = await api("/asignaciones/" + idAsig + "/estudiantes?periodo=" + idPer, null, BASE_BOLETIN);
+        tb.innerHTML = lista.length ? lista.map(function (e) {
+          // Las notas antiguas guardadas con palabras (ALTO, BAJO...) no son números: se deja vacío para escribirlas de nuevo
+          const num = parseFloat(String(e.promedio == null ? "" : e.promedio).replace(",", "."));
+          const valor = isNaN(num) ? "" : num.toFixed(1);
+          const des = desempenoDe(valor);
+          return '<tr data-mat="' + e.idMatricula + '" data-nota="' + (e.idNota != null ? e.idNota : "") + '">' +
+            '<td data-label="Estudiante">' + esc(e.nombre) + "</td>" +
+            '<td data-label="Promedio"><input type="number" class="pn-input pn-num" min="1" max="5" step="0.1" placeholder="0.0" value="' + valor + '"></td>' +
+            '<td data-label="Desempeño"><span class="pn-chip ' + claseDes(des) + '">' + (des || "—") + "</span></td>" +
+            '<td data-label="Observación"><textarea class="pn-input pn-obs" rows="2" maxlength="1500" placeholder="Ej. Aprende acerca de las propiedades de los lípidos y carbohidratos.">' + esc(e.descripcion) + "</textarea></td>" +
+            '<td data-label="Acciones"><div class="pn-acciones">' +
+              '<button class="pn-btn" data-accion="subir-nota">Subir</button>' +
+              '<button class="pn-btn-peligro" data-accion="eliminar-nota"' + (e.idNota ? "" : " disabled") + ">Eliminar</button>" +
+            "</div></td></tr>";
+        }).join("") : filaVacia(5, "Este curso no tiene estudiantes matriculados.");
+      } catch (e) { avisar(e.message, "error"); tb.innerHTML = filaVacia(5, "No se pudieron cargar los estudiantes."); }
+    }
+
+    async function subirNota(btn) {
+      const tr = btn.closest("tr");
+      const promedio = tr.querySelector(".pn-num").value;
+      const descripcion = tr.querySelector(".pn-obs").value.trim();
+      if (!promedio) { avisar("Escribe el promedio antes de subir.", "aviso"); return; }
+      if (!descripcion && !confirm("No escribiste ninguna observación. ¿Subir solo el desempeño?")) return;
+
+      btn.disabled = true;
+      try {
+        await api("/notas", { method: "POST", body: JSON.stringify({
+          idAsignacion: +$("selAsigNotas").value,
+          idPeriodo: +$("selPeriodoNotas").value,
+          idMatricula: +tr.dataset.mat,
+          promedio: promedio,
+          descripcion: descripcion
+        })}, BASE_BOLETIN);
+        avisar("Nota subida: ya aparece en el boletín.");
+        cargarNotas();
+      } catch (e) { avisar(e.message, "error"); btn.disabled = false; }
+    }
+
+    async function eliminarNota(btn) {
+      const tr = btn.closest("tr");
+      if (!confirm("¿Eliminar la nota de este estudiante? Dejará de aparecer en su boletín.")) return;
+      try {
+        await api("/notas/" + tr.dataset.nota, { method: "DELETE" }, BASE_BOLETIN);
+        avisar("Nota eliminada.");
+        cargarNotas();
+      } catch (e) { avisar(e.message, "error"); }
+    }
+
+    // ---------- Periodos ----------
+    async function cargarPeriodos() {
+      periodos = await api("/periodos");
+      const anios = Array.from(new Set(periodos.map(anioDe)));
+      const actual = periodos.find(function (p) { return p.actual; });
+      const hoy = String(new Date().getFullYear());
+      const anioSel = actual ? anioDe(actual) : (anios.includes(hoy) ? hoy : anios[anios.length - 1]);
+
+      $("selAnio").innerHTML = anios.map(function (a) {
+        return "<option" + (a === anioSel ? " selected" : "") + ">" + a + "</option>";
+      }).join("");
+
+      $("selPeriodoNotas").innerHTML = periodos.map(function (p) {
+        return '<option value="' + p.idPeriodo + '"' + (p.actual ? " selected" : "") + ">" + esc(p.nombre) + " (" + anioDe(p) + ")</option>";
+      }).join("");
+      pintarPeriodos();
+    }
+
+    function pintarPeriodos() {
+      const anio = $("selAnio").value;
+      const lista = periodos.filter(function (p) { return anioDe(p) === anio; });
+      $("listaPeriodos").innerHTML = lista.length ? lista.map(function (p) {
+        return '<div class="pn-periodo' + (p.actual ? " actual" : "") + '">' +
+          '<div class="pn-periodo-cab"><h3>' + esc(p.nombre) + "</h3>" + (p.actual ? '<span class="pn-etiqueta">En curso</span>' : "") + "</div>" +
+          '<span class="pn-suave" style="margin:0">' + esc(p.fechaInicio) + " a " + esc(p.fechaFin) + "</span>" +
+          '<textarea class="pn-input" rows="3" id="desc' + p.idPeriodo + '" placeholder="Describe lo que se desarrolla en este periodo">' + esc(p.descripcion) + "</textarea>" +
+          '<div><button class="pn-btn" data-accion="guardar-desc" data-id="' + p.idPeriodo + '">Guardar descripción</button></div>' +
+          "</div>";
+      }).join("") : '<p class="pn-suave">No hay periodos registrados para este año.</p>';
+    }
+
+    async function guardarDescripcion(id) {
+      try {
+        const descripcion = $("desc" + id).value.trim();
+        await api("/periodos/" + id, { method: "PUT", body: JSON.stringify({ descripcion: descripcion }) });
+        periodos.find(function (p) { return p.idPeriodo === id; }).descripcion = descripcion;
+        avisar("Descripción guardada.");
+      } catch (e) { avisar(e.message, "error"); }
+    }
+
+    // ---------- Módulo visible según la URL ----------
+    function mostrarModulo() {
+      const m = TITULOS[location.hash.slice(1)] ? location.hash.slice(1) : "asignaciones";
+      document.querySelectorAll(".modulo").forEach(function (s) { s.classList.toggle("pn-oculto", s.id !== m); });
+      document.querySelectorAll("#pestanas a").forEach(function (a) { a.classList.toggle("activa", a.dataset.m === m); });
+      $("tituloModulo").textContent = TITULOS[m];
+      $("migaModulo").textContent = TITULOS[m];
+      document.title = TITULOS[m] + " | PISE-GGM";
+    }
+
+    // ---------- Eventos ----------
+    document.addEventListener("click", function (e) {
+      const b = e.target.closest("[data-accion]");
+      if (!b) return;
+      const a = b.dataset.accion;
+      if (a === "ver-est") irA("estudiantes", b.dataset.id);
+      else if (a === "reg-notas") irA("notas", b.dataset.id);
+      else if (a === "subir-nota") subirNota(b);
+      else if (a === "eliminar-nota") eliminarNota(b);
+      else if (a === "guardar-desc") guardarDescripcion(+b.dataset.id);
+    });
+
+    // Mientras el docente escribe el promedio, se muestra el desempeño que le corresponde
+    $("tbNotas").addEventListener("input", function (e) {
+      if (!e.target.classList.contains("pn-num")) return;
+      const des = desempenoDe(e.target.value);
+      const chip = e.target.closest("tr").querySelector(".pn-chip");
+      chip.className = "pn-chip " + claseDes(des);
+      chip.textContent = des || "—";
+    });
+
+    $("selEstudiantes").addEventListener("change", cargarEstudiantes);
+    $("selAsigNotas").addEventListener("change", cargarNotas);
+    $("selPeriodoNotas").addEventListener("change", cargarNotas);
+    $("selAnio").addEventListener("change", pintarPeriodos);
+    window.addEventListener("hashchange", mostrarModulo);
+
+    $("btnCerrarSesion").addEventListener("click", function () {
+      localStorage.removeItem("token");
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("idPerfil");
+      window.location.href = "login.html";
+    });
+
+    // ---------- Inicio ----------
+    (async function iniciar() {
+      mostrarModulo();
+      try {
+        await Promise.all([cargarAsignaciones(), cargarPeriodos()]);
+        cargarEstudiantes();
+        cargarNotas();
+      } catch (e) { avisar(e.message, "error"); }
+    })();
+
+  })();
+  </script>
+</body>
+</html>

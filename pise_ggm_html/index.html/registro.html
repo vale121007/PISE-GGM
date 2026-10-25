@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+  :root {
+    --blanco: #FFFDF8; --verde-900: #0F3D2E; --verde-700: #1F6B45;
+    --amarillo-500: #F2C230; --amarillo-300: #F7DB7A; --dorado-600: #B8860B;
+    --f-display: 'Playfair Display', Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--blanco); color: #17241B; min-height: 100vh; display: flex; flex-direction: column; }
+  a { text-decoration: none; }
+  [hidden] { display: none !important; }
+
+  /* ---------- Barra superior ---------- */
+  .rg-top { background: var(--verde-900); border-bottom: 5px solid var(--amarillo-500); }
+  .rg-top-in { max-width: 1120px; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .rg-top a { color: #e8f1e9; font-weight: 600; font-size: .9rem; }
+  .rg-top a:hover { color: var(--amarillo-300); }
+  .rg-top .marca { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-size: 1.1rem; color: #fff; }
+  .rg-top .marca img { width: 38px; height: 38px; object-fit: contain; }
+  .rg-top nav { display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* ---------- Fondo ---------- */
+  .rg-pagina { position: relative; overflow: hidden; flex: 1; padding: 44px 24px 56px; display: flex; align-items: center; }
+  .rg-pagina::before { content: ""; position: absolute; inset: 0; background: url("ANIMADOCOLGGM.png") center / cover no-repeat; opacity: .11; }
+  .rg-pagina::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at 15% 20%, rgba(247,219,122,.32), transparent 45%), radial-gradient(circle at 85% 80%, rgba(45,139,87,.22), transparent 50%); }
+  .rg-grid { position: relative; z-index: 1; width: 100%; max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: minmax(340px, 470px) 1fr; gap: 56px; align-items: center; }
+
+  /* ---------- Tarjeta ---------- */
+  @keyframes subir { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .rg-card {
+    position: relative; padding: 36px 34px 28px; color: #FFFDF8; animation: subir .6s ease both;
+    background: linear-gradient(160deg, rgba(15,61,46,.94), rgba(31,107,69,.9));
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: 1px solid rgba(247,219,122,.35); border-radius: 6px 44px 6px 44px; box-shadow: 0 24px 50px rgba(15,61,46,.35);
+  }
+  .rg-card::before { content: ""; position: absolute; top: 0; left: 34px; right: 34px; height: 5px; border-radius: 0 0 6px 6px;
+    background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 18px, var(--dorado-600) 18px 36px); }
+  .rg-marca { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .rg-marca img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,.35)); }
+  .rg-marca strong { display: block; font-family: var(--f-display); font-size: 1.4rem; line-height: 1.1; }
+  .rg-marca span { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo-300); }
+  .rg-card h1 { font-family: var(--f-display); font-size: 1.7rem; margin: 6px 0 2px; line-height: 1.15; }
+  .rg-sub { color: #cfe3d3; font-size: .92rem; margin: 0 0 18px; }
+
+  /* ---------- Pasos ---------- */
+  .rg-pasos { display: flex; align-items: center; margin-bottom: 20px; }
+  .rg-paso { display: flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 700; color: #9fbfa4; }
+  .rg-paso b { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #9fbfa4; font-size: .85rem; transition: all .3s ease; }
+  .rg-paso.activo { color: #fff; }
+  .rg-paso.activo b { background: var(--amarillo-500); border-color: var(--amarillo-500); color: var(--verde-900); }
+  .rg-paso.hecho b { background: #2ea36a; border-color: #2ea36a; color: #fff; }
+  .rg-linea { flex: 1; height: 3px; margin: 0 10px; border-radius: 3px; background: rgba(255,255,255,.2); overflow: hidden; }
+  .rg-linea i { display: block; height: 100%; width: 0; background: var(--amarillo-500); transition: width .4s ease; }
+  .rg-linea.llena i { width: 100%; }
+
+  /* ---------- Campos ---------- */
+  .rg-campo { margin-bottom: 13px; }
+  .rg-campo label { display: block; font-size: .76rem; font-weight: 700; letter-spacing: .04em; color: #dfeee2; margin-bottom: 5px; }
+  .rg-input { position: relative; }
+  .rg-input > i.ico { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--verde-700); pointer-events: none; }
+  .rg-input input, .rg-input select {
+    width: 100%; padding: 12px 14px 12px 42px; border-radius: 4px 16px 4px 16px; border: 2px solid transparent;
+    background: rgba(255,253,248,.95); color: #17241B; font-family: inherit; font-size: .95rem; transition: all .2s ease;
+  }
+  .rg-input select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 40px; }
+  .rg-input .flecha { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--verde-700); pointer-events: none; font-size: .8rem; }
+  .rg-input input::placeholder { color: #6b7a6e; }
+  .rg-input input:focus, .rg-input select:focus { outline: none; background: #fff; border-color: var(--amarillo-500); box-shadow: 0 0 0 4px rgba(242,194,48,.28); }
+  .rg-input.error input, .rg-input.error select { border-color: #ff7b7b; background: #fff5f5; }
+  .rg-input input.con-ojo { padding-right: 48px; }
+  .rg-ojo { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border: 0; border-radius: 50%; background: transparent; color: var(--verde-700); cursor: pointer; }
+  .rg-ojo:hover { background: rgba(31,107,69,.12); }
+  .rg-err { color: #ffd0d0; font-size: .76rem; margin-top: 4px; min-height: 0; }
+  .rg-doble { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Fuerza de contraseña */
+  .rg-fuerza { display: flex; gap: 5px; margin-top: 7px; }
+  .rg-fuerza i { flex: 1; height: 5px; border-radius: 4px; background: rgba(255,255,255,.2); transition: background .3s ease; }
+  .rg-fuerza.n1 i:nth-child(-n+1) { background: #ff7b7b; }
+  .rg-fuerza.n2 i:nth-child(-n+2) { background: #ffb45a; }
+  .rg-fuerza.n3 i:nth-child(-n+3) { background: var(--amarillo-500); }
+  .rg-fuerza.n4 i:nth-child(-n+4) { background: #5fe0a0; }
+  .rg-fuerza-txt { font-size: .74rem; color: #cfe3d3; margin-top: 4px; }
+
+  /* ---------- Botones ---------- */
+  .rg-botones { display: flex; gap: 10px; margin-top: 18px; }
+  .rg-btn { flex: 1; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; letter-spacing: .05em; padding: 14px 18px; border-radius: 4px 16px 4px 16px; font-size: .95rem;
+    display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform .15s ease, background .2s ease; }
+  .rg-btn:hover:not(:disabled) { transform: translateY(-2px); }
+  .rg-btn.lleno { background: var(--amarillo-500); color: var(--verde-900); }
+  .rg-btn.lleno:hover:not(:disabled) { background: var(--amarillo-300); }
+  .rg-btn.borde { flex: 0 0 auto; background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.4); }
+  .rg-btn.borde:hover { background: rgba(255,255,255,.1); }
+  .rg-btn:disabled { background: #8a958c; color: #fff; cursor: not-allowed; }
+
+  .rg-msg { margin-top: 14px; padding: 10px 14px; border-radius: 4px 14px 4px 14px; font-size: .88rem; font-weight: 600; text-align: center; background: rgba(255,120,120,.16); color: #ffd0d0; border: 1px solid rgba(255,140,140,.45); }
+  .rg-pie-card { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.16); text-align: center; font-size: .9rem; color: #cfe3d3; }
+  .rg-pie-card a { color: var(--amarillo-300); font-weight: 700; }
+  .rg-pie-card a:hover { color: #fff; text-decoration: underline; }
+
+  /* ---------- Éxito ---------- */
+  .rg-exito { text-align: center; padding: 12px 0 4px; }
+  .rg-exito .check { width: 84px; height: 84px; margin: 0 auto 14px; border-radius: 50%; background: #2ea36a; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; color: #fff; animation: pop .5s cubic-bezier(.2,1.6,.4,1) both; }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+  .rg-exito h2 { font-family: var(--f-display); margin: 0 0 8px; font-size: 1.5rem; }
+  .rg-exito p { color: #cfe3d3; margin: 0 0 8px; font-size: .94rem; }
+  .rg-exito .rg-btn { margin-top: 12px; text-decoration: none; }
+
+  /* ---------- Panel lateral ---------- */
+  .rg-info h2 { font-family: var(--f-display); font-size: 2rem; color: var(--verde-900); margin: 0 0 6px; line-height: 1.15; }
+  .rg-info h2 em { font-style: normal; color: var(--dorado-600); }
+  .rg-info > p { color: #4B5C4E; margin: 0 0 26px; max-width: 460px; }
+  .rg-pasos-info { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .rg-pasos-info li { display: flex; gap: 16px; align-items: flex-start; background: rgba(255,253,248,.85); border: 1px solid rgba(15,61,46,.15); border-left: 5px solid var(--amarillo-500); border-radius: 4px 22px 4px 22px; padding: 16px 20px; box-shadow: 0 8px 20px rgba(15,61,46,.08); animation: subir .6s ease both; }
+  .rg-pasos-info li:nth-child(2) { animation-delay: .12s; } .rg-pasos-info li:nth-child(3) { animation-delay: .24s; }
+  .rg-pasos-info .num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--verde-900); color: var(--amarillo-300); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+  .rg-pasos-info strong { display: block; color: var(--verde-900); font-family: var(--f-display); }
+  .rg-pasos-info span { font-size: .88rem; color: #4B5C4E; }
+
+  .rg-pie { background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+
+  @media (max-width: 960px) {
+    .rg-grid { grid-template-columns: 1fr; max-width: 480px; gap: 30px; }
+    .rg-info { display: none; }
+    .rg-pagina { padding: 30px 16px 44px; }
+  }
+  @media (max-width: 480px) {
+    .rg-card { padding: 30px 20px 24px; border-radius: 6px 34px 6px 34px; }
+    .rg-card::before { left: 20px; right: 20px; }
+    .rg-doble { grid-template-columns: 1fr; gap: 0; }
+    .rg-paso span { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header class="rg-top">
+    <div class="rg-top-in">
+      <a class="marca" href="index.html"><img src="ESCUDOGGMSINFONDO.png" alt="Escudo"> PISE-GGM</a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="oferta.html">Oferta académica</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="matriculas.html">Matrículas</a>
+        <a href="login.html">Ingresar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="rg-pagina">
+    <div class="rg-grid">
+
+      <!-- TARJETA -->
+      <section class="rg-card" aria-labelledby="rg-titulo">
+        <div class="rg-marca">
+          <img src="ESCUDOGGMSINFONDO.png" alt="Escudo Colegio Gabriel García Márquez">
+          <div><strong>PISE-GGM</strong><span>Registro de usuarios</span></div>
+        </div>
+
+        <div id="vistaForm">
+          <h1 id="rg-titulo">¡Crea tu cuenta!</h1>
+          <p class="rg-sub">Solo toma un minuto. Tu solicitud será revisada por el colegio.</p>
+
+          <div class="rg-pasos" aria-hidden="true">
+            <div class="rg-paso activo" id="pasoA"><b>1</b><span>Tus datos</span></div>
+            <div class="rg-linea" id="linea"><i></i></div>
+            <div class="rg-paso" id="pasoB"><b>2</b><span>Tu cuenta</span></div>
+          </div>
+
+          <form id="registroForm" novalidate>
+
+            <!-- PASO 1 -->
+            <div id="paso1">
+              <div class="rg-campo">
+                <label for="tipoDocumento">Tipo de documento</label>
+                <div class="rg-input">
+                  <i class="bi bi-card-text ico"></i>
+                  <select id="tipoDocumento">
+                    <option value="">Selecciona...</option>
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="TI">Tarjeta de Identidad</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PPT">Permiso por Protección Temporal</option>
+                  </select>
+                  <i class="bi bi-chevron-down flecha"></i>
+                </div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-campo">
+                <label for="documento">Número de documento</label>
+                <div class="rg-input">
+                  <i class="bi bi-person-badge ico"></i>
+                  <input type="text" id="documento" placeholder="Ej. 1234567890" inputmode="numeric" autocomplete="off">
+                </div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-doble">
+                <div class="rg-campo">
+                  <label for="nombre">Nombre</label>
+                  <div class="rg-input"><i class="bi bi-person ico"></i><input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name"></div>
+                  <div class="rg-err"></div>
+                </div>
+                <div class="rg-campo">
+                  <label for="apellido">Apellido</label>
+                  <div class="rg-input"><i class="bi bi-person ico"></i><input type="text" id="apellido" placeholder="Tu apellido" autocomplete="family-name"></div>
+                  <div class="rg-err"></div>
+                </div>
+              </div>
+
+              <div class="rg-botones">
+                <button type="button" class="rg-btn lleno" id="btnSiguiente">SIGUIENTE <i class="bi bi-arrow-right"></i></button>
+              </div>
+            </div>
+
+            <!-- PASO 2 -->
+            <div id="paso2" hidden>
+              <div class="rg-campo">
+                <label for="telefono">Teléfono</label>
+                <div class="rg-input"><i class="bi bi-telephone ico"></i><input type="tel" id="telefono" placeholder="Ej. 3001234567" inputmode="tel" autocomplete="tel"></div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-campo">
+                <label for="email">Correo electrónico</label>
+                <div class="rg-input"><i class="bi bi-envelope ico"></i><input type="email" id="email" placeholder="correo@ejemplo.com" autocomplete="email"></div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-campo">
+                <label for="password">Contraseña</label>
+                <div class="rg-input">
+                  <i class="bi bi-lock ico"></i>
+                  <input type="password" id="password" class="con-ojo" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+                  <button type="button" class="rg-ojo" data-ojo="password" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="rg-fuerza" id="fuerza"><i></i><i></i><i></i><i></i></div>
+                <div class="rg-fuerza-txt" id="fuerzaTxt">Usa mayúsculas, números y símbolos</div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-campo">
+                <label for="password2">Confirmar contraseña</label>
+                <div class="rg-input">
+                  <i class="bi bi-lock-fill ico"></i>
+                  <input type="password" id="password2" class="con-ojo" placeholder="Repite tu contraseña" autocomplete="new-password">
+                  <button type="button" class="rg-ojo" data-ojo="password2" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-campo">
+                <label for="rol">Me registro como</label>
+                <div class="rg-input">
+                  <i class="bi bi-people ico"></i>
+                  <select id="rol">
+                    <option value="">Selecciona tu rol</option>
+                    <option value="3">Docente</option>
+                    <option value="1">Estudiante</option>
+                    <option value="2">Acudiente</option>
+                  </select>
+                  <i class="bi bi-chevron-down flecha"></i>
+                </div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-botones">
+                <button type="button" class="rg-btn borde" id="btnAtras"><i class="bi bi-arrow-left"></i> Atrás</button>
+                <button type="submit" class="rg-btn lleno" id="btnRegistrar"><i class="bi bi-check2-circle"></i> REGISTRARME</button>
+              </div>
+            </div>
+          </form>
+
+          <div id="mensaje" class="rg-msg" role="alert" hidden></div>
+
+          <p class="rg-pie-card">¿Ya tienes una cuenta? <a href="login.html">Iniciar sesión</a></p>
+        </div>
+
+        <!-- ÉXITO -->
+        <div id="vistaExito" class="rg-exito" hidden>
+          <div class="check"><i class="bi bi-check-lg"></i></div>
+          <h2>¡Solicitud enviada!</h2>
+          <p>Gracias, <strong id="exitoNombre"></strong>. El administrador revisará tus datos y te dará acceso.</p>
+          <p>Cuando te aprueben, podrás ingresar con tu documento y contraseña.</p>
+          <a class="rg-btn lleno" href="login.html"><i class="bi bi-box-arrow-in-right"></i> IR A INGRESAR</a>
+        </div>
+      </section>
+
+      <!-- PANEL LATERAL -->
+      <aside class="rg-info">
+        <h2>Únete a la plataforma <em>PISE-GGM</em></h2>
+        <p>Consulta notas, cursos y toda la información académica del Colegio Gabriel García Márquez desde un solo lugar.</p>
+        <ol class="rg-pasos-info">
+          <li><div class="num"><i class="bi bi-pencil-square"></i></div><div><strong>1. Completa tus datos</strong><span>Escribe tu información y elige tu rol.</span></div></li>
+          <li><div class="num"><i class="bi bi-shield-check"></i></div><div><strong>2. El colegio te aprueba</strong><span>Un administrador revisa tu solicitud.</span></div></li>
+          <li><div class="num"><i class="bi bi-box-arrow-in-right"></i></div><div><strong>3. ¡Ingresa!</strong><span>Entra con tu documento y contraseña.</span></div></li>
+        </ol>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="rg-pie">© 2026 Colegio Gabriel García Márquez · Plataforma PISE-GGM</footer>
+
+  <script>
+  (function () {
+
+    // Si tu endpoint de registro es otro, cámbialo aquí
+    const API_REGISTRO = "http://localhost:8081/api/auth/registro";
+
+    const $ = function (id) { return document.getElementById(id); };
+    const form = $("registroForm");
+
+    // ---------- Validación ----------
+    function error(id, texto) {
+      const campo = $(id).closest(".rg-campo");
+      campo.querySelector(".rg-input").classList.toggle("error", !!texto);
+      campo.querySelector(".rg-err").textContent = texto || "";
+      return !texto;
+    }
+
+    function validarPaso1() {
+      let ok = true;
+      ok = error("tipoDocumento", $("tipoDocumento").value ? "" : "Elige el tipo de documento.") && ok;
+      ok = error("documento", /^[0-9A-Za-z]{5,15}$/.test($("documento").value.trim()) ? "" : "Escribe un documento válido (5 a 15 caracteres).") && ok;
+      ok = error("nombre", $("nombre").value.trim().length >= 2 ? "" : "Escribe tu nombre.") && ok;
+      ok = error("apellido", $("apellido").value.trim().length >= 2 ? "" : "Escribe tu apellido.") && ok;
+      return ok;
+    }
+
+    function validarPaso2() {
+      let ok = true;
+      ok = error("telefono", /^[0-9+\s-]{7,15}$/.test($("telefono").value.trim()) ? "" : "Escribe un teléfono válido.") && ok;
+      ok = error("email", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim()) ? "" : "Escribe un correo válido.") && ok;
+      ok = error("password", $("password").value.length >= 6 ? "" : "Mínimo 6 caracteres.") && ok;
+      ok = error("password2", $("password2").value === $("password").value ? "" : "Las contraseñas no coinciden.") && ok;
+      ok = error("rol", $("rol").value ? "" : "Elige tu rol.") && ok;
+      return ok;
+    }
+
+    // ---------- Pasos ----------
+    function irAPaso(n) {
+      $("paso1").hidden = n !== 1;
+      $("paso2").hidden = n !== 2;
+      $("pasoA").className = "rg-paso " + (n === 1 ? "activo" : "hecho");
+      $("pasoB").className = "rg-paso " + (n === 2 ? "activo" : "");
+      $("pasoA").querySelector("b").innerHTML = n === 2 ? '<i class="bi bi-check-lg"></i>' : "1";
+      $("linea").classList.toggle("llena", n === 2);
+      mostrarMensaje("");
+    }
+
+    $("btnSiguiente").addEventListener("click", function () { if (validarPaso1()) irAPaso(2); });
+    $("btnAtras").addEventListener("click", function () { irAPaso(1); });
+
+    // Limpia el error al escribir
+    form.addEventListener("input", function (e) {
+      if (e.target.id) error(e.target.id, "");
+    });
+
+    // ---------- Ojo de contraseña ----------
+    document.querySelectorAll("[data-ojo]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        const inp = $(b.dataset.ojo);
+        const oculta = inp.type === "password";
+        inp.type = oculta ? "text" : "password";
+        b.innerHTML = oculta ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+      });
+    });
+
+    // ---------- Fuerza de la contraseña ----------
+    $("password").addEventListener("input", function () {
+      const p = $("password").value;
+      let n = 0;
+      if (p.length >= 6) n++;
+      if (p.length >= 10) n++;
+      if (/[A-Z]/.test(p) && /[a-z]/.test(p)) n++;
+      if (/[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p)) n++;
+      if (!p) n = 0;
+      $("fuerza").className = "rg-fuerza" + (n ? " n" + n : "");
+      $("fuerzaTxt").textContent = !p ? "Usa mayúsculas, números y símbolos"
+        : ["", "Muy débil", "Podría ser mejor", "Buena", "¡Excelente!"][n];
+    });
+
+    // ---------- Mensajes ----------
+    function mostrarMensaje(texto) {
+      $("mensaje").textContent = texto;
+      $("mensaje").hidden = !texto;
+    }
+
+    // ---------- Envío ----------
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      if (!validarPaso1()) { irAPaso(1); return; }
+      if (!validarPaso2()) return;
+
+      const numero = $("documento").value.trim();
+      const datos = {
+        tipoDocumento: $("tipoDocumento").value,
+        numeroDocumento: numero,
+        documento: numero,
+        nombre: $("nombre").value.trim(),
+        apellido: $("apellido").value.trim(),
+        telefono: $("telefono").value.trim(),
+        email: $("email").value.trim(),
+        password: $("password").value,
+        rol: { idRol: Number($("rol").value) }
+      };
+
+      const btn = $("btnRegistrar");
+      btn.disabled = true;
+      btn.innerHTML = "ENVIANDO...";
+      mostrarMensaje("");
+
+      try {
+        const r = await fetch(API_REGISTRO, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos)
+        });
+
+        let cuerpo = null;
+        try { cuerpo = await r.json(); } catch (x) { /* sin JSON */ }
+
+        if (!r.ok) {
+          throw new Error((cuerpo && (cuerpo.message || cuerpo.error || cuerpo.mensaje)) ||
+            (r.status === 409 ? "Ya existe un usuario con ese documento o correo." : "No se pudo completar el registro (error " + r.status + ")."));
+        }
+
+        $("exitoNombre").textContent = datos.nombre;
+        $("vistaForm").hidden = true;
+        $("vistaExito").hidden = false;
+
+      } catch (err) {
+        console.error(err);
+        mostrarMensaje(err instanceof TypeError
+          ? "No fue posible conectar con el servidor. Verifica que el backend esté encendido."
+          : err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-check2-circle"></i> REGISTRARME';
+      }
+    });
+
+  })();
+  </script>
+</body>
+</html>

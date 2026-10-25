@@ -1,0 +1,159 @@
+/* ============================================================
+   PÁGINA DE ADMISIONES (Aspirante) — se carga DESPUÉS de style.css
+   Usa las mismas variables del sitio (verde, amarillo, dorado, modo noche)
+============================================================ */
+
+/* Enlace activo del menú */
+.nav-links a.activo:not(.nav-cta) { color: var(--verde-700); }
+.nav-links a.activo:not(.nav-cta)::after { transform: scaleX(1); }
+:root[data-tema="noche"] .nav-links a.activo:not(.nav-cta) { color: var(--amarillo-300); }
+
+/* ---------- Encabezado ---------- */
+.pag-hero {
+  position: relative; color: #fff; overflow: hidden; padding: 44px 24px 104px;
+  background: radial-gradient(circle at 85% 20%, rgba(242,194,48,.22), transparent 45%),
+              linear-gradient(135deg, var(--verde-900), var(--verde-700));
+}
+.pag-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+  background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+}
+.pag-hero-contenido { max-width: 1180px; margin: 0 auto; }
+.pag-migas { font-size: .85rem; color: #dfeee2; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.pag-migas a { border-bottom: 1px dotted var(--amarillo-500); }
+.pag-migas i { font-size: .7rem; color: var(--amarillo-500); }
+.pag-etiqueta { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo-500); margin-bottom: 6px; }
+.pag-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.15; max-width: 720px; color: #fff; }
+.pag-hero h1 em { color: var(--amarillo-500); font-style: normal; }
+.pag-lead { margin-top: 12px; max-width: 600px; font-size: 1rem; color: #e8f1e9; }
+
+/* ---------- Franja de pasos (sobre el encabezado) ---------- */
+.pasos { position: relative; z-index: 5; max-width: 1180px; margin: -64px auto 0; padding: 0 24px; }
+.pasos-caja {
+  display: grid; grid-template-columns: repeat(3, 1fr); background: var(--blanco);
+  border: 1px solid var(--borde); border-radius: 10px; box-shadow: 0 12px 34px rgba(15,61,46,.16); overflow: hidden;
+}
+.paso-item { display: flex; align-items: center; gap: 16px; padding: 22px 24px; border-right: 1px solid var(--borde); transition: background .2s ease; }
+.paso-item:last-child { border-right: 0; }
+.paso-item:hover { background: var(--verde-100); }
+.paso-num {
+  flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: var(--verde-900); color: var(--amarillo-300); font-family: var(--f-display); font-weight: 700; font-size: 1.3rem;
+}
+.paso-item h4 { font-family: var(--f-display); font-size: 1.05rem; color: var(--verde-900); line-height: 1.2; margin-bottom: 2px; }
+.paso-item p { font-size: .82rem; color: var(--tinta-suave); line-height: 1.35; }
+:root[data-tema="noche"] .paso-item h4 { color: var(--amarillo-300); }
+
+/* ---------- Secciones (ritmo vertical uniforme) ---------- */
+.mat-seccion { padding: 80px 24px; background: var(--blanco); }
+.mat-seccion.suave { background: var(--verde-100); }
+.mat-caja { max-width: 1180px; margin: 0 auto; }
+.mat-seccion h2 { font-family: var(--f-display); font-weight: 700; color: var(--verde-900); font-size: clamp(1.6rem, 3vw, 2.1rem); line-height: 1.2; margin-bottom: 14px; }
+:root[data-tema="noche"] .mat-seccion h2 { color: var(--amarillo-300); }
+.mat-intro { color: var(--tinta-suave); font-size: 1.05rem; line-height: 1.75; max-width: 560px; }
+.mat-encabezado { max-width: 640px; margin-bottom: 40px; }
+
+/* ---------- Paso 1: requisitos ---------- */
+.req-grilla { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.req-card {
+  display: flex; gap: 22px; align-items: flex-start; background: var(--blanco);
+  border: 1px solid var(--borde); border-left: 6px solid var(--amarillo-500);
+  border-radius: 6px 28px 6px 28px; padding: 30px 32px; box-shadow: 0 12px 28px rgba(15,61,46,.12);
+}
+.req-icono {
+  flex-shrink: 0; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: var(--verde-900); color: var(--amarillo-300); font-size: 1.9rem;
+}
+.req-card h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; line-height: 1.25; color: var(--verde-900); margin-bottom: 8px; }
+:root[data-tema="noche"] .req-card h3 { color: var(--amarillo-300); }
+.req-card p { font-size: .95rem; line-height: 1.6; color: var(--tinta-suave); margin-bottom: 18px; }
+
+/* ---------- Paso 2: videos ---------- */
+.videos-grilla { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.video-card {
+  margin: 0; background: var(--blanco); border: 1px solid var(--borde); border-radius: 6px 32px 6px 32px;
+  overflow: hidden; box-shadow: 0 8px 22px rgba(15,61,46,.12); transition: transform .25s ease, box-shadow .25s ease;
+}
+.video-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(15,61,46,.18); }
+.video-card video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--verde-900); }
+.video-card figcaption {
+  display: flex; align-items: center; gap: 10px; padding: 16px 22px; border-top: 4px solid var(--amarillo-500);
+  font-family: var(--f-display); font-weight: 700; font-size: 1.02rem; line-height: 1.3; color: var(--verde-900);
+}
+.video-card figcaption i { color: var(--dorado-600); font-size: 1.3rem; flex-shrink: 0; }
+:root[data-tema="noche"] .video-card figcaption { color: var(--amarillo-300); }
+
+/* ---------- Fotos grandes (marco con fondo difuminado) ---------- */
+.foto-seccion { padding: 0 24px 80px; background: var(--blanco); }
+.foto-seccion.despues-suave { padding-top: 80px; }
+.foto-marco {
+  position: relative; max-width: 940px; margin: 0 auto; aspect-ratio: 16 / 8; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; background: var(--verde-900);
+  border: 4px solid var(--amarillo-500); border-radius: 6px 44px 6px 44px; box-shadow: 0 14px 30px rgba(15,61,46,.2);
+}
+.foto-marco::before {
+  content: ""; position: absolute; inset: -24px; background: var(--img) center / cover no-repeat;
+  filter: blur(20px) brightness(.7);
+}
+.foto-marco img { position: relative; z-index: 1; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.foto-marco figcaption {
+  position: absolute; left: 20px; bottom: 18px; z-index: 2; display: flex; align-items: center; gap: 8px;
+  background: rgba(15,61,46,.88); color: #FFFDF8; padding: 7px 16px; border-radius: 30px; font-size: .85rem; font-weight: 700;
+}
+.foto-marco figcaption i { color: var(--amarillo-500); }
+
+/* ---------- Información ---------- */
+.info-grilla { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: center; }
+.info-texto p { font-size: 1.08rem; line-height: 1.85; color: var(--tinta-suave); margin-bottom: 14px; }
+.info-texto .info-saludo { font-weight: 700; color: var(--verde-700); }
+.info-texto .info-firma { font-size: .92rem; font-style: italic; padding-top: 14px; margin-top: 8px; border-top: 1px solid var(--borde); }
+:root[data-tema="noche"] .info-texto .info-saludo { color: var(--amarillo-300); }
+
+.info-datos { display: grid; gap: 14px; }
+.dato {
+  display: flex; align-items: center; gap: 16px; background: var(--blanco); border: 1px solid var(--borde);
+  border-radius: 6px 22px 6px 22px; padding: 16px 20px; box-shadow: 0 6px 16px rgba(15,61,46,.07);
+}
+.dato i { flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--amarillo-500); color: var(--verde-900); font-size: 1.4rem; }
+.dato strong { display: block; font-family: var(--f-display); font-size: 1.05rem; color: var(--verde-900); line-height: 1.2; }
+.dato span { font-size: .85rem; color: var(--tinta-suave); }
+:root[data-tema="noche"] .dato strong { color: var(--amarillo-300); }
+
+/* ---------- Comunidad: Instagram y YouTube ---------- */
+.com-grilla { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.com-card {
+  display: flex; flex-direction: column; background: var(--blanco); border: 1px solid var(--borde);
+  border-radius: 6px 32px 6px 32px; padding: 32px; box-shadow: 0 8px 22px rgba(15,61,46,.1);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.com-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(15,61,46,.16); }
+.com-icono { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.7rem; margin-bottom: 18px; }
+.com-card.instagram .com-icono { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+.com-card.youtube .com-icono { background: #e00000; }
+.com-card .etiqueta { margin-bottom: 4px; }
+.com-card h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.4rem; line-height: 1.25; color: var(--verde-900); margin-bottom: 12px; }
+:root[data-tema="noche"] .com-card h3 { color: var(--amarillo-300); }
+.com-card p { font-size: .98rem; line-height: 1.7; color: var(--tinta-suave); margin-bottom: 22px; }
+.com-card .boton { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; }
+
+/* ---------- CTA ---------- */
+.admision.mat-cta { padding: 80px 24px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .pasos-caja { grid-template-columns: 1fr; }
+  .paso-item { border-right: 0; border-bottom: 1px solid var(--borde); }
+  .paso-item:last-child { border-bottom: 0; }
+  .req-grilla, .info-grilla { grid-template-columns: 1fr; gap: 32px; }
+  .videos-grilla, .com-grilla { grid-template-columns: 1fr; }
+  .mat-seccion { padding: 64px 24px; }
+  .foto-seccion { padding-bottom: 64px; }
+  .foto-seccion.despues-suave { padding-top: 64px; }
+}
+@media (max-width: 600px) {
+  .pag-hero { padding: 36px 24px 96px; }
+  .req-card { flex-direction: column; padding: 24px; }
+  .com-card { padding: 24px; }
+  .foto-marco { aspect-ratio: 4 / 3; border-radius: 6px 30px 6px 30px; }
+  .foto-marco figcaption { left: 12px; bottom: 12px; font-size: .78rem; }
+}

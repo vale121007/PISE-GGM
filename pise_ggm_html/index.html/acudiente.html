@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Acudiente | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+  /* ============================================================
+     PANEL ACUDIENTE: estilos propios de la página.
+     Colores, tipografía, navbar y modo noche vienen de style.css.
+  ============================================================ */
+
+  body.pn-body { background: var(--blanco); min-height: 100vh; display: flex; flex-direction: column; }
+  .pn-main { flex: 1; }
+
+  /* ---------- Barra superior ---------- */
+  .pn-usuario {
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .92rem; color: var(--verde-900);
+    background: var(--verde-100); border: 1px solid var(--borde); padding: 7px 14px; border-radius: 4px 14px 4px 14px;
+  }
+  .pn-usuario i { color: var(--dorado-600); }
+  :root[data-tema="noche"] .pn-usuario { color: var(--amarillo-300); }
+
+  .pn-salir {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 700; font-family: inherit;
+    background: transparent; color: #c0392b; border: 2px solid #c0392b; padding: .5rem 1.1rem; border-radius: 30px;
+    margin-left: 8px; cursor: pointer; transition: background .2s ease, color .2s ease;
+  }
+  .pn-salir:hover { background: #c0392b; color: #fff; }
+  @media (max-width: 880px) {
+    .nav-links .pn-salir { margin: 10px 4px 0; align-self: flex-start; }
+    .nav-links .pn-usuario { margin: 6px 4px 0; align-self: flex-start; }
+  }
+
+  /* ---------- Encabezado ---------- */
+  .pn-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 38px 24px 50px;
+    background: radial-gradient(circle at 88% 15%, rgba(242,194,48,.25), transparent 45%),
+                linear-gradient(135deg, var(--verde-900), var(--verde-700));
+  }
+  .pn-hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+  }
+  .pn-hero-caja { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .pn-migas { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--amarillo-500); margin: 0 0 6px; }
+  .pn-migas i { font-size: .65rem; }
+  .pn-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.15; color: #fff; margin: 0; }
+  .pn-hero h1 em { color: var(--amarillo-500); font-style: normal; }
+  .pn-hero p.pn-sub { margin: 8px 0 0; max-width: 560px; color: #e8f1e9; }
+  .pn-rol {
+    display: inline-flex; align-items: center; gap: 14px; padding: 16px 22px; background: rgba(255,253,248,.1);
+    border: 1px solid rgba(247,219,122,.4); border-radius: 6px 28px 6px 28px; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .pn-rol i { font-size: 2rem; color: var(--amarillo-500); }
+  .pn-rol strong { display: block; font-family: var(--f-display); font-size: 1.15rem; color: var(--amarillo-300); line-height: 1.1; }
+  .pn-rol span { font-size: .78rem; color: #cfe3d3; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ---------- Contenido ---------- */
+  .pn-contenido { max-width: 1180px; margin: 0 auto; padding: 36px 24px 64px; width: 100%; box-sizing: border-box; }
+
+  /* ---------- Tarjetas del menú ---------- */
+  .pn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+  .pn-tarjeta {
+    display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none;
+    background: var(--blanco); border: 1px solid var(--borde); border-top: 5px solid var(--amarillo-500);
+    border-radius: 6px 24px 6px 24px; box-shadow: 0 8px 20px rgba(15,61,46,.08); padding: 24px 16px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .pn-tarjeta:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(15,61,46,.14); }
+  .pn-icono { width: 60px; height: 60px; border-radius: 50%; background: var(--verde-100); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .pn-icono i { font-size: 1.7rem; color: var(--dorado-600); }
+  .pn-tarjeta h3 { font-family: var(--f-display); font-size: 1.1rem; color: var(--verde-900); margin: 0 0 6px; }
+  .pn-tarjeta p { margin: 0 0 14px; font-size: .85rem; color: var(--tinta-suave); flex: 1; }
+  :root[data-tema="noche"] .pn-tarjeta h3 { color: var(--amarillo-300); }
+
+  .pn-btn {
+    display: inline-block; border-radius: 30px; font-size: .85rem; font-weight: 700; padding: 8px 22px;
+    background: var(--verde-700); color: #fff; border: 2px solid var(--verde-700); transition: background .2s ease;
+  }
+  .pn-tarjeta:hover .pn-btn { background: var(--verde-900); border-color: var(--verde-900); }
+
+  /* ---------- Pie ---------- */
+  .pn-pie { background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+  .pn-pie p { margin: 0; }
+
+  @media (max-width: 600px) {
+    .pn-hero { padding: 30px 20px 42px; }
+    .pn-contenido { padding: 28px 16px 56px; }
+    .pn-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  }
+  </style>
+</head>
+<body class="pn-body">
+
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="acudiente.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>PISE-GGM<br>Acudiente</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <span class="pn-usuario"><i class="bi bi-person-circle"></i><span id="nombreUsuario"></span></span>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <button class="pn-salir" id="btnCerrarSesion"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ENCABEZADO -->
+  <header class="pn-hero">
+    <div class="pn-hero-caja">
+      <div>
+        <p class="pn-migas">Panel <i class="bi bi-chevron-right"></i> Acudiente</p>
+        <h1>Bienvenido, <em id="nombreBienvenida">Acudiente</em></h1>
+        <p class="pn-sub">Panel del Acudiente — Colegio Gabriel García Márquez</p>
+      </div>
+      <div class="pn-rol">
+        <i class="bi bi-people-fill"></i>
+        <div><strong>Acudiente</strong><span>Seguimiento</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pn-main">
+    <div class="pn-contenido">
+      <div class="pn-grid">
+
+        <a class="pn-tarjeta" href="mis-acudidos.html">
+          <div class="pn-icono"><i class="bi bi-people-fill"></i></div>
+          <h3>Mis Acudidos</h3>
+          <p>Ver los estudiantes a mi cargo</p>
+          <span class="pn-btn">Ir</span>
+        </a>
+
+        <!-- NUEVO: boletín por periodo, con descarga en PDF -->
+        <a class="pn-tarjeta" href="boletin.html">
+          <div class="pn-icono"><i class="bi bi-file-earmark-text-fill"></i></div>
+          <h3>Boletín</h3>
+          <p>Ver y descargar el boletín de mis acudidos</p>
+          <span class="pn-btn">Ir</span>
+        </a>
+
+        <a class="pn-tarjeta" href="notas-acudidos.html">
+          <div class="pn-icono"><i class="bi bi-clipboard-data-fill"></i></div>
+          <h3>Notas</h3>
+          <p>Consultar las notas de mis acudidos</p>
+          <span class="pn-btn">Ir</span>
+        </a>
+
+        <a class="pn-tarjeta" href="perfilAcudiente.html">
+          <div class="pn-icono"><i class="bi bi-person-badge-fill"></i></div>
+          <h3>Mi Perfil</h3>
+          <p>Ver mis datos personales</p>
+          <span class="pn-btn">Ir</span>
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="pn-pie">
+    <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="script.js"></script>
+  <script>
+  (function () {
+
+    // ---- Guardia de sesión: solo Acudiente ----
+    const token = localStorage.getItem("token");
+    const usuarioRaw = localStorage.getItem("usuario");
+    if (!token || !usuarioRaw) { window.location.href = "login.html"; return; }
+
+    let usuario;
+    try { usuario = JSON.parse(usuarioRaw); } catch (e) { window.location.href = "login.html"; return; }
+
+    const rol = ((usuario.rol && usuario.rol.nombreRol) || "").trim();
+    if (rol.toUpperCase() !== "ACUDIENTE") { window.location.href = "login.html"; return; }
+
+    document.getElementById("nombreUsuario").textContent = usuario.nombre + " " + (usuario.apellido || "");
+    document.getElementById("nombreBienvenida").textContent = usuario.nombre;
+
+    document.getElementById("btnCerrarSesion").addEventListener("click", function () {
+      localStorage.removeItem("token");
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("idPerfil");
+      window.location.href = "login.html";
+    });
+
+  })();
+  </script>
+</body>
+</html>

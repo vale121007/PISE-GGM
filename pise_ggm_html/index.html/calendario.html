@@ -1,180 +1,351 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Calendario Escolar</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario académico | Colegio Gabriel García Márquez</title>
 
-<style>
-body { 
-  font-family: Arial; 
-  margin:0;   
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
-  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
-  position: relative;
-}
-
-/* OSCURECER FONDO */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
-
-/* HEADER */
-header {
-  background: white;
-  padding: 15px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-header h1 {
-  color: #285900;
-  font-size: 20px;
-}
-
-nav a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-size: 14px;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-/* CONTENEDOR */
-.container {
-  padding:40px;
-  text-align:center;
-}
-
-.container h1{
-  color: yellow;
-  font-size: 40px;
-  margin-bottom: 30px;
-}
-
-/* TABLA */
-.table-container {
-  display: flex;
-  justify-content: center;
-}
-
-table {
-  width: 80%;
-  border-collapse: collapse;
-  background: rgba(255,255,255,0.9);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-th {
-  background: #5a7fb5;
-  color: white;
-  padding: 15px;
-  font-size: 18px;
-}
-
-td {
-  padding: 15px;
-  text-align: center;
-  font-size: 16px;
-  border-top: 1px solid #ddd;
-}
-
-/* FILAS ALTERNAS */
-tr:nth-child(even) {
-  background: #f2f2f2;
-}
-
-/* FOOTER */
-footer {
-  background: #29860a;
-  color: white;
-  text-align: center;
-  padding: 5px;
-  margin-top: 80px;
-}
-</style>
-
+  <link rel="stylesheet" href="calendario.css">
 </head>
-
 <body>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="oferta.html">Oferta Academica</a>
-    <a href="quienessomos.html">¿Quienes somos?</a>
-    <a href="calendario.html">Calendario</a>
-    <a href="matriculas.html">Matriculas</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="login.html">Login</a>
-  </nav>
-</header>
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
 
-<div class="container">
-  <h1>CALENDARIO ESCOLAR - 2026</h1>
-
-  <div class="table-container">
-    <table>
-      <tr>
-        <th>FECHA</th>
-        <th>ACTIVIDAD</th>
-      </tr>
-
-      <tr>
-        <td>Febrero 02 al 10 de Abril</td>
-        <td>Primer periodo académico</td>
-      </tr>
-
-      <tr>
-        <td>Marzo 30 al 03 de Abril</td>
-        <td>Receso de Semana Santa</td>
-      </tr>
-
-      <tr>
-        <td>13 de Abril al 12 de Junio</td>
-        <td>Segundo periodo académico</td>
-      </tr>
-
-      <tr>
-        <td>22 de Junio al 06 de Julio</td>
-        <td>Receso académico de mitad de año</td>
-      </tr>
-
-      <tr>
-        <td>06 de Julio al 11 de Septiembre</td>
-        <td>Tercer periodo académico</td>
-      </tr>
-
-      <tr>
-        <td>05 de Octubre al 11 de Octubre</td>
-        <td>Semana de receso estudiantil</td>
-      </tr>
-
-      <tr>
-        <td>14 de Septiembre al 27 de Noviembre</td>
-        <td>Cuarto periodo académico</td>
-      </tr>
-
-    </table>
+  <!-- BARRA SUPERIOR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <span><i class="bi bi-telephone-fill"></i>87472004</span>
+        <span><i class="bi bi-envelope-fill"></i>colggm@gmail.com</span>
+        <span><i class="bi bi-geo-alt-fill"></i>Tv. 3 #67-14, Tunja, Boyacá</span>
+      </div>
+      <div class="topbar-der">
+        <a href="noticias.html">Noticias</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="login.html">Campus virtual</a>
+        <a href="matriculas.html" class="tb-admision">ADMISIONES ABIERTAS</a>
+      </div>
+    </div>
   </div>
-</div>
 
-<footer>
-  <p>©2026 PISE-GGM</p>
-</footer>
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="index.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>Gabriel García<br>Márquez</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="quienessomos.html">¿Quiénes somos?</a>
+        <a href="oferta.html">Oferta académica</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="calendario.html" class="activo">Calendario</a>
+        <a href="matriculas.html">Aspirante</a>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a class="nav-cta" href="login.html">Ingresar</a>
+      </div>
+    </div>
+  </nav>
 
+  <!-- ENCABEZADO -->
+  <header class="pag-hero">
+    <div class="pag-hero-contenido">
+      <p class="pag-migas"><a href="index.html">Inicio</a> <i class="bi bi-chevron-right"></i> Calendario</p>
+      <p class="pag-etiqueta">Año lectivo 2026</p>
+      <h1>Calendario <em>académico</em>.</h1>
+      <p class="pag-lead">Periodos, recesos y semanas especiales del año escolar, para que toda la familia pueda organizarse.</p>
+    </div>
+  </header>
+
+  <!-- AHORA / LO QUE SIGUE (se calcula con la fecha de hoy) -->
+  <div class="ahora">
+    <div class="ahora-grilla">
+      <article class="ahora-card actual" aria-live="polite">
+        <i class="bi bi-journal-bookmark-fill"></i>
+        <div>
+          <small>Estamos en</small>
+          <h2 id="ahoraTitulo">Calendario 2026</h2>
+          <p id="ahoraTexto">Consulta las fechas más importantes del año.</p>
+          <div class="cal-barra" id="ahoraBarraCaja" hidden><span id="ahoraBarra"></span></div>
+        </div>
+      </article>
+      <article class="ahora-card siguiente" aria-live="polite">
+        <i class="bi bi-calendar-event-fill"></i>
+        <div>
+          <small>Lo que sigue</small>
+          <h2 id="sigTitulo">—</h2>
+          <p id="sigTexto"></p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <main>
+    <section class="cal-seccion" aria-labelledby="cal-titulo">
+      <div class="cal-caja">
+
+        <div class="cabecera">
+          <div>
+            <p class="etiqueta">Fechas importantes</p>
+            <h2 id="cal-titulo">Línea de tiempo del año escolar</h2>
+          </div>
+        </div>
+
+        <div class="cal-filtros" role="group" aria-label="Filtrar eventos">
+          <button type="button" class="activo" data-filtro="todos">Todos</button>
+          <button type="button" data-filtro="periodo">Periodos académicos</button>
+          <button type="button" data-filtro="receso">Recesos</button>
+        </div>
+
+        <div class="cal-linea" id="calLinea">
+
+          <article class="evento" data-tipo="periodo" data-inicio="2026-02-02" data-fin="2026-04-10" data-titulo="Primer periodo académico">
+            <div class="ev-fecha"><strong>02</strong><span>FEB</span><small>al 10 abr</small></div>
+            <div class="ev-punto"></div>
+            <div class="ev-card">
+              <div class="ev-cabecera"><span class="ev-tipo"><i class="bi bi-book-fill"></i> Periodo académico</span><span class="ev-estado"></span></div>
+              <h3>Primer periodo académico</h3>
+              <div class="ev-meta"><span><i class="bi bi-calendar3"></i> 02 de febrero al 10 de abril</span><span><i class="bi bi-hourglass-split"></i> <b class="dur"></b></span></div>
+              <div class="cal-barra"><span></span></div><p class="ev-progreso"></p>
+            </div>
+          </article>
+
+          <article class="evento" data-tipo="receso" data-inicio="2026-03-30" data-fin="2026-04-03" data-titulo="Receso de Semana Santa">
+            <div class="ev-fecha"><strong>30</strong><span>MAR</span><small>al 03 abr</small></div>
+            <div class="ev-punto"></div>
+            <div class="ev-card">
+              <div class="ev-cabecera"><span class="ev-tipo"><i class="bi bi-brightness-high-fill"></i> Receso</span><span class="ev-estado"></span></div>
+              <h3>Receso de Semana Santa</h3>
+              <div class="ev-meta"><span><i class="bi bi-calendar3"></i> 30 de marzo al 03 de abril</span><span><i class="bi bi-hourglass-split"></i> <b class="dur"></b></span></div>
+              <div class="cal-barra"><span></span></div><p class="ev-progreso"></p>
+            </div>
+          </article>
+
+          <article class="evento" data-tipo="periodo" data-inicio="2026-04-13" data-fin="2026-06-12" data-titulo="Segundo periodo académico">
+            <div class="ev-fecha"><strong>13</strong><span>ABR</span><small>al 12 jun</small></div>
+            <div class="ev-punto"></div>
+            <div class="ev-card">
+              <div class="ev-cabecera"><span class="ev-tipo"><i class="bi bi-book-fill"></i> Periodo académico</span><span class="ev-estado"></span></div>
+              <h3>Segundo periodo académico</h3>
+              <div class="ev-meta"><span><i class="bi bi-calendar3"></i> 13 de abril al 12 de junio</span><span><i class="bi bi-hourglass-split"></i> <b class="dur"></b></span></div>
+              <div class="cal-barra"><span></span></div><p class="ev-progreso"></p>
+            </div>
+          </article>
+
+          <!-- OJO: en tu calendario original decía "22 de julio al 06 de julio" (el fin queda antes del inicio).
+               Aquí lo puse como 22 de junio al 06 de julio. Si no es correcto, cambia el texto y data-inicio / data-fin. -->
+          <article class="evento" data-tipo="receso" data-inicio="2026-06-22" data-fin="2026-07-06" data-titulo="Receso académico de mitad de año">
+            <div class="ev-fecha"><strong>22</strong><span>JUN</span><small>al 06 jul</small></div>
+            <div class="ev-punto"></div>
+            <div class="ev-card">
+              <div class="ev-cabecera"><span class="ev-tipo"><i class="bi bi-brightness-high-fill"></i> Receso</span><span class="ev-estado"></span></div>
+              <h3>Receso académico de mitad de año</h3>
+              <div class="ev-meta"><span><i class="bi bi-calendar3"></i> 22 de junio al 06 de julio</span><span><i class="bi bi-hourglass-split"></i> <b class="dur"></b></span></div>
+              <div class="cal-barra"><span></span></div><p class="ev-progreso"></p>
+            </div>
+          </article>
+
+          <article class="evento" data-tipo="periodo" data-inicio="2026-07-06" data-fin="2026-09-11" data-titulo="Tercer periodo académico">
+            <div class="ev-fecha"><strong>06</strong><span>JUL</span><small>al 11 sep</small></div>
+            <div class="ev-punto"></div>
+            <div class="ev-card">
+              <div class="ev-cabecera"><span class="ev-tipo"><i class="bi bi-book-fill"></i> Periodo académico</span><span class="ev-estado"></span></div>
+              <h3>Tercer periodo académico</h3>
+              <div class="ev-meta"><span><i class="bi bi-calendar3"></i> 06 de julio al 11 de septiembre</span><span><i class="bi bi-hourglass-split"></i> <b class="dur"></b></span></div>
+              <div class="cal-barra"><span></span></div><p class="ev-progreso"></p>
+            </div>
+          </article>
+
+          <article class="evento" data-tipo="periodo" data-inicio="2026-09-14" data-fin="2026-11-27" data-titulo="Cuarto periodo académico">
+            <div class="ev-fecha"><strong>14</strong><span>SEP</span><small>al 27 nov</small></div>
+            <div class="ev-punto"></div>
+            <div class="ev-card">
+              <div class="ev-cabecera"><span class="ev-tipo"><i class="bi bi-book-fill"></i> Periodo académico</span><span class="ev-estado"></span></div>
+              <h3>Cuarto periodo académico</h3>
+              <div class="ev-meta"><span><i class="bi bi-calendar3"></i> 14 de septiembre al 27 de noviembre</span><span><i class="bi bi-hourglass-split"></i> <b class="dur"></b></span></div>
+              <div class="cal-barra"><span></span></div><p class="ev-progreso"></p>
+            </div>
+          </article>
+
+          <article class="evento" data-tipo="receso" data-inicio="2026-10-05" data-fin="2026-10-11" data-titulo="Semana de receso estudiantil">
+            <div class="ev-fecha"><strong>05</strong><span>OCT</span><small>al 11 oct</small></div>
+            <div class="ev-punto"></div>
+            <div class="ev-card">
+              <div class="ev-cabecera"><span class="ev-tipo"><i class="bi bi-brightness-high-fill"></i> Receso</span><span class="ev-estado"></span></div>
+              <h3>Semana de receso estudiantil</h3>
+              <div class="ev-meta"><span><i class="bi bi-calendar3"></i> 05 de octubre al 11 de octubre</span><span><i class="bi bi-hourglass-split"></i> <b class="dur"></b></span></div>
+              <div class="cal-barra"><span></span></div><p class="ev-progreso"></p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="cal-leyenda">
+          <span><b class="l-periodo"></b> Periodo académico</span>
+          <span><b class="l-receso"></b> Receso o semana especial</span>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pie">
+    <div class="pie-enredadera" aria-hidden="true"></div>
+    <div class="contenedor pie-grilla">
+      <div>
+        <div class="pie-marca">
+          <img src="ESCUDOGGM.jpg" alt="Escudo Colegio Gabriel García Márquez">
+          <h3>Colegio Gabriel<br>García Márquez</h3>
+        </div>
+        <p class="pie-texto">Formamos niños y jóvenes de paz y bien, con rigor académico y valores.</p>
+        <div class="pie-social">
+          <a href="https://www.facebook.com/colggmtunja/?locale=es_LA" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Enlaces rápidos</h4>
+        <ul class="pie-enlaces">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="quienessomos.html">Nosotros</a></li>
+          <li><a href="oferta.html">Académico</a></li>
+          <li><a href="matriculas.html">Proceso de admisión</a></li>
+          <li><a href="login.html">Campus virtual</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Contacto</h4>
+        <ul class="pie-contacto">
+          <li><i class="bi bi-geo-alt-fill"></i><span>Tv. 3 #67-14, Tunja, Boyacá</span></li>
+          <li><i class="bi bi-telephone-fill"></i><span>87472004</span></li>
+          <li><i class="bi bi-envelope-fill"></i><span>colggm@gmail.com</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Boletín</h4>
+        <p class="pie-texto">Recibe noticias y novedades del colegio.</p>
+        <form class="pie-form" onsubmit="return false;">
+          <input type="email" placeholder="Tu correo" aria-label="Correo">
+          <button type="submit" aria-label="Enviar"><i class="bi bi-send-fill"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="contenedor">
+      <hr class="pie-divisor">
+      <div class="pie-inferior">
+        <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+        <div class="pie-legal">
+          <a href="#" onclick="return false;">Políticas de privacidad</a>
+          <a href="#" onclick="return false;">Términos de servicio</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script>
+  (function () {
+    var DIA = 86400000;
+    var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+    function aFecha(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+    function dias(a, b) { return Math.round((b - a) / DIA); }
+    function texto(f) { return f.getDate() + ' de ' + MESES[f.getMonth()]; }
+    function enDias(n) { return n === 1 ? 'mañana' : 'en ' + n + ' días'; }
+
+    var hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+
+    var eventos = Array.prototype.map.call(document.querySelectorAll('.evento'), function (el) {
+      return { el: el, ini: aFecha(el.dataset.inicio), fin: aFecha(el.dataset.fin), tipo: el.dataset.tipo, titulo: el.dataset.titulo };
+    });
+
+    // Estado de cada evento
+    eventos.forEach(function (e) {
+      var total = dias(e.ini, e.fin) + 1;
+      e.el.querySelector('.dur').textContent = total + (total === 1 ? ' día' : ' días');
+
+      var estado = e.fin < hoy ? 'finalizado' : (e.ini <= hoy ? 'en-curso' : 'proximo');
+      e.estado = estado;
+      e.el.classList.add(estado);
+
+      var badge = e.el.querySelector('.ev-estado');
+      if (estado === 'en-curso') {
+        badge.textContent = 'EN CURSO';
+        var n = dias(e.ini, hoy) + 1;
+        var pct = Math.min(100, Math.round(n / total * 100));
+        e.el.querySelector('.ev-progreso').textContent = 'Día ' + n + ' de ' + total + ' · ' + pct + '%';
+        var barra = e.el.querySelector('.cal-barra span');
+        setTimeout(function () { barra.style.width = pct + '%'; }, 400);
+      } else if (estado === 'proximo') {
+        badge.textContent = 'COMIENZA ' + enDias(dias(hoy, e.ini)).toUpperCase();
+      } else {
+        badge.textContent = 'FINALIZADO';
+      }
+    });
+
+    // Tarjeta "Estamos en"
+    var actual = eventos.filter(function (e) { return e.estado === 'en-curso' && e.tipo === 'periodo'; })[0];
+    var receso = eventos.filter(function (e) { return e.estado === 'en-curso' && e.tipo === 'receso'; })[0];
+    var tA = document.getElementById('ahoraTitulo'), pA = document.getElementById('ahoraTexto');
+    if (receso) {
+      tA.textContent = receso.titulo;
+      pA.textContent = 'Del ' + texto(receso.ini) + ' al ' + texto(receso.fin) + '. Quedan ' + (dias(hoy, receso.fin) + 1) + ' días de descanso.';
+    } else if (actual) {
+      var tot = dias(actual.ini, actual.fin) + 1, n = dias(actual.ini, hoy) + 1;
+      tA.textContent = actual.titulo;
+      pA.textContent = 'Día ' + n + ' de ' + tot + ' · termina el ' + texto(actual.fin) + ' (faltan ' + dias(hoy, actual.fin) + ' días).';
+      document.getElementById('ahoraBarraCaja').hidden = false;
+      setTimeout(function () { document.getElementById('ahoraBarra').style.width = Math.round(n / tot * 100) + '%'; }, 400);
+    } else {
+      tA.textContent = 'Fuera de periodo académico';
+      pA.textContent = 'Consulta abajo las fechas del año lectivo.';
+    }
+
+    // Tarjeta "Lo que sigue"
+    var proximos = eventos.filter(function (e) { return e.ini > hoy; }).sort(function (a, b) { return a.ini - b.ini; });
+    var sig = proximos[0];
+    var tS = document.getElementById('sigTitulo'), pS = document.getElementById('sigTexto');
+    if (sig) {
+      tS.textContent = sig.titulo;
+      pS.textContent = 'Comienza ' + enDias(dias(hoy, sig.ini)) + ' (' + texto(sig.ini) + ') y termina el ' + texto(sig.fin) + '.';
+    } else {
+      tS.textContent = 'Año lectivo finalizado';
+      pS.textContent = 'Muy pronto publicaremos el calendario del próximo año.';
+    }
+
+    // Filtros
+    var botones = document.querySelectorAll('.cal-filtros button');
+    botones.forEach(function (b) {
+      b.addEventListener('click', function () {
+        botones.forEach(function (x) { x.classList.remove('activo'); });
+        b.classList.add('activo');
+        var f = b.dataset.filtro;
+        eventos.forEach(function (e) { e.el.classList.toggle('oculto', f !== 'todos' && e.tipo !== f); });
+      });
+    });
+
+    // Aparición al hacer scroll
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (items) {
+        items.forEach(function (it) { if (it.isIntersecting) { it.target.classList.add('visible'); io.unobserve(it.target); } });
+      }, { threshold: 0.12 });
+      eventos.forEach(function (e) { io.observe(e.el); });
+    } else {
+      eventos.forEach(function (e) { e.el.classList.add('visible'); });
+    }
+  })();
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>

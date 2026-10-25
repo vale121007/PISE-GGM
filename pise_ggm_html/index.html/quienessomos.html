@@ -1,148 +1,454 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Nosotros</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Quiénes somos? | Colegio Gabriel García Márquez</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="quienessomos.css">
 </head>
 <body>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-        <a href="index.html">Inicio</a>
-        <a href="oferta.html">Oferta Academica</a>
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <span><i class="bi bi-telephone-fill"></i>87472004</span>
+        <span><i class="bi bi-envelope-fill"></i>colggm@gmail.com</span>
+        <span><i class="bi bi-geo-alt-fill"></i>Tv. 3 #67-14, Tunja, Boyacá</span>
+      </div>
+      <div class="topbar-der">
+        <a href="noticias.html">Noticias</a>
         <a href="calendario.html">Calendario</a>
-        <a href="matriculas.html">Matriculas</a>
-        <a href="contacto.html">Contacto</a>
-         <a href="noticias.html">Noticias</a>
-        <a href="login.html">Login</a>
-        <main>
-  </nav>
-</header>
-<div class="container">
-  <h1>¿Quiénes somos?</h1>
-  <p>Somos una institución educativa comprometida con la formación integral de niños y jóvenes, con más de 26 años de experiencia formando generaciones en valores, conocimiento y sentido humano. En el Colegio Gabriel García Márquez nos destacamos por ser un colegio técnico en sistemas y programación, brindando a nuestros estudiantes herramientas clave para enfrentar los retos del mundo actual.
-
-Nuestra propuesta educativa se complementa con una sólida formación musical y cultural, que fortalece la sensibilidad, la creatividad y la expresión artística, contribuyendo al desarrollo equilibrado de nuestros estudiantes.
-
-Trabajamos de manera articulada entre docentes, directivos y familias para garantizar procesos educativos de calidad, promoviendo el pensamiento crítico, el uso responsable de la tecnología y el crecimiento personal. Nuestro compromiso es formar ciudadanos íntegros, autónomos y comprometidos con una cultura de paz y bien, capaces de aportar positivamente a la sociedad.</p>
-  <div class="cards">
-
-    <div class="card">
-      <h2>Misión</h2>
-      <p>
-        El COLEGIO GABRIEL GARCÍA MÁRQUEZ es un Colegio de iniciativa privada, mixto, que desarrolla y presta servicios académicos integrados, de excelente calidad,  cuyo objetivo es la formación educativa y humana de niños y jóvenes;  fundamentado en los valores religiosos, éticos, morales, tecnológicos, inclusivos, sociales y ambientales; afirma su identidad a través de la permanente innovación pedagógica, la investigación científica, las humanidades, el deporte, las habilidades artísticas, la tecnología, la resolución de problemas, el inglés como segunda lengua y la confluencia de cinco principios básicos: Amor, servicio, fraternidad, efectividad, mejoramiento continuo y oración. Todo lo anterior, desde el enfoque de formación ciudadana y una perspectiva del desarrollo humano que respeta la diversidad y las diferencias.
-      </p>
+        <a href="login.html">Campus virtual</a>
+        <a href="matriculas.html" class="tb-admision">ADMISIONES ABIERTAS</a>
+      </div>
     </div>
-
-    <div class="card">
-      <h2>Visión</h2>
-      <p>
-        VISIÓN
-Para el 2026 EL COLEGIO GABRIEL GARCÍA MÀRQUEZ desea consolidarse como una Institución de alta calidad Educativa, que se caracteriza por educar en el amor por la vida, la justicia, la paz, la libertad, el servicio a los demás (especialmente las personas más desprotegidas), la atención a la diversidad, e enfoque técnico en sistemas y por la protección y preservación del medio ambiente. Todo lo anterior conllevará a la renovación y actualización del currículo, donde aspectos relevantes para la institución como: la espiritualidad, el bilingüismo, la inclusión y formación ciudadana, la alta calidad académica,  la tecnología, lo ético y moral, desarrollados desde una política interna de gestión de calidad, harán la diferencia, consiguiendo, como efecto, el posicionamiento del colegio, a nivel regional y nacional, y el reconocimiento del mismo, en todo el sector educativo y social, como una de las instituciones educativas más exitosas.
-      </p>
-    </div>
-
   </div>
-</div>
-<img src="niñosggm.png" alt=Imagen de estudiantes>
-<footer>
-  <p>©2026 PISE-GGM</p>
-</footer>
 
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="index.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>Gabriel García<br>Márquez</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="quienessomos.html" class="activo">¿Quiénes somos?</a>
+        <a href="oferta.html">Oferta académica</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="matriculas.html">Aspirante</a>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a class="nav-cta" href="login.html">Ingresar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ENCABEZADO -->
+  <header class="pag-hero">
+    <div class="pag-hero-contenido">
+      <p class="pag-migas"><a href="index.html">Inicio</a> <i class="bi bi-chevron-right"></i> ¿Quiénes somos?</p>
+      <p class="pag-etiqueta">Nuestra identidad</p>
+      <h1>Una historia que se sigue escribiendo, <em>capítulo a capítulo</em>.</h1>
+      <p class="pag-lead">Conoce quiénes somos, hacia dónde vamos y el camino que hemos recorrido para formar generaciones de bachilleres en Tunja, Boyacá.</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PILARES -->
+    <section class="qs-seccion" aria-labelledby="pilares-titulo">
+      <div class="qs-caja">
+        <div class="qs-titulo">
+          <p class="etiqueta">Nuestros pilares</p>
+          <h2 id="pilares-titulo">Quiénes somos, misión y visión</h2>
+          <p>Tres capítulos que definen el presente y el futuro de nuestra institución.</p>
+        </div>
+
+        <div class="pilares-grilla">
+
+          <article class="pilar">
+            <div class="pilar-numero">I</div>
+            <h3>Quiénes somos</h3>
+            <p>
+              Somos una institución educativa comprometida con la formación integral de niños y jóvenes, con más de 26 años de experiencia formando generaciones en valores, conocimiento y sentido humano.
+              <span class="texto-oculto">
+                En el Colegio Gabriel García Márquez nos destacamos por ser un colegio técnico en sistemas y programación, brindando a nuestros estudiantes herramientas clave para enfrentar los retos del mundo actual.
+                Nuestra propuesta educativa se complementa con una sólida formación musical y cultural, que fortalece la sensibilidad, la creatividad y la expresión artística.
+              </span>
+            </p>
+            <button type="button" class="btn-ver-mas">Ver más</button>
+          </article>
+
+          <article class="pilar">
+            <div class="pilar-numero">II</div>
+            <h3>Misión</h3>
+            <p>
+              El Colegio Gabriel García Márquez es una institución de iniciativa privada, mixta, que desarrolla y presta servicios académicos integrados, de excelente calidad, cuyo objetivo es la formación educativa y humana de niños y jóvenes.
+              <span class="texto-oculto">
+                Está fundamentado en valores religiosos, éticos, morales, tecnológicos, inclusivos, sociales y ambientales.
+                Afirma su identidad a través de la permanente innovación pedagógica, la investigación científica, las humanidades, el deporte, las habilidades artísticas, la tecnología y el inglés como segunda lengua.
+              </span>
+            </p>
+            <button type="button" class="btn-ver-mas">Ver más</button>
+          </article>
+
+          <article class="pilar">
+            <div class="pilar-numero">III</div>
+            <h3>Visión</h3>
+            <p>
+              Para el 2026, el Colegio Gabriel García Márquez desea consolidarse como una institución de alta calidad educativa, caracterizada por educar en el amor por la vida, la justicia, la paz, la libertad y el servicio a los demás.
+              <span class="texto-oculto">
+                Con un enfoque técnico en sistemas y un compromiso con la protección del medio ambiente.
+                Todo esto conllevará a la renovación y actualización del currículo, donde la espiritualidad, el bilingüismo, la inclusión, la formación ciudadana, la alta calidad académica, la tecnología y lo ético-moral harán la diferencia.
+              </span>
+            </p>
+            <button type="button" class="btn-ver-mas">Ver más</button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- NUESTRA HISTORIA: EL LIBRO -->
+    <section class="qs-seccion suave" aria-labelledby="historia-titulo">
+      <div class="qs-caja">
+        <div class="qs-titulo centrado">
+          <p class="etiqueta">De dónde venimos</p>
+          <h2 id="historia-titulo">Nuestra historia</h2>
+          <p>Pasa las páginas y recorre los momentos que han dado forma al colegio que somos hoy en Tunja, Boyacá.</p>
+        </div>
+
+        <div class="libro-zona">
+          <div class="libro" id="libro" tabindex="0" aria-label="Libro de la historia del colegio. Usa las flechas del teclado para pasar las páginas.">
+            <div class="libro-cinta" aria-hidden="true"></div>
+            <div class="libro-tapa">
+              <div class="libro-pliegos">
+
+                <!-- PORTADA -->
+                <div class="pliego activo" data-etiqueta="Portada" data-estado="Portada">
+                  <article class="pagina izq portada-izq">
+                    <figure class="foto-pegada">
+                      <img src="niñatambor.JPG" alt="Archivo fotográfico del Colegio Gabriel García Márquez">
+                      <figcaption>Archivo del colegio</figcaption>
+                    </figure>
+                    <div class="sello">+26 años de historia</div>
+                  </article>
+                  <article class="pagina der portada-der">
+                    <img class="portada-escudo" src="ESCUDOGGM.jpg" alt="Escudo del colegio">
+                    <p class="portada-marca">Colegio Gabriel García Márquez</p>
+                    <h3 class="portada-titulo">Capítulo a capítulo</h3>
+                    <div class="adorno"><i class="bi bi-suit-diamond-fill"></i></div>
+                    <p class="portada-sub">Tunja, Boyacá · desde 1999</p>
+                    <button type="button" class="boton boton-oscuro" data-ir="1">Comenzar a leer <i class="bi bi-arrow-right"></i></button>
+                  </article>
+                </div>
+
+                <!-- CAPÍTULO I · 1999 -->
+                <div class="pliego" data-etiqueta="1999" data-estado="Capítulo I de V · páginas 2 y 3">
+                  <article class="pagina izq">
+                    <p class="cap-etiqueta">Capítulo I</p>
+                    <div class="cap-anio">1999</div>
+                    <div class="cap-icono"><i class="bi bi-flower2"></i></div>
+                    <div class="adorno"><i class="bi bi-suit-diamond-fill"></i></div>
+                    <h3 class="cap-titulo">Esta hermosa historia inicia</h3>
+                    <span class="num-pagina">— 2 —</span>
+                  </article>
+                  <article class="pagina der">
+                    <p class="capitular">La necesidad de unificar pensamientos, sentimientos y acciones en busca de una mejor sociedad llevó a su fundadora Esp. María Estella Buitrago Muñoz a darle origen a la Sala Maternal Pilatunas en 1999.</p>
+                    <p>Este espacio, germen del actual colegio, representa el primer paso en la construcción de una comunidad educativa basada en valores y principios compartidos. Desde sus inicios se vislumbró la importancia de cultivar desde temprana edad la unión, el respeto y la solidaridad entre los miembros de la comunidad educativa.</p>
+                    <span class="num-pagina">— 3 —</span>
+                  </article>
+                </div>
+
+                <!-- CAPÍTULO II · 2007 -->
+                <div class="pliego" data-etiqueta="2007" data-estado="Capítulo II de V · páginas 4 y 5">
+                  <article class="pagina izq">
+                    <p class="cap-etiqueta">Capítulo II</p>
+                    <div class="cap-anio">2007</div>
+                    <div class="cap-icono"><i class="bi bi-house-heart-fill"></i></div>
+                    <div class="adorno"><i class="bi bi-suit-diamond-fill"></i></div>
+                    <h3 class="cap-titulo">Un futuro prometedor</h3>
+                    <span class="num-pagina">— 4 —</span>
+                  </article>
+                  <article class="pagina der">
+                    <p class="capitular">El Colegio La Ronda de los Niños adquirió su propia sede y se trasladó a las instalaciones actuales, dejando atrás su ubicación en la entrada del barrio Los Músicas.</p>
+                    <p>La adquisición de una sede propia permitió al colegio implementar nuevas áreas académicas, deportivas y recreativas. El cambio de nombre y la nueva sede representaron un hito importante en la historia del colegio, proyectando una imagen de crecimiento y modernización.</p>
+                    <span class="num-pagina">— 5 —</span>
+                  </article>
+                </div>
+
+                <!-- CAPÍTULO III · 2011 – 2016 -->
+                <div class="pliego" data-etiqueta="2011 – 2016" data-estado="Capítulo III de V · páginas 6 y 7">
+                  <article class="pagina izq">
+                    <p class="cap-etiqueta">Capítulo III</p>
+                    <div class="cap-anio rango">2011 – 2016</div>
+                    <div class="cap-icono"><i class="bi bi-mortarboard-fill"></i></div>
+                    <div class="adorno"><i class="bi bi-suit-diamond-fill"></i></div>
+                    <h3 class="cap-titulo">Un legado de educación integral y sostenible</h3>
+                    <span class="num-pagina">— 6 —</span>
+                  </article>
+                  <article class="pagina der">
+                    <p class="capitular">En 2011 el colegio amplió su cobertura educativa para incluir la educación secundaria, adoptando el nombre de Colegio Gabriel García Márquez.</p>
+                    <p>Este cambio estuvo inspirado en la visión de García Márquez sobre la educación como un proceso continuo y transformador. En 2016, la institución logró un hito significativo al incluir los grados décimo y once, un proyecto anhelado por toda la comunidad educativa. Esto fue posible gracias a la gestión de la institución y al apoyo de la Secretaría de Educación de Boyacá.</p>
+                    <span class="num-pagina">— 7 —</span>
+                  </article>
+                </div>
+
+                <!-- CAPÍTULO IV · 2016 – 2017 -->
+                <div class="pliego" data-etiqueta="2016 – 2017" data-estado="Capítulo IV de V · páginas 8 y 9">
+                  <article class="pagina izq">
+                    <p class="cap-etiqueta">Capítulo IV</p>
+                    <div class="cap-anio rango">2016 – 2017</div>
+                    <div class="cap-icono"><i class="bi bi-tree-fill"></i></div>
+                    <div class="adorno"><i class="bi bi-suit-diamond-fill"></i></div>
+                    <h3 class="cap-titulo">Sede Campestre</h3>
+                    <span class="num-pagina">— 8 —</span>
+                  </article>
+                  <article class="pagina der">
+                    <p class="capitular">La inversión realizada en la adquisición y construcción de la sede campestre demuestra una visión estratégica y un compromiso con la excelencia educativa.</p>
+                    <p>Al ofrecer un entorno natural y experiencias de aprendizaje enriquecedoras, la institución continúa invirtiendo en el futuro de sus estudiantes y fortaleciendo su proyecto educativo.</p>
+                    <span class="num-pagina">— 9 —</span>
+                  </article>
+                </div>
+
+                <!-- CAPÍTULO V · ARTE Y MÚSICA -->
+                <div class="pliego" data-etiqueta="Arte y música" data-estado="Capítulo V de V · páginas 10 y 11">
+                  <article class="pagina izq">
+                    <p class="cap-etiqueta">Capítulo V</p>
+                    <div class="cap-icono grande"><i class="bi bi-music-note-beamed"></i></div>
+                    <div class="adorno"><i class="bi bi-suit-diamond-fill"></i></div>
+                    <h3 class="cap-titulo">Educación artística y musical en nuestro colegio</h3>
+                    <span class="num-pagina">— 10 —</span>
+                  </article>
+                  <article class="pagina der">
+                    <p class="capitular">La educación artística y musical ha desempeñado un papel fundamental en el proceso de formación de los niños y jóvenes a lo largo de los años.</p>
+                    <p>Esta formación nos ha llevado a participar en diferentes eventos y recibir distintos reconocimientos por nuestra participación. Es una inversión en el futuro de nuestros estudiantes, ya que al proporcionarles herramientas y oportunidades para desarrollar sus habilidades creativas, estamos formando individuos más completos, capaces de enfrentar los desafíos del mundo actual con mayor confianza y éxito.</p>
+                    <span class="num-pagina">— 11 —</span>
+                  </article>
+                </div>
+
+                <!-- EPÍLOGO -->
+                <div class="pliego" data-etiqueta="Epílogo" data-estado="Epílogo">
+                  <article class="pagina izq">
+                    <p class="cap-etiqueta">Epílogo</p>
+                    <div class="cap-icono grande"><i class="bi bi-feather"></i></div>
+                    <div class="adorno"><i class="bi bi-suit-diamond-fill"></i></div>
+                    <h3 class="cap-titulo">Continuará…</h3>
+                    <span class="num-pagina">— 12 —</span>
+                  </article>
+                  <article class="pagina der">
+                    <p class="epilogo-frase">Una historia que se sigue escribiendo, capítulo a capítulo.</p>
+                    <div class="epilogo-botones">
+                      <a href="matriculas.html" class="boton boton-oscuro"><i class="bi bi-mortarboard"></i> Ser parte de ella</a>
+                      <button type="button" class="boton boton-lleno" data-ir="0"><i class="bi bi-arrow-counterclockwise"></i> Volver al inicio</button>
+                    </div>
+                    <span class="num-pagina">— 13 —</span>
+                  </article>
+                </div>
+
+              </div>
+              <div class="libro-lomo" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="libro-controles">
+            <button type="button" class="libro-flecha" id="libroPrev" aria-label="Página anterior"><i class="bi bi-chevron-left"></i></button>
+            <p class="libro-estado" id="libroEstado" aria-live="polite">Portada</p>
+            <button type="button" class="libro-flecha" id="libroNext" aria-label="Página siguiente"><i class="bi bi-chevron-right"></i></button>
+          </div>
+
+          <nav class="libro-indice" id="libroIndice" aria-label="Índice del libro"></nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANUAL DE CONVIVENCIA -->
+    <section class="qs-seccion" aria-label="Manual de Convivencia">
+      <div class="qs-caja">
+        <div class="manual-caja">
+          <div class="manual-icono"><i class="bi bi-book-half"></i></div>
+          <div class="manual-texto">
+            <p class="etiqueta">Comunidad educativa</p>
+            <h2>¿Quieres conocer nuestro Manual de Convivencia?</h2>
+            <p>Conoce los principios, derechos, deberes, normas y acuerdos que orientan la convivencia de nuestra comunidad educativa.</p>
+          </div>
+          <a href="manual-convivencia.html" class="boton boton-lleno"><i class="bi bi-book"></i> Conoce nuestro Manual</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="admision qs-cta" aria-label="Llamado a la acción">
+      <div class="admision-caja">
+        <i class="bi bi-calendar-check"></i>
+        <h2>¿Quieres conocer más<br>de nuestra institución?</h2>
+        <p>Agenda una visita y descubre de cerca el modelo educativo del Colegio Gabriel García Márquez.</p>
+        <a href="matriculas.html" class="boton boton-lleno">Agendar visita</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pie">
+    <div class="pie-enredadera" aria-hidden="true"></div>
+    <div class="contenedor pie-grilla">
+      <div>
+        <div class="pie-marca">
+          <img src="ESCUDOGGM.jpg" alt="Escudo Colegio Gabriel García Márquez">
+          <h3>Colegio Gabriel<br>García Márquez</h3>
+        </div>
+        <p class="pie-texto">Formamos niños y jóvenes de paz y bien, con rigor académico y valores.</p>
+        <div class="pie-social">
+          <a href="https://www.facebook.com/colggmtunja/?locale=es_LA" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Enlaces rápidos</h4>
+        <ul class="pie-enlaces">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="quienessomos.html">Nosotros</a></li>
+          <li><a href="oferta.html">Académico</a></li>
+          <li><a href="matriculas.html">Proceso de admisión</a></li>
+          <li><a href="manual-convivencia.html">Manual de convivencia</a></li>
+          <li><a href="login.html">Campus virtual</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Contacto</h4>
+        <ul class="pie-contacto">
+          <li><i class="bi bi-geo-alt-fill"></i><span>Tv. 3 #67-14, Tunja, Boyacá</span></li>
+          <li><i class="bi bi-telephone-fill"></i><span>87472004</span></li>
+          <li><i class="bi bi-envelope-fill"></i><span>colggm@gmail.com</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Boletín</h4>
+        <p class="pie-texto">Recibe noticias y novedades del colegio.</p>
+        <form class="pie-form" onsubmit="return false;">
+          <input type="email" placeholder="Tu correo" aria-label="Correo">
+          <button type="submit" aria-label="Enviar"><i class="bi bi-send-fill"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="contenedor">
+      <hr class="pie-divisor">
+      <div class="pie-inferior">
+        <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+        <div class="pie-legal">
+          <a href="#" onclick="return false;">Políticas de privacidad</a>
+          <a href="#" onclick="return false;">Términos de servicio</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script>
+  // "Ver más" de los pilares
+  document.querySelectorAll(".btn-ver-mas").forEach(function (boton) {
+    boton.addEventListener("click", function () {
+      var texto = boton.parentElement.querySelector(".texto-oculto");
+      texto.classList.toggle("mostrar");
+      boton.textContent = texto.classList.contains("mostrar") ? "Ver menos" : "Ver más";
+    });
+  });
+
+  // Libro de la historia
+  (function () {
+    var libro = document.getElementById("libro");
+    if (!libro) return;
+
+    var pliegos = Array.prototype.slice.call(libro.querySelectorAll(".pliego"));
+    var prev = document.getElementById("libroPrev");
+    var next = document.getElementById("libroNext");
+    var estado = document.getElementById("libroEstado");
+    var indice = document.getElementById("libroIndice");
+    var reducir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var actual = 0, ocupado = false;
+
+    var chips = pliegos.map(function (p, n) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = p.dataset.etiqueta;
+      b.addEventListener("click", function () { ir(n); });
+      indice.appendChild(b);
+      return b;
+    });
+
+    function pintar() {
+      pliegos.forEach(function (p, n) { p.classList.toggle("activo", n === actual); });
+      chips.forEach(function (c, n) {
+        c.classList.toggle("activo", n === actual);
+        if (n === actual) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current");
+      });
+      estado.textContent = pliegos[actual].dataset.estado;
+      prev.disabled = actual === 0;
+      next.disabled = actual === pliegos.length - 1;
+    }
+
+    function ir(n) {
+      if (ocupado || n < 0 || n >= pliegos.length || n === actual) return;
+      var dir = n > actual ? 1 : -1;
+
+      // En celular o con movimiento reducido: cambio directo
+      if (reducir || window.innerWidth <= 860) { actual = n; pintar(); return; }
+
+      ocupado = true;
+      var salida = pliegos[actual].querySelector(dir > 0 ? ".der" : ".izq");
+      var claseSalida = dir > 0 ? "sale-der" : "sale-izq";
+      salida.classList.add(claseSalida);
+
+      setTimeout(function () {
+        salida.classList.remove(claseSalida);
+        actual = n;
+        pintar();
+        var entra = pliegos[actual].querySelector(dir > 0 ? ".izq" : ".der");
+        var claseEntra = dir > 0 ? "entra-izq" : "entra-der";
+        entra.classList.add(claseEntra);
+        setTimeout(function () { entra.classList.remove(claseEntra); ocupado = false; }, 320);
+      }, 300);
+    }
+
+    prev.addEventListener("click", function () { ir(actual - 1); });
+    next.addEventListener("click", function () { ir(actual + 1); });
+
+    libro.querySelectorAll("[data-ir]").forEach(function (b) {
+      b.addEventListener("click", function () { ir(parseInt(b.dataset.ir, 10)); });
+    });
+
+    libro.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); ir(actual + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); ir(actual - 1); }
+    });
+
+    var x0 = null;
+    libro.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    libro.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) ir(actual + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+
+    pintar();
+  })();
+  </script>
+
+  <script src="script.js"></script>
 </body>
 </html>
-<style>
-body { 
-  font-family: Arial; 
-  margin:0;   
-  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
-  position: relative;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
-
- header {
-    background: white;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
- header h1 {
-    color: #285900;
-    font-size: 20px;
-}
-
-nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-    }
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-.container { 
-  padding:40px; 
-  text-align:center; 
-}
-.container h1{
-    color:#ffffff;
-}
-.container p{
-    color:#ffffff;
-}
-.cards {
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin-top:30px;
-  flex-wrap: wrap;
-}
-
-.card {
-  background:white;
-  padding:25px;
-  width:300px;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card h2 {
-  color:#0a861b;
-}
-
-.card p {
-  color:#000000;
-}
-img {
-  
-   height:250px;
-
-}
-footer {
-      background: #29860a;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      margin-top: 80px;
-    }
-</style>

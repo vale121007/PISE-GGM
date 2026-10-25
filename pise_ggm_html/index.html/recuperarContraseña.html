@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar contraseña | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+  :root {
+    --blanco: #FFFDF8; --verde-900: #0F3D2E; --verde-700: #1F6B45;
+    --amarillo-500: #F2C230; --amarillo-300: #F7DB7A; --dorado-600: #B8860B;
+    --f-display: 'Playfair Display', Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--blanco); color: #17241B; min-height: 100vh; display: flex; flex-direction: column; }
+  a { text-decoration: none; }
+  [hidden] { display: none !important; }
+
+  /* ---------- Barra superior ---------- */
+  .rg-top { background: var(--verde-900); border-bottom: 5px solid var(--amarillo-500); }
+  .rg-top-in { max-width: 1120px; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .rg-top a { color: #e8f1e9; font-weight: 600; font-size: .9rem; }
+  .rg-top a:hover { color: var(--amarillo-300); }
+  .rg-top .marca { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-size: 1.1rem; color: #fff; }
+  .rg-top .marca img { width: 38px; height: 38px; object-fit: contain; }
+  .rg-top nav { display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* ---------- Fondo ---------- */
+  .rg-pagina { position: relative; overflow: hidden; flex: 1; padding: 44px 24px 56px; display: flex; align-items: center; }
+  .rg-pagina::before { content: ""; position: absolute; inset: 0; background: url("ANIMADOCOLGGM.png") center / cover no-repeat; opacity: .11; }
+  .rg-pagina::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at 15% 20%, rgba(247,219,122,.32), transparent 45%), radial-gradient(circle at 85% 80%, rgba(45,139,87,.22), transparent 50%); }
+  .rg-grid { position: relative; z-index: 1; width: 100%; max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: minmax(340px, 470px) 1fr; gap: 56px; align-items: center; }
+
+  /* ---------- Tarjeta ---------- */
+  @keyframes subir { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .rg-card {
+    position: relative; padding: 36px 34px 28px; color: #FFFDF8; animation: subir .6s ease both;
+    background: linear-gradient(160deg, rgba(15,61,46,.94), rgba(31,107,69,.9));
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: 1px solid rgba(247,219,122,.35); border-radius: 6px 44px 6px 44px; box-shadow: 0 24px 50px rgba(15,61,46,.35);
+  }
+  .rg-card::before { content: ""; position: absolute; top: 0; left: 34px; right: 34px; height: 5px; border-radius: 0 0 6px 6px;
+    background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 18px, var(--dorado-600) 18px 36px); }
+  .rg-marca { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .rg-marca img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,.35)); }
+  .rg-marca strong { display: block; font-family: var(--f-display); font-size: 1.4rem; line-height: 1.1; }
+  .rg-marca span { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo-300); }
+  .rg-card h1 { font-family: var(--f-display); font-size: 1.7rem; margin: 6px 0 2px; line-height: 1.15; }
+  .rg-sub { color: #cfe3d3; font-size: .92rem; margin: 0 0 18px; }
+
+  /* ---------- Pasos ---------- */
+  .rg-pasos { display: flex; align-items: center; margin-bottom: 20px; }
+  .rg-paso { display: flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 700; color: #9fbfa4; }
+  .rg-paso b { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #9fbfa4; font-size: .85rem; transition: all .3s ease; }
+  .rg-paso.activo { color: #fff; }
+  .rg-paso.activo b { background: var(--amarillo-500); border-color: var(--amarillo-500); color: var(--verde-900); }
+  .rg-paso.hecho b { background: #2ea36a; border-color: #2ea36a; color: #fff; }
+  .rg-linea { flex: 1; height: 3px; margin: 0 10px; border-radius: 3px; background: rgba(255,255,255,.2); overflow: hidden; }
+  .rg-linea i { display: block; height: 100%; width: 0; background: var(--amarillo-500); transition: width .4s ease; }
+  .rg-linea.llena i { width: 100%; }
+
+  /* ---------- Campos ---------- */
+  .rg-campo { margin-bottom: 13px; }
+  .rg-campo label { display: block; font-size: .76rem; font-weight: 700; letter-spacing: .04em; color: #dfeee2; margin-bottom: 5px; }
+  .rg-input { position: relative; }
+  .rg-input > i.ico { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--verde-700); pointer-events: none; }
+  .rg-input input {
+    width: 100%; padding: 12px 14px 12px 42px; border-radius: 4px 16px 4px 16px; border: 2px solid transparent;
+    background: rgba(255,253,248,.95); color: #17241B; font-family: inherit; font-size: .95rem; transition: all .2s ease;
+  }
+  .rg-input input::placeholder { color: #6b7a6e; }
+  .rg-input input:focus { outline: none; background: #fff; border-color: var(--amarillo-500); box-shadow: 0 0 0 4px rgba(242,194,48,.28); }
+  .rg-input.error input { border-color: #ff7b7b; background: #fff5f5; }
+  .rg-input input.con-ojo { padding-right: 48px; }
+  .rg-input input.codigo { text-align: center; letter-spacing: .55rem; font-size: 1.4rem; font-weight: 700; padding-left: 14px; padding-right: 14px; }
+  .rg-ojo { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border: 0; border-radius: 50%; background: transparent; color: var(--verde-700); cursor: pointer; }
+  .rg-ojo:hover { background: rgba(31,107,69,.12); }
+  .rg-err { color: #ffd0d0; font-size: .76rem; margin-top: 4px; min-height: 0; }
+
+  /* Fuerza de contraseña */
+  .rg-fuerza { display: flex; gap: 5px; margin-top: 7px; }
+  .rg-fuerza i { flex: 1; height: 5px; border-radius: 4px; background: rgba(255,255,255,.2); transition: background .3s ease; }
+  .rg-fuerza.n1 i:nth-child(-n+1) { background: #ff7b7b; }
+  .rg-fuerza.n2 i:nth-child(-n+2) { background: #ffb45a; }
+  .rg-fuerza.n3 i:nth-child(-n+3) { background: var(--amarillo-500); }
+  .rg-fuerza.n4 i:nth-child(-n+4) { background: #5fe0a0; }
+  .rg-fuerza-txt { font-size: .74rem; color: #cfe3d3; margin-top: 4px; }
+
+  /* Requisitos de la contraseña */
+  .rg-reglas { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3px 12px; font-size: .74rem; color: #9fbfa4; }
+  .rg-reglas li { display: flex; align-items: center; gap: 6px; transition: color .2s ease; }
+  .rg-reglas li.cumple { color: #5fe0a0; }
+
+  /* ---------- Botones ---------- */
+  .rg-botones { display: flex; gap: 10px; margin-top: 18px; }
+  .rg-btn { flex: 1; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; letter-spacing: .05em; padding: 14px 18px; border-radius: 4px 16px 4px 16px; font-size: .95rem;
+    display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform .15s ease, background .2s ease; }
+  .rg-btn:hover:not(:disabled) { transform: translateY(-2px); }
+  .rg-btn.lleno { background: var(--amarillo-500); color: var(--verde-900); }
+  .rg-btn.lleno:hover:not(:disabled) { background: var(--amarillo-300); }
+  .rg-btn.borde { flex: 0 0 auto; background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.4); }
+  .rg-btn.borde:hover { background: rgba(255,255,255,.1); }
+  .rg-btn:disabled { background: #8a958c; color: #fff; cursor: not-allowed; }
+  .rg-enlace { display: block; margin: 14px auto 0; background: none; border: 0; padding: 4px 8px; font-family: inherit; font-size: .86rem; font-weight: 700; color: var(--amarillo-300); cursor: pointer; }
+  .rg-enlace:hover:not(:disabled) { color: #fff; text-decoration: underline; }
+  .rg-enlace:disabled { color: #9fbfa4; cursor: not-allowed; }
+
+  .rg-msg { margin-top: 14px; padding: 10px 14px; border-radius: 4px 14px 4px 14px; font-size: .88rem; font-weight: 600; text-align: center; background: rgba(255,120,120,.16); color: #ffd0d0; border: 1px solid rgba(255,140,140,.45); }
+  .rg-msg.ok { background: rgba(95,224,160,.16); color: #c9f5de; border-color: rgba(95,224,160,.45); }
+  .rg-pie-card { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.16); text-align: center; font-size: .9rem; color: #cfe3d3; }
+  .rg-pie-card a { color: var(--amarillo-300); font-weight: 700; }
+  .rg-pie-card a:hover { color: #fff; text-decoration: underline; }
+
+  /* ---------- Éxito ---------- */
+  .rg-exito { text-align: center; padding: 12px 0 4px; }
+  .rg-exito .check { width: 84px; height: 84px; margin: 0 auto 14px; border-radius: 50%; background: #2ea36a; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; color: #fff; animation: pop .5s cubic-bezier(.2,1.6,.4,1) both; }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+  .rg-exito h2 { font-family: var(--f-display); margin: 0 0 8px; font-size: 1.5rem; }
+  .rg-exito p { color: #cfe3d3; margin: 0 0 8px; font-size: .94rem; }
+  .rg-exito .rg-btn { margin-top: 12px; text-decoration: none; }
+
+  /* ---------- Panel lateral ---------- */
+  .rg-info h2 { font-family: var(--f-display); font-size: 2rem; color: var(--verde-900); margin: 0 0 6px; line-height: 1.15; }
+  .rg-info h2 em { font-style: normal; color: var(--dorado-600); }
+  .rg-info > p { color: #4B5C4E; margin: 0 0 26px; max-width: 460px; }
+  .rg-pasos-info { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .rg-pasos-info li { display: flex; gap: 16px; align-items: flex-start; background: rgba(255,253,248,.85); border: 1px solid rgba(15,61,46,.15); border-left: 5px solid var(--amarillo-500); border-radius: 4px 22px 4px 22px; padding: 16px 20px; box-shadow: 0 8px 20px rgba(15,61,46,.08); animation: subir .6s ease both; }
+  .rg-pasos-info li:nth-child(2) { animation-delay: .12s; } .rg-pasos-info li:nth-child(3) { animation-delay: .24s; }
+  .rg-pasos-info .num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--verde-900); color: var(--amarillo-300); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+  .rg-pasos-info strong { display: block; color: var(--verde-900); font-family: var(--f-display); }
+  .rg-pasos-info span { font-size: .88rem; color: #4B5C4E; }
+
+  .rg-pie { background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+
+  @media (max-width: 960px) {
+    .rg-grid { grid-template-columns: 1fr; max-width: 480px; gap: 30px; }
+    .rg-info { display: none; }
+    .rg-pagina { padding: 30px 16px 44px; }
+  }
+  @media (max-width: 480px) {
+    .rg-card { padding: 30px 20px 24px; border-radius: 6px 34px 6px 34px; }
+    .rg-card::before { left: 20px; right: 20px; }
+    .rg-paso span { display: none; }
+    .rg-reglas { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header class="rg-top">
+    <div class="rg-top-in">
+      <a class="marca" href="index.html"><img src="ESCUDOGGMSINFONDO.png" alt="Escudo"> PISE-GGM</a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="oferta.html">Oferta académica</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="matriculas.html">Matrículas</a>
+        <a href="login.html">Ingresar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="rg-pagina">
+    <div class="rg-grid">
+
+      <!-- TARJETA -->
+      <section class="rg-card" aria-labelledby="titulo">
+        <div class="rg-marca">
+          <img src="ESCUDOGGMSINFONDO.png" alt="Escudo Colegio Gabriel García Márquez">
+          <div><strong>PISE-GGM</strong><span>Recuperar contraseña</span></div>
+        </div>
+
+        <div id="vistaForm">
+          <h1 id="titulo">¿Olvidaste tu contraseña?</h1>
+          <p class="rg-sub" id="subtitulo">Escribe tu documento y el correo con el que te registraste.</p>
+
+          <div class="rg-pasos" aria-hidden="true">
+            <div class="rg-paso activo" id="pasoA"><b>1</b><span>Tus datos</span></div>
+            <div class="rg-linea" id="linea1"><i></i></div>
+            <div class="rg-paso" id="pasoB"><b>2</b><span>Código</span></div>
+            <div class="rg-linea" id="linea2"><i></i></div>
+            <div class="rg-paso" id="pasoC"><b>3</b><span>Nueva clave</span></div>
+          </div>
+
+          <form id="recForm" novalidate>
+
+            <!-- PASO 1: documento y correo -->
+            <div id="paso1">
+              <div class="rg-campo">
+                <label for="documento">Número de documento</label>
+                <div class="rg-input">
+                  <i class="bi bi-person-badge ico"></i>
+                  <input type="text" id="documento" placeholder="Ej. 1234567890" inputmode="numeric" autocomplete="username">
+                </div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-campo">
+                <label for="email">Correo electrónico</label>
+                <div class="rg-input"><i class="bi bi-envelope ico"></i><input type="email" id="email" placeholder="correo@ejemplo.com" autocomplete="email"></div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-botones">
+                <button type="submit" class="rg-btn lleno" id="btnEnviar"><i class="bi bi-send"></i> ENVIAR CÓDIGO</button>
+              </div>
+            </div>
+
+            <!-- PASO 2: código -->
+            <div id="paso2" hidden>
+              <p class="rg-sub" style="margin-bottom: 14px;">Te enviamos un código de 6 dígitos a <strong id="correoEnviado"></strong>. Vence en 10 minutos.</p>
+
+              <div class="rg-campo">
+                <label for="codigo">Código de verificación</label>
+                <div class="rg-input">
+                  <input type="text" id="codigo" class="codigo" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+                </div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-botones">
+                <button type="button" class="rg-btn borde" id="btnAtras1"><i class="bi bi-arrow-left"></i> Atrás</button>
+                <button type="submit" class="rg-btn lleno" id="btnVerificar"><i class="bi bi-shield-check"></i> VERIFICAR</button>
+              </div>
+              <button type="button" class="rg-enlace" id="btnReenviar" disabled>Reenviar código</button>
+            </div>
+
+            <!-- PASO 3: contraseña nueva -->
+            <div id="paso3" hidden>
+              <div class="rg-campo">
+                <label for="nueva">Contraseña nueva</label>
+                <div class="rg-input">
+                  <i class="bi bi-lock ico"></i>
+                  <input type="password" id="nueva" class="con-ojo" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+                  <button type="button" class="rg-ojo" data-ojo="nueva" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="rg-fuerza" id="fuerza"><i></i><i></i><i></i><i></i></div>
+                <div class="rg-fuerza-txt" id="fuerzaTxt">Usa mayúsculas, números y símbolos</div>
+                <ul class="rg-reglas" id="reglas">
+                  <li data-regla="largo"><i class="bi bi-circle"></i> Mínimo 6 caracteres</li>
+                  <li data-regla="mayus"><i class="bi bi-circle"></i> Una mayúscula</li>
+                  <li data-regla="minus"><i class="bi bi-circle"></i> Una minúscula</li>
+                  <li data-regla="numero"><i class="bi bi-circle"></i> Un número</li>
+                  <li data-regla="especial"><i class="bi bi-circle"></i> Un carácter especial</li>
+                </ul>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-campo">
+                <label for="repetir">Confirmar contraseña</label>
+                <div class="rg-input">
+                  <i class="bi bi-lock-fill ico"></i>
+                  <input type="password" id="repetir" class="con-ojo" placeholder="Repite tu contraseña" autocomplete="new-password">
+                  <button type="button" class="rg-ojo" data-ojo="repetir" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="rg-err"></div>
+              </div>
+
+              <div class="rg-botones">
+                <button type="submit" class="rg-btn lleno" id="btnGuardar"><i class="bi bi-check2-circle"></i> RECUPERAR CONTRASEÑA</button>
+              </div>
+            </div>
+          </form>
+
+          <div id="mensaje" class="rg-msg" role="alert" hidden></div>
+
+          <p class="rg-pie-card">¿Ya la recordaste? <a href="login.html">Iniciar sesión</a></p>
+        </div>
+
+        <!-- ÉXITO -->
+        <div id="vistaExito" class="rg-exito" hidden>
+          <div class="check"><i class="bi bi-check-lg"></i></div>
+          <h2>¡Contraseña actualizada!</h2>
+          <p>Ya puedes ingresar con tu documento y tu contraseña nueva.</p>
+          <p>Te llevamos al inicio de sesión en unos segundos...</p>
+          <a class="rg-btn lleno" href="login.html"><i class="bi bi-box-arrow-in-right"></i> IR A INGRESAR</a>
+        </div>
+      </section>
+
+      <!-- PANEL LATERAL -->
+      <aside class="rg-info">
+        <h2>Recupera tu acceso a <em>PISE-GGM</em></h2>
+        <p>En tres pasos sencillos vuelves a entrar a la plataforma del Colegio Gabriel García Márquez.</p>
+        <ol class="rg-pasos-info">
+          <li><div class="num"><i class="bi bi-person-badge"></i></div><div><strong>1. Confirma tus datos</strong><span>Escribe tu documento y el correo con el que te registraste.</span></div></li>
+          <li><div class="num"><i class="bi bi-envelope-check"></i></div><div><strong>2. Escribe el código</strong><span>Te llega un código de 6 dígitos que vence en 10 minutos.</span></div></li>
+          <li><div class="num"><i class="bi bi-key"></i></div><div><strong>3. Crea tu nueva contraseña</strong><span>Y vuelve a ingresar con tu documento.</span></div></li>
+        </ol>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="rg-pie">© 2026 Colegio Gabriel García Márquez · Plataforma PISE-GGM</footer>
+
+  <script>
+  (function () {
+
+    const API = "http://localhost:8081/api/recuperacion";
+
+    const $ = function (id) { return document.getElementById(id); };
+    const form = $("recForm");
+
+    let paso = 1;
+    let documento = "";   // se guardan para usarlos en los pasos siguientes
+    let correo = "";
+    let codigo = "";
+    let temporizador = null;
+
+    // ---------- Reglas de la contraseña ----------
+    const REGLAS = {
+      largo:    function (c) { return c.length >= 6; },
+      mayus:    function (c) { return /\p{Lu}/u.test(c); },
+      minus:    function (c) { return /\p{Ll}/u.test(c); },
+      numero:   function (c) { return /\d/.test(c); },
+      especial: function (c) { return /[^\p{L}\p{N}\s]/u.test(c); }
+    };
+
+    function cumpleTodo(clave) {
+      return Object.keys(REGLAS).every(function (k) { return REGLAS[k](clave); });
+    }
+
+    // ---------- Errores por campo ----------
+    function error(id, texto) {
+      const campo = $(id).closest(".rg-campo");
+      campo.querySelector(".rg-input").classList.toggle("error", !!texto);
+      campo.querySelector(".rg-err").textContent = texto || "";
+      return !texto;
+    }
+
+    function mostrarMensaje(texto, tipo) {
+      $("mensaje").textContent = texto || "";
+      $("mensaje").className = "rg-msg" + (tipo === "ok" ? " ok" : "");
+      $("mensaje").hidden = !texto;
+    }
+
+    // ---------- Petición al servidor ----------
+    async function enviar(ruta, datos) {
+      const respuesta = await fetch(API + ruta, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+      });
+
+      let cuerpo = {};
+      try { cuerpo = await respuesta.json(); } catch (e) { /* sin cuerpo */ }
+
+      if (!respuesta.ok) {
+        throw new Error(cuerpo.message || "No se pudo completar la solicitud (error " + respuesta.status + ").");
+      }
+      return cuerpo;
+    }
+
+    // Desactiva el botón mientras se espera la respuesta y muestra los errores
+    async function conCarga(boton, textoOcupado, accion) {
+      const original = boton.innerHTML;
+      boton.disabled = true;
+      if (textoOcupado) boton.innerHTML = textoOcupado;
+      mostrarMensaje("");
+      try {
+        await accion();
+      } catch (err) {
+        console.error(err);
+        mostrarMensaje(err instanceof TypeError
+          ? "No fue posible conectar con el servidor. Verifica que el backend esté encendido."
+          : err.message);
+      } finally {
+        if (textoOcupado) boton.innerHTML = original;
+        if (boton.id !== "btnReenviar") boton.disabled = false;
+      }
+    }
+
+    // ---------- Pasos ----------
+    const TITULOS = [
+      ["¿Olvidaste tu contraseña?", "Escribe tu documento y el correo con el que te registraste."],
+      ["Revisa tu correo", "Escribe el código de 6 dígitos que te enviamos."],
+      ["Crea tu nueva contraseña", "Elige una contraseña segura para volver a ingresar."]
+    ];
+
+    function irAPaso(n) {
+      paso = n;
+      ["paso1", "paso2", "paso3"].forEach(function (id, i) { $(id).hidden = (i + 1) !== n; });
+
+      ["pasoA", "pasoB", "pasoC"].forEach(function (id, i) {
+        const el = $(id);
+        el.className = "rg-paso " + ((i + 1) === n ? "activo" : ((i + 1) < n ? "hecho" : ""));
+        el.querySelector("b").innerHTML = (i + 1) < n ? '<i class="bi bi-check-lg"></i>' : String(i + 1);
+      });
+      $("linea1").classList.toggle("llena", n >= 2);
+      $("linea2").classList.toggle("llena", n >= 3);
+
+      $("titulo").textContent = TITULOS[n - 1][0];
+      $("subtitulo").textContent = TITULOS[n - 1][1];
+      mostrarMensaje("");
+    }
+
+    // El botón "Reenviar" se habilita a los 60 segundos
+    function iniciarEspera() {
+      const boton = $("btnReenviar");
+      let resta = 60;
+      boton.disabled = true;
+      boton.textContent = "Reenviar código (60 s)";
+      clearInterval(temporizador);
+
+      temporizador = setInterval(function () {
+        resta--;
+        if (resta <= 0) {
+          clearInterval(temporizador);
+          boton.disabled = false;
+          boton.textContent = "Reenviar código";
+        } else {
+          boton.textContent = "Reenviar código (" + resta + " s)";
+        }
+      }, 1000);
+    }
+
+    // ---------- Paso 1: pedir el código ----------
+    async function pedirCodigo() {
+      let ok = true;
+      ok = error("documento", /^[0-9A-Za-z]{5,15}$/.test($("documento").value.trim()) ? "" : "Escribe un documento válido (5 a 15 caracteres).") && ok;
+      ok = error("email", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim()) ? "" : "Escribe un correo válido.") && ok;
+      if (!ok) return;
+
+      await conCarga($("btnEnviar"), "ENVIANDO...", async function () {
+        const doc = $("documento").value.trim();
+        const mail = $("email").value.trim();
+        await enviar("/solicitar", { documento: doc, email: mail });
+        documento = doc;
+        correo = mail;
+        $("correoEnviado").textContent = correo;
+        $("codigo").value = "";
+        irAPaso(2);
+        iniciarEspera();
+      });
+    }
+
+    $("btnReenviar").addEventListener("click", async function () {
+      await conCarga($("btnReenviar"), null, async function () {
+        await enviar("/solicitar", { documento: documento, email: correo });
+        mostrarMensaje("Te enviamos un código nuevo.", "ok");
+        iniciarEspera();
+      });
+      if (!$("btnReenviar").textContent.includes("(")) $("btnReenviar").disabled = false;
+    });
+
+    $("btnAtras1").addEventListener("click", function () { clearInterval(temporizador); irAPaso(1); });
+
+    // ---------- Paso 2: verificar el código ----------
+    async function verificarCodigo() {
+      const escrito = $("codigo").value.trim();
+      if (!error("codigo", /^\d{6}$/.test(escrito) ? "" : "El código tiene 6 dígitos.")) return;
+
+      await conCarga($("btnVerificar"), "VERIFICANDO...", async function () {
+        await enviar("/verificar", { documento: documento, codigo: escrito });
+        codigo = escrito;
+        clearInterval(temporizador);
+        irAPaso(3);
+      });
+    }
+
+    // ---------- Paso 3: guardar la contraseña nueva ----------
+    async function guardarContrasena() {
+      const nueva = $("nueva").value;
+      let ok = true;
+      ok = error("nueva", cumpleTodo(nueva) ? "" : "Debe tener 6 caracteres, mayúscula, minúscula, número y un carácter especial.") && ok;
+      ok = error("repetir", $("repetir").value === nueva ? "" : "Las contraseñas no coinciden.") && ok;
+      if (!ok) return;
+
+      await conCarga($("btnGuardar"), "GUARDANDO...", async function () {
+        await enviar("/restablecer", { documento: documento, codigo: codigo, nuevaPassword: nueva });
+        $("vistaForm").hidden = true;
+        $("vistaExito").hidden = false;
+        setTimeout(function () { window.location.href = "login.html"; }, 4000);
+      });
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (paso === 1) pedirCodigo();
+      else if (paso === 2) verificarCodigo();
+      else guardarContrasena();
+    });
+
+    // Limpia el error al escribir
+    form.addEventListener("input", function (e) {
+      if (e.target.id) error(e.target.id, "");
+    });
+
+    // ---------- Ojo de contraseña ----------
+    document.querySelectorAll("[data-ojo]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        const inp = $(b.dataset.ojo);
+        const oculta = inp.type === "password";
+        inp.type = oculta ? "text" : "password";
+        b.innerHTML = oculta ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+      });
+    });
+
+    // ---------- Fuerza de la contraseña y requisitos ----------
+    $("nueva").addEventListener("input", function () {
+      const p = $("nueva").value;
+
+      let n = 0;
+      if (p.length >= 6) n++;
+      if (p.length >= 10) n++;
+      if (/[A-Z]/.test(p) && /[a-z]/.test(p)) n++;
+      if (/[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p)) n++;
+      if (!p) n = 0;
+      $("fuerza").className = "rg-fuerza" + (n ? " n" + n : "");
+      $("fuerzaTxt").textContent = !p ? "Usa mayúsculas, números y símbolos"
+        : ["", "Muy débil", "Podría ser mejor", "Buena", "¡Excelente!"][n];
+
+      document.querySelectorAll("#reglas li").forEach(function (li) {
+        const cumple = REGLAS[li.dataset.regla](p);
+        li.classList.toggle("cumple", cumple);
+        li.querySelector("i").className = cumple ? "bi bi-check-circle-fill" : "bi bi-circle";
+      });
+    });
+
+  })();
+  </script>
+</body>
+</html>

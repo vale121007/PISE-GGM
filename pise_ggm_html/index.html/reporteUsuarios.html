@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Usuarios | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="reporteusuarios.css">
+</head>
+<body class="pn-body">
+
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="administrador.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>PISE-GGM<br>Panel</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <span class="pn-usuario"><i class="bi bi-person-circle"></i><span id="nombreUsuario"></span></span>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a href="administrador.html" class="nav-volver"><i class="bi bi-arrow-left"></i> Volver al panel</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="pn-hero mini">
+    <div class="pn-hero-caja">
+      <div>
+        <p class="pn-migas"><a href="administrador.html">Panel</a> <i class="bi bi-chevron-right"></i> Usuarios</p>
+        <h1>Gestión de <em>usuarios</em></h1>
+        <p class="pn-sub">Crea, edita y elimina usuarios, y asigna el rol de cada uno</p>
+      </div>
+      <button id="btnNuevo" class="boton boton-lleno"><i class="bi bi-person-plus-fill"></i> Nuevo usuario</button>
+    </div>
+  </header>
+
+  <main class="pn-main">
+    <div class="pn-contenido">
+
+      <div id="alerta" class="pn-alerta oculto" role="alert"></div>
+
+      <!-- NUEVOS USUARIOS POR APROBAR (solo se ve si hay solicitudes) -->
+      <section id="seccionPendientes" class="pn-pendientes oculto" aria-label="Solicitudes pendientes">
+        <div class="pn-pendientes-cab">
+          <i class="bi bi-bell-fill"></i>
+          <span>Nuevos usuarios por aprobar</span>
+          <span class="pn-cuenta" id="contadorPendientes">0</span>
+        </div>
+        <ul class="pn-pend-lista" id="listaPendientes"></ul>
+      </section>
+
+      <!-- FILTROS -->
+      <div class="pn-filtros">
+        <div>
+          <label class="pn-label" for="filtroRol">Filtrar por rol</label>
+          <select id="filtroRol" class="pn-input">
+            <option value="">Todos los roles</option>
+          </select>
+        </div>
+        <div class="pn-buscar-caja">
+          <label class="pn-label" for="buscador">Buscar</label>
+          <div class="pn-buscar">
+            <i class="bi bi-search"></i>
+            <input type="text" id="buscador" class="pn-input" placeholder="Nombre, apellido o documento...">
+          </div>
+        </div>
+        <span class="pn-contador" id="contador">0 registros</span>
+      </div>
+
+      <!-- TABLA -->
+      <div class="pn-tabla-caja">
+        <table class="pn-tabla">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tipo Doc.</th>
+              <th>Documento</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Teléfono</th>
+              <th>Correo</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTabla">
+            <tr><td colspan="9" class="pn-vacio">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="pn-pie">
+    <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- MODAL CREAR / EDITAR -->
+  <dialog class="pn-modal" id="modalUsuario" aria-labelledby="tituloModal">
+    <form id="formUsuario" novalidate>
+      <div class="pn-modal-cab">
+        <h2 id="tituloModal">Nuevo usuario</h2>
+        <button type="button" class="pn-cerrar" data-cerrar aria-label="Cerrar"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="pn-modal-cuerpo">
+        <div class="pn-form-grilla">
+          <div>
+            <label class="pn-label" for="fTipoDoc">Tipo de documento</label>
+            <select id="fTipoDoc" class="pn-input" required>
+              <option value="">Selecciona...</option>
+              <option>CC</option>
+              <option>TI</option>
+              <option>CE</option>
+              <option>RC</option>
+            </select>
+          </div>
+          <div>
+            <label class="pn-label" for="fNumDoc">Número de documento</label>
+            <input id="fNumDoc" class="pn-input" required>
+          </div>
+          <div>
+            <label class="pn-label" for="fNombre">Nombre</label>
+            <input id="fNombre" class="pn-input" required>
+          </div>
+          <div>
+            <label class="pn-label" for="fApellido">Apellido</label>
+            <input id="fApellido" class="pn-input" required>
+          </div>
+          <div>
+            <label class="pn-label" for="fEmail">Correo</label>
+            <input id="fEmail" type="email" class="pn-input" required>
+          </div>
+          <div>
+            <label class="pn-label" for="fTelefono">Teléfono</label>
+            <input id="fTelefono" class="pn-input">
+          </div>
+          <div>
+            <label class="pn-label" for="fPassword">Contraseña</label>
+            <input id="fPassword" type="password" class="pn-input" autocomplete="new-password">
+            <div class="pn-ayuda" id="ayudaPassword"></div>
+          </div>
+          <div id="grupoRol">
+            <label class="pn-label" for="fRol">Rol</label>
+            <select id="fRol" class="pn-input"></select>
+          </div>
+
+          <!-- Solo aparece al crear un usuario con rol Acudiente -->
+          <div class="pn-bloque oculto" id="bloqueAcudiente">
+            <div class="pn-form-grilla">
+              <div class="ancho">
+                <label class="pn-label" for="fParentesco">Parentesco</label>
+                <input id="fParentesco" class="pn-input" list="listaParentesco" placeholder="Padre, madre, abuelo...">
+                <datalist id="listaParentesco">
+                  <option value="Padre"></option>
+                  <option value="Madre"></option>
+                  <option value="Abuelo"></option>
+                  <option value="Abuela"></option>
+                  <option value="Tío"></option>
+                  <option value="Tía"></option>
+                  <option value="Otro"></option>
+                </datalist>
+              </div>
+              <div class="ancho">
+                <label class="pn-label" for="buscaEstudiante">Estudiantes a cargo</label>
+                <input id="buscaEstudiante" class="pn-input pn-input-sm" placeholder="Buscar por nombre o documento...">
+                <div id="listaEstudiantes" class="pn-lista-est"></div>
+                <div class="pn-ayuda" id="contadorSel">Ninguno seleccionado</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Solo aparece al crear un usuario con rol Docente -->
+          <div class="pn-bloque oculto" id="bloqueDocente">
+            <div class="pn-tres">
+              <div>
+                <label class="pn-label" for="fEspecialidad">Especialidad</label>
+                <input id="fEspecialidad" class="pn-input">
+              </div>
+              <div>
+                <label class="pn-label" for="fLicenciatura">Licenciatura</label>
+                <input id="fLicenciatura" class="pn-input">
+              </div>
+              <div>
+                <label class="pn-label" for="fGradoFormacion">Grado de formación</label>
+                <input id="fGradoFormacion" class="pn-input" placeholder="Maestría, especialización...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Solo aparece al crear un usuario con rol Estudiante -->
+          <div class="pn-bloque oculto" id="bloqueEstudiante">
+            <label class="pn-label" for="fAcudiente">Acudiente</label>
+            <select id="fAcudiente" class="pn-input">
+              <option value="">Sin acudiente por ahora</option>
+            </select>
+          </div>
+        </div>
+        <div id="errorForm" class="pn-error-form"></div>
+      </div>
+      <div class="pn-modal-pie">
+        <button type="button" class="pn-btn pn-btn-borde" data-cerrar>Cancelar</button>
+        <button type="submit" class="pn-btn pn-btn-ok" id="btnGuardar"><i class="bi bi-check2-circle"></i> Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="script.js"></script>
+  <script>
+
+    const API = "http://localhost:8081/api";
+
+    // ---- Guardia de sesión: solo Administrador ----
+    const token = localStorage.getItem("token");
+    const usuarioRaw = localStorage.getItem("usuario");
+
+    if (!token || !usuarioRaw) {
+      window.location.href = "login.html";
+    }
+
+    const usuarioSesion = JSON.parse(usuarioRaw);
+    const rolSesion = ((usuarioSesion.rol && usuarioSesion.rol.nombreRol) || "").trim();
+
+    if (rolSesion.toUpperCase() !== "ADMINISTRADOR") {
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("nombreUsuario").textContent =
+      usuarioSesion.nombre + " " + usuarioSesion.apellido;
+
+    // ---- Estado en memoria ----
+    let usuarios = [];
+    let roles = [];
+    let estudiantes = [];               // se cargan la primera vez que se elige el rol Acudiente
+    const seleccionados = new Set();    // ids de los estudiantes marcados
+    let acudientes = [];                // se cargan al elegir el rol Estudiante
+    let pendientes = [];                // usuarios registrados que esperan aprobación
+    let idEditando = null;   // null = creando
+    const dlg = document.getElementById("modalUsuario");
+    const modal = {
+      show: function () { dlg.showModal(); },
+      hide: function () { dlg.close(); }
+    };
+    dlg.querySelectorAll("[data-cerrar]").forEach(function (b) {
+      b.addEventListener("click", function () { dlg.close(); });
+    });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+
+    // ---- Utilidades ----
+    // Envía la petición con el token y convierte los errores en mensajes legibles.
+    async function peticion(url, opciones) {
+      const config = Object.assign({
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token }
+      }, opciones || {});
+
+      const respuesta = await fetch(url, config);
+
+      if (!respuesta.ok) {
+        let mensaje = "El servidor respondió con estado " + respuesta.status;
+        try {
+          const datos = await respuesta.json();
+          if (datos.message) mensaje = datos.message;
+        } catch (e) { /* sin cuerpo JSON */ }
+        throw new Error(mensaje);
+      }
+
+      const texto = await respuesta.text();
+      try { return JSON.parse(texto); } catch (e) { return texto; }
+    }
+
+    function limpiar(valor) {
+      if (valor === null || valor === undefined || valor === "") return "—";
+      return String(valor).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function esYo(u) {
+      return usuarioSesion.idUsuario !== undefined && u.idUsuario === usuarioSesion.idUsuario;
+    }
+
+    function avisar(mensaje, tipo) {
+      const caja = document.getElementById("alerta");
+      caja.className = "pn-alerta pn-" + tipo;
+      caja.textContent = mensaje;
+      setTimeout(function () { caja.className = "pn-alerta oculto"; }, 5000);
+    }
+
+    // ---- Carga ----
+    async function cargarRoles() {
+      roles = await peticion(API + "/rol");
+
+      const opciones = roles.map(function (r) {
+        return '<option value="' + r.idRol + '">' + limpiar(r.nombreRol.trim()) + "</option>";
+      }).join("");
+
+      document.getElementById("filtroRol").innerHTML =
+        '<option value="">Todos los roles</option>' + opciones;
+      document.getElementById("fRol").innerHTML = opciones;
+    }
+
+    async function cargarUsuarios() {
+      const idRol = document.getElementById("filtroRol").value;
+      const url = idRol
+        ? API + "/reportes/usuarios/rol/" + idRol
+        : API + "/reportes/usuarios";
+
+      try {
+        usuarios = await peticion(url);
+        pintarTabla();
+      } catch (error) {
+        console.error(error);
+        document.getElementById("cuerpoTabla").innerHTML =
+          '<tr><td colspan="9" class="pn-vacio pn-error">' +
+          limpiar(error.message) + "</td></tr>";
+        document.getElementById("contador").textContent = "0 registros";
+      }
+    }
+
+    // ---- Render ----
+    function opcionesRol(idSeleccionado) {
+      const sinRol = idSeleccionado ? "" : '<option value="" selected>Sin rol</option>';
+      return sinRol + roles.map(function (r) {
+        const sel = r.idRol === idSeleccionado ? " selected" : "";
+        return '<option value="' + r.idRol + '"' + sel + ">" + limpiar(r.nombreRol.trim()) + "</option>";
+      }).join("");
+    }
+
+    function pintarTabla() {
+      const texto = document.getElementById("buscador").value.trim().toLowerCase();
+
+      const filtrados = usuarios.filter(function (u) {
+        if (texto === "") return true;
+        return (u.nombre || "").toLowerCase().includes(texto) ||
+               (u.apellido || "").toLowerCase().includes(texto) ||
+               (u.numeroDocumento || "").toLowerCase().includes(texto);
+      });
+
+      document.getElementById("contador").textContent = filtrados.length + " registros";
+
+      if (filtrados.length === 0) {
+        document.getElementById("cuerpoTabla").innerHTML =
+          '<tr><td colspan="9" class="pn-vacio">Sin resultados</td></tr>';
+        return;
+      }
+
+      document.getElementById("cuerpoTabla").innerHTML = filtrados.map(function (u, i) {
+        const yo = esYo(u);
+        return "<tr>" +
+          '<td data-label="#">' + (i + 1) + "</td>" +
+          '<td data-label="Tipo doc.">' + limpiar(u.tipoDocumento) + "</td>" +
+          '<td data-label="Documento">' + limpiar(u.numeroDocumento) + "</td>" +
+          '<td data-label="Nombre">' + limpiar(u.nombre) + "</td>" +
+          '<td data-label="Apellido">' + limpiar(u.apellido) + "</td>" +
+          '<td data-label="Teléfono">' + limpiar(u.telefono) + "</td>" +
+          '<td data-label="Correo">' + limpiar(u.email) + "</td>" +
+          '<td data-label="Rol"><select class="pn-input pn-input-sm sel-rol" data-id="' + u.idUsuario + '"' +
+            (yo ? " disabled" : "") + ' aria-label="Rol de ' + limpiar(u.nombre) + '">' +
+            opcionesRol(u.idRol) + "</select></td>" +
+          '<td data-label="Acciones" style="white-space:nowrap">' +
+            '<button class="pn-btn-ico" data-accion="editar" data-id="' +
+              u.idUsuario + '" title="Editar"><i class="bi bi-pencil"></i></button>' +
+            '<button class="pn-btn-ico pn-peligro" data-accion="eliminar" data-id="' +
+              u.idUsuario + '" title="' + (yo ? "No puedes eliminar tu propia cuenta" : "Eliminar") + '"' +
+              (yo ? " disabled" : "") + '><i class="bi bi-trash"></i></button>' +
+          "</td></tr>";
+      }).join("");
+    }
+
+    // ---- Solicitudes de registro pendientes ----
+    async function cargarPendientes() {
+      try {
+        pendientes = await peticion(API + "/usuario/pendientes");
+      } catch (e) {
+        pendientes = [];
+      }
+      pintarPendientes();
+    }
+
+    function pintarPendientes() {
+      document.getElementById("seccionPendientes").classList.toggle("oculto", pendientes.length === 0);
+      document.getElementById("contadorPendientes").textContent = pendientes.length;
+
+      document.getElementById("listaPendientes").innerHTML = pendientes.map(function (u) {
+        const idRol = u.rol ? u.rol.idRol : null;
+        return '<li class="pn-pend-item">' +
+          '<div class="pn-pend-info">' +
+            '<div class="pn-pend-nombre">' + limpiar(u.nombre) + " " + limpiar(u.apellido) + "</div>" +
+            '<div class="pn-pend-datos">' + limpiar(u.tipoDocumento) + " " + limpiar(u.numeroDocumento) +
+              " · " + limpiar(u.email) + "</div>" +
+          "</div>" +
+          '<select class="pn-input pn-input-sm sel-rol-pend" aria-label="Rol para ' +
+            limpiar(u.nombre) + '">' + opcionesRol(idRol) + "</select>" +
+          '<button class="pn-btn pn-btn-ok" data-pend="aceptar" data-id="' + u.idUsuario + '">' +
+            '<i class="bi bi-check-lg"></i> Aceptar</button>' +
+          '<button class="pn-btn pn-btn-rechazar" data-pend="rechazar" data-id="' + u.idUsuario + '">' +
+            '<i class="bi bi-x-lg"></i> Rechazar</button>' +
+          '<div class="extra-pend oculto"></div>' +
+          "</li>";
+      }).join("");
+    }
+
+    // Carga (una sola vez) las listas que se necesitan para relacionar estudiantes y acudientes
+    async function asegurarAcudientes() {
+      if (acudientes.length > 0) return;
+      try {
+        acudientes = await peticion(API + "/reportes/acudientes");
+      } catch (e) {
+        avisar("No se pudo cargar la lista de acudientes.", "danger");
+      }
+    }
+
+    async function asegurarEstudiantes() {
+      if (estudiantes.length > 0) return;
+      try {
+        estudiantes = await peticion(API + "/reportes/estudiantes");
+      } catch (e) {
+        avisar("No se pudo cargar la lista de estudiantes.", "danger");
+      }
+    }
+
+    // Muestra, dentro de la solicitud, los datos que corresponden al rol elegido
+    async function pintarExtraPendiente(li) {
+      const extra = li.querySelector(".extra-pend");
+      const rol = ROLES_POR_ID[Number(li.querySelector(".sel-rol-pend").value)] || "";
+
+      extra.classList.toggle("oculto", !["ESTUDIANTE", "ACUDIENTE", "DOCENTE"].includes(rol));
+
+      if (rol === "ESTUDIANTE") {
+        await asegurarAcudientes();
+        extra.innerHTML =
+          '<label class="pn-label">Acudiente</label>' +
+          '<select class="pn-input pn-input-sm pend-acudiente" style="width:100%">' +
+            '<option value="">Sin acudiente por ahora</option>' +
+            acudientes.map(function (a) {
+              return '<option value="' + a.idAcudiente + '">' + limpiar(a.nombre) + " " +
+                     limpiar(a.apellido) + " (" + limpiar(a.numeroDocumento) + ")</option>";
+            }).join("") +
+          "</select>" +
+          '<div class="pn-ayuda">Si su acudiente también está pendiente, acéptalo primero para que aparezca aquí.</div>';
+
+      } else if (rol === "ACUDIENTE") {
+        await asegurarEstudiantes();
+        extra.innerHTML =
+          '<div class="pn-mini-grilla">' +
+            "<div>" +
+              '<label class="pn-label">Parentesco</label>' +
+              '<input class="pn-input pn-input-sm pend-parentesco" list="listaParentesco" placeholder="Padre, madre..." style="width:100%">' +
+            "</div>" +
+            "<div>" +
+              '<label class="pn-label">Estudiantes a cargo</label>' +
+              '<select multiple size="4" class="pn-input pn-input-sm pend-estudiantes" style="width:100%">' +
+                estudiantes.map(function (s) {
+                  return '<option value="' + s.idEstudiante + '">' + limpiar(s.nombre) + " " +
+                         limpiar(s.apellido) + " (" + limpiar(s.numeroDocumento) + ")</option>";
+                }).join("") +
+              "</select>" +
+              '<div class="pn-ayuda">Mantén Ctrl para marcar varios. Si su hijo también está pendiente, acéptalo primero.</div>' +
+            "</div>" +
+          "</div>";
+
+      } else if (rol === "DOCENTE") {
+        extra.innerHTML =
+          '<div class="pn-mini-grilla">' +
+            '<div><label class="pn-label">Especialidad</label>' +
+              '<input class="pn-input pn-input-sm pend-especialidad" style="width:100%"></div>' +
+            '<div><label class="pn-label">Licenciatura</label>' +
+              '<input class="pn-input pn-input-sm pend-licenciatura" style="width:100%"></div>' +
+            '<div><label class="pn-label">Grado de formación</label>' +
+              '<input class="pn-input pn-input-sm pend-grado" style="width:100%"></div>' +
+          "</div>";
+      }
+    }
+
+    // ---- Datos propios del rol Acudiente ----
+    // Rol elegido en el formulario. Se detecta por su id (el mismo que usa el backend),
+    // así no depende de cómo esté escrito el nombre del rol en la base de datos.
+    const ROLES_POR_ID = { 1: "ESTUDIANTE", 2: "ACUDIENTE", 3: "DOCENTE", 4: "ADMINISTRADOR" };
+
+    function rolElegido() {
+      return ROLES_POR_ID[Number(document.getElementById("fRol").value)] || "";
+    }
+
+    async function cargarAcudientes() {
+      if (acudientes.length > 0) return;
+      try {
+        acudientes = await peticion(API + "/reportes/acudientes");
+        document.getElementById("fAcudiente").innerHTML =
+          '<option value="">Sin acudiente por ahora</option>' +
+          acudientes.map(function (a) {
+            return '<option value="' + a.idAcudiente + '">' + limpiar(a.nombre) + " " +
+                   limpiar(a.apellido) + " (" + limpiar(a.numeroDocumento) + ")</option>";
+          }).join("");
+      } catch (e) {
+        avisar("No se pudo cargar la lista de acudientes.", "danger");
+      }
+    }
+
+    async function actualizarBloqueAcudiente() {
+      const creando = idEditando === null;
+      const rol = rolElegido();
+
+      document.getElementById("bloqueDocente").classList.toggle("oculto", !(creando && rol === "DOCENTE"));
+      document.getElementById("bloqueEstudiante").classList.toggle("oculto", !(creando && rol === "ESTUDIANTE"));
+      if (creando && rol === "ESTUDIANTE") cargarAcudientes();
+
+      const mostrar = creando && rol === "ACUDIENTE";
+      document.getElementById("bloqueAcudiente").classList.toggle("oculto", !mostrar);
+      if (!mostrar) return;
+
+      try {
+        if (estudiantes.length === 0) {
+          estudiantes = await peticion(API + "/reportes/estudiantes");
+        }
+        pintarEstudiantes();
+      } catch (e) {
+        document.getElementById("listaEstudiantes").textContent = "No se pudo cargar la lista de estudiantes.";
+      }
+    }
+
+    function pintarEstudiantes() {
+      const texto = document.getElementById("buscaEstudiante").value.trim().toLowerCase();
+
+      const lista = estudiantes.filter(function (e) {
+        const base = (e.nombre || "") + " " + (e.apellido || "") + " " + (e.numeroDocumento || "");
+        return base.toLowerCase().includes(texto);
+      });
+
+      document.getElementById("listaEstudiantes").innerHTML = lista.length === 0
+        ? '<div class="pn-vacio-mini">Sin estudiantes</div>'
+        : lista.map(function (e) {
+            const acu = e.acudienteNombre || e.acudiente;
+            const tiene = acu && acu !== "Sin acudiente";
+            return '<div class="pn-check">' +
+              '<input class="chk-est" type="checkbox" id="est' + e.idEstudiante +
+                '" data-id="' + e.idEstudiante + '"' + (seleccionados.has(e.idEstudiante) ? " checked" : "") + ">" +
+              '<label for="est' + e.idEstudiante + '">' +
+                limpiar(e.nombre) + " " + limpiar(e.apellido) + " (" + limpiar(e.numeroDocumento) + ")" +
+                (tiene ? ' <span class="pn-a-cargo">— hoy a cargo de ' + limpiar(acu) + "</span>" : "") +
+              "</label></div>";
+          }).join("");
+
+      document.getElementById("contadorSel").textContent = seleccionados.size === 0
+        ? "Ninguno seleccionado"
+        : seleccionados.size + " seleccionado(s)";
+    }
+
+    // ---- Modal ----
+    function abrirModal(usuario) {
+      idEditando = usuario ? usuario.idUsuario : null;
+      document.getElementById("formUsuario").reset();
+      document.getElementById("errorForm").textContent = "";
+      document.getElementById("tituloModal").textContent = usuario ? "Editar usuario" : "Nuevo usuario";
+      document.getElementById("grupoRol").classList.toggle("oculto", !!usuario);
+      document.getElementById("ayudaPassword").textContent = usuario
+        ? "Déjala vacía para conservar la contraseña actual."
+        : "Obligatoria para crear el usuario.";
+
+      if (usuario) {
+        document.getElementById("fTipoDoc").value = usuario.tipoDocumento || "";
+        document.getElementById("fNumDoc").value = usuario.numeroDocumento || "";
+        document.getElementById("fNombre").value = usuario.nombre || "";
+        document.getElementById("fApellido").value = usuario.apellido || "";
+        document.getElementById("fEmail").value = usuario.email || "";
+        document.getElementById("fTelefono").value = usuario.telefono || "";
+      }
+      seleccionados.clear();
+      document.getElementById("buscaEstudiante").value = "";
+      actualizarBloqueAcudiente();
+      modal.show();
+    }
+
+    async function guardar(evento) {
+      evento.preventDefault();
+      const error = document.getElementById("errorForm");
+      error.textContent = "";
+
+      const dto = {
+        tipoDocumento: document.getElementById("fTipoDoc").value,
+        numeroDocumento: document.getElementById("fNumDoc").value.trim(),
+        nombre: document.getElementById("fNombre").value.trim(),
+        apellido: document.getElementById("fApellido").value.trim(),
+        email: document.getElementById("fEmail").value.trim(),
+        telefono: document.getElementById("fTelefono").value.trim()
+      };
+      const password = document.getElementById("fPassword").value;
+
+      if (!dto.tipoDocumento || !dto.numeroDocumento || !dto.nombre || !dto.apellido || !dto.email) {
+        error.textContent = "Completa tipo y número de documento, nombre, apellido y correo.";
+        return;
+      }
+      if (idEditando === null && !password) {
+        error.textContent = "La contraseña es obligatoria para crear un usuario.";
+        return;
+      }
+      if (password) dto.password = password;
+
+      try {
+        if (idEditando === null) {
+          dto.rol = { idRol: Number(document.getElementById("fRol").value) };
+          const nombreRol = rolElegido();
+          if (nombreRol === "ACUDIENTE") {
+            dto.parentesco = document.getElementById("fParentesco").value.trim();
+            dto.estudiantesIds = Array.from(seleccionados);
+          } else if (nombreRol === "DOCENTE") {
+            dto.especialidad = document.getElementById("fEspecialidad").value.trim();
+            dto.licenciatura = document.getElementById("fLicenciatura").value.trim();
+            dto.gradoFormacion = document.getElementById("fGradoFormacion").value.trim();
+          } else if (nombreRol === "ESTUDIANTE") {
+            const idAcudiente = document.getElementById("fAcudiente").value;
+            if (idAcudiente) dto.idAcudiente = Number(idAcudiente);
+          }
+          await peticion(API + "/usuario", { method: "POST", body: JSON.stringify(dto) });
+          acudientes = [];    // el nuevo usuario puede ser un acudiente o un estudiante:
+          estudiantes = [];   // se vuelven a pedir al servidor la próxima vez
+        } else {
+          await peticion(API + "/usuario/" + idEditando, { method: "PUT", body: JSON.stringify(dto) });
+        }
+        modal.hide();
+        avisar(idEditando === null ? "Usuario creado." : "Usuario actualizado.", "success");
+        await cargarUsuarios();
+      } catch (e) {
+        error.textContent = e.message;
+      }
+    }
+
+    // ---- Acciones de la tabla ----
+    async function cambiarRol(id, idRol) {
+      try {
+        await peticion(API + "/usuario/" + id + "/rol/" + idRol, { method: "PUT" });
+        avisar("Rol actualizado.", "success");
+      } catch (e) {
+        avisar(e.message, "danger");
+      }
+      await cargarUsuarios();
+    }
+
+    async function eliminar(id) {
+      try {
+        await peticion(API + "/usuario/" + id, { method: "DELETE" });
+        avisar("Usuario eliminado.", "success");
+      } catch (e) {
+        avisar(e.message, "danger");
+      }
+      await cargarUsuarios();
+    }
+
+    // ---- Eventos ----
+    document.getElementById("btnNuevo").addEventListener("click", function () { abrirModal(null); });
+    document.getElementById("formUsuario").addEventListener("submit", guardar);
+    document.getElementById("filtroRol").addEventListener("change", cargarUsuarios);
+    document.getElementById("buscador").addEventListener("input", pintarTabla);
+
+    document.getElementById("listaPendientes").addEventListener("click", async function (e) {
+      const boton = e.target.closest("button[data-pend]");
+      if (!boton) return;
+
+      const id = Number(boton.dataset.id);
+      const u = pendientes.find(function (x) { return x.idUsuario === id; });
+      if (!u) return;
+      const nombre = u.nombre + " " + u.apellido;
+
+      try {
+        if (boton.dataset.pend === "aceptar") {
+          const idRol = Number(boton.closest("li").querySelector(".sel-rol-pend").value);
+          if (!idRol) {
+            avisar("Elige un rol para " + nombre + " antes de aceptar.", "warning");
+            return;
+          }
+          // Datos de relación según el rol (acudiente, parentesco, estudiantes, etc.)
+          const li = boton.closest("li");
+          const datos = {};
+          const rolNombre = ROLES_POR_ID[idRol];
+
+          if (rolNombre === "ESTUDIANTE") {
+            const sel = li.querySelector(".pend-acudiente");
+            if (sel && sel.value) datos.idAcudiente = Number(sel.value);
+          } else if (rolNombre === "ACUDIENTE") {
+            const par = li.querySelector(".pend-parentesco");
+            if (par) datos.parentesco = par.value.trim();
+            datos.estudiantesIds = Array.from(li.querySelectorAll(".pend-estudiantes option:checked"))
+              .map(function (o) { return Number(o.value); });
+          } else if (rolNombre === "DOCENTE") {
+            const val = function (clase) {
+              const campo = li.querySelector(clase);
+              return campo ? campo.value.trim() : "";
+            };
+            datos.especialidad = val(".pend-especialidad");
+            datos.licenciatura = val(".pend-licenciatura");
+            datos.gradoFormacion = val(".pend-grado");
+          }
+
+          await peticion(API + "/usuario/" + id + "/aprobar/" + idRol,
+            { method: "PUT", body: JSON.stringify(datos) });
+          acudientes = [];    // el usuario aceptado puede ser un acudiente o un estudiante nuevo:
+          estudiantes = [];   // se vuelven a pedir las listas la próxima vez
+          avisar(nombre + " ya puede ingresar al sistema.", "success");
+        } else {
+          if (!confirm("¿Rechazar la solicitud de " + nombre + "?")) return;
+          await peticion(API + "/usuario/" + id + "/rechazar", { method: "PUT" });
+          avisar("Se rechazó la solicitud de " + nombre + ".", "success");
+        }
+      } catch (err) {
+        avisar(err.message, "danger");
+      }
+
+      await cargarPendientes();
+      await cargarUsuarios();
+    });
+
+    document.getElementById("listaPendientes").addEventListener("change", function (e) {
+      if (e.target.classList.contains("sel-rol-pend")) pintarExtraPendiente(e.target.closest("li"));
+    });
+
+    document.getElementById("fRol").addEventListener("change", actualizarBloqueAcudiente);
+    document.getElementById("buscaEstudiante").addEventListener("input", pintarEstudiantes);
+    document.getElementById("listaEstudiantes").addEventListener("change", function (e) {
+      if (!e.target.classList.contains("chk-est")) return;
+      const id = Number(e.target.dataset.id);
+      if (e.target.checked) { seleccionados.add(id); } else { seleccionados.delete(id); }
+      pintarEstudiantes();
+    });
+
+    document.getElementById("cuerpoTabla").addEventListener("click", function (e) {
+      const boton = e.target.closest("button[data-accion]");
+      if (!boton) return;
+      const id = Number(boton.dataset.id);
+      const u = usuarios.find(function (x) { return x.idUsuario === id; });
+      if (!u) return;
+
+      if (boton.dataset.accion === "editar") {
+        abrirModal(u);
+      } else if (confirm("¿Eliminar a " + u.nombre + " " + u.apellido + "? Esta acción no se puede deshacer.")) {
+        eliminar(id);
+      }
+    });
+
+    document.getElementById("cuerpoTabla").addEventListener("change", function (e) {
+      if (!e.target.classList.contains("sel-rol")) return;
+      const id = Number(e.target.dataset.id);
+      const u = usuarios.find(function (x) { return x.idUsuario === id; });
+      const idRol = Number(e.target.value);
+      if (!u || !idRol) return;
+
+      const nombreRol = e.target.options[e.target.selectedIndex].text;
+      if (confirm("¿Cambiar el rol de " + u.nombre + " " + u.apellido + " a " + nombreRol + "?")) {
+        cambiarRol(id, idRol);
+      } else {
+        pintarTabla();   // vuelve al rol anterior
+      }
+    });
+
+    // ---- Inicio ----
+    cargarRoles().then(function () {
+      cargarPendientes();
+      return cargarUsuarios();
+    }).catch(function (e) {
+      console.error(e);
+      avisar("No se pudo conectar con el servidor. Verifica que el backend esté encendido.", "danger");
+    });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Estudiantes | PISE-GGM</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+  /* ============================================================
+     REPORTE DE ESTUDIANTES: estilos propios de la página.
+     Colores, tipografía, navbar y modo noche vienen de style.css.
+  ============================================================ */
+
+  body.pn-body { background: var(--blanco); min-height: 100vh; display: flex; flex-direction: column; }
+  .pn-main { flex: 1; }
+
+  /* ---------- Barra superior ---------- */
+  .pn-usuario {
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .92rem; color: var(--verde-900);
+    background: var(--verde-100); border: 1px solid var(--borde); padding: 7px 14px; border-radius: 4px 14px 4px 14px;
+  }
+  .pn-usuario i { color: var(--dorado-600); }
+  :root[data-tema="noche"] .pn-usuario { color: var(--amarillo-300); }
+
+  .nav-volver {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 700;
+    background: var(--verde-700); color: #FFFDF8; padding: .6rem 1.2rem; border-radius: 30px; margin-left: 8px;
+    transition: background .2s ease, transform .15s ease;
+  }
+  .nav-volver:hover { background: var(--verde-900); transform: translateY(-1px); }
+  @media (max-width: 880px) {
+    .nav-volver { margin: 10px 4px 0; align-self: flex-start; }
+    .pn-usuario { margin: 6px 4px 0; align-self: flex-start; }
+  }
+
+  /* ---------- Encabezado ---------- */
+  .pn-hero {
+    position: relative; overflow: hidden; color: #fff; padding: 38px 24px 50px;
+    background: radial-gradient(circle at 88% 15%, rgba(242,194,48,.25), transparent 45%),
+                linear-gradient(135deg, var(--verde-900), var(--verde-700));
+  }
+  .pn-hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+  }
+  .pn-hero-caja { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .pn-migas { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--amarillo-500); margin-bottom: 6px; }
+  .pn-migas a { color: var(--amarillo-300); }
+  .pn-migas a:hover { text-decoration: underline; }
+  .pn-migas i { font-size: .65rem; }
+  .pn-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.15; color: #fff; }
+  .pn-hero h1 em { color: var(--amarillo-500); font-style: normal; }
+  .pn-hero p.pn-sub { margin-top: 8px; max-width: 560px; color: #e8f1e9; }
+  .pn-rol {
+    display: inline-flex; align-items: center; gap: 14px; padding: 16px 22px; background: rgba(255,253,248,.1);
+    border: 1px solid rgba(247,219,122,.4); border-radius: 6px 28px 6px 28px; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .pn-rol i { font-size: 2rem; color: var(--amarillo-500); }
+  .pn-rol strong { display: block; font-family: var(--f-display); font-size: 1.15rem; color: var(--amarillo-300); line-height: 1.1; }
+  .pn-rol span { font-size: .78rem; color: #cfe3d3; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ---------- Contenido ---------- */
+  .pn-contenido { max-width: 1180px; margin: 0 auto; padding: 36px 24px 64px; }
+
+  /* ---------- Filtros ---------- */
+  .pn-filtros {
+    display: grid; grid-template-columns: minmax(180px, 1fr) 2fr auto; gap: 16px; align-items: end; margin-bottom: 20px;
+  }
+  .pn-label { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--verde-900); margin-bottom: 6px; }
+  :root[data-tema="noche"] .pn-label { color: var(--amarillo-300); }
+  .pn-input {
+    width: 100%; padding: 11px 12px; border-radius: 4px 14px 4px 14px; border: 2px solid var(--borde);
+    background: var(--blanco); color: var(--tinta); font-family: inherit; font-size: .95rem;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .pn-input:focus { outline: none; border-color: var(--amarillo-500); box-shadow: 0 0 0 4px rgba(242,194,48,.25); }
+  .pn-buscar { position: relative; }
+  .pn-buscar i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--verde-700); pointer-events: none; }
+  .pn-buscar .pn-input { padding-left: 36px; }
+  .pn-contador { font-weight: 700; font-size: .85rem; color: var(--verde-700); padding-bottom: 12px; white-space: nowrap; }
+  :root[data-tema="noche"] .pn-contador { color: var(--amarillo-300); }
+
+  /* ---------- Tabla ---------- */
+  .pn-tabla-caja {
+    background: var(--blanco); border: 1px solid var(--borde); border-radius: 6px 24px 6px 24px;
+    box-shadow: 0 8px 20px rgba(15,61,46,.08); overflow-x: auto;
+  }
+  .pn-tabla { width: 100%; border-collapse: collapse; min-width: 1000px; }
+  .pn-tabla th {
+    text-align: left; padding: 12px 14px; background: var(--verde-900); color: var(--amarillo-300);
+    font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+  }
+  .pn-tabla td { padding: 10px 14px; border-bottom: 1px solid var(--borde); color: var(--tinta); font-size: .9rem; vertical-align: middle; }
+  .pn-tabla tbody tr:hover { background: var(--verde-100); }
+  .pn-vacio { text-align: center; color: var(--tinta-suave); padding: 24px !important; }
+  .pn-error { color: #c0392b; font-weight: 600; }
+
+  /* Chip del curso */
+  .pn-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pn-chips li {
+    background: var(--verde-100); color: var(--verde-900); border: 1px solid var(--borde);
+    border-radius: 4px 12px 4px 12px; padding: 3px 10px; font-size: .78rem; font-weight: 600;
+  }
+  :root[data-tema="noche"] .pn-chips li { color: var(--amarillo-300); }
+
+  /* ---------- Pie ---------- */
+  .pn-pie { background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+
+  /* ---------- Celular: cada fila se vuelve una tarjeta ---------- */
+  @media (max-width: 860px) {
+    .pn-filtros { grid-template-columns: 1fr; }
+    .pn-contador { padding-bottom: 0; }
+    .pn-tabla { min-width: 0; display: block; }
+    .pn-tabla thead { display: none; }
+    .pn-tabla tbody { display: block; }
+    .pn-tabla tr { display: block; padding: 10px 14px; border-bottom: 6px solid var(--verde-100); }
+    .pn-tabla td {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      border: 0; padding: 6px 0; text-align: right; word-break: break-word;
+    }
+    .pn-tabla td::before {
+      content: attr(data-label); font-weight: 700; font-size: .75rem; letter-spacing: .05em;
+      text-transform: uppercase; color: var(--verde-700); text-align: left; flex-shrink: 0;
+    }
+    .pn-tabla td[colspan] { display: block; text-align: center; }
+    .pn-tabla td[colspan]::before { content: none; }
+  }
+  @media (max-width: 600px) {
+    .pn-hero { padding: 36px 24px 50px; }
+    .pn-contenido { padding: 30px 16px 56px; }
+  }
+  </style>
+</head>
+<body class="pn-body">
+
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="administrador.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>PISE-GGM<br>Panel</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <span class="pn-usuario"><i class="bi bi-person-circle"></i><span id="nombreUsuario"></span></span>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a href="administrador.html" class="nav-volver"><i class="bi bi-arrow-left"></i> Volver al panel</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ENCABEZADO -->
+  <header class="pn-hero mini">
+    <div class="pn-hero-caja">
+      <div>
+        <p class="pn-migas"><a href="administrador.html">Panel</a> <i class="bi bi-chevron-right"></i> Estudiantes</p>
+        <h1>Reporte de <em>estudiantes</em></h1>
+        <p class="pn-sub">Estudiantes matriculados, su curso actual y su acudiente</p>
+      </div>
+      <div class="pn-rol">
+        <i class="bi bi-mortarboard-fill"></i>
+        <div><strong>Estudiantes</strong><span>Consulta</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pn-main">
+    <div class="pn-contenido">
+
+      <!-- FILTROS -->
+      <div class="pn-filtros">
+        <div>
+          <label class="pn-label" for="filtroCurso">Filtrar por curso</label>
+          <select id="filtroCurso" class="pn-input">
+            <option value="">Todos los cursos</option>
+          </select>
+        </div>
+        <div class="pn-buscar-caja">
+          <label class="pn-label" for="buscador">Buscar</label>
+          <div class="pn-buscar">
+            <i class="bi bi-search"></i>
+            <input type="text" id="buscador" class="pn-input" placeholder="Nombre, apellido o documento...">
+          </div>
+        </div>
+        <span class="pn-contador" id="contador">0 registros</span>
+      </div>
+
+      <!-- TABLA -->
+      <div class="pn-tabla-caja">
+        <table class="pn-tabla">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tipo Doc.</th>
+              <th>Documento</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Teléfono</th>
+              <th>Correo</th>
+              <th>Curso</th>
+              <th>Acudiente</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTabla">
+            <tr><td colspan="9" class="pn-vacio">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="pn-pie">
+    <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="script.js"></script>
+  <script>
+  (function () {
+
+    const API_BASE = "http://localhost:8081/api/reportes";
+
+    // ---- Guardia de sesión: solo Administrador ----
+    const token = localStorage.getItem("token");
+    const usuarioRaw = localStorage.getItem("usuario");
+
+    if (!token || !usuarioRaw) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    let usuarioSesion;
+    try {
+      usuarioSesion = JSON.parse(usuarioRaw);
+    } catch (e) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const rolSesion = ((usuarioSesion.rol && usuarioSesion.rol.nombreRol) || "").trim();
+
+    if (rolSesion.toUpperCase() !== "ADMINISTRADOR") {
+      window.location.href = "login.html";
+      return;
+    }
+
+    document.getElementById("nombreUsuario").textContent =
+      usuarioSesion.nombre + " " + usuarioSesion.apellido;
+
+    // ---- Estado ----
+    let estudiantes = [];
+    const cabeceras = { "Authorization": "Bearer " + token };
+
+    // ---- Carga inicial ----
+    async function cargarTodo() {
+      mostrarCargando();
+      try {
+        const [respEstudiantes, respCursos] = await Promise.all([
+          fetch(API_BASE + "/estudiantes", { headers: cabeceras }),
+          fetch(API_BASE + "/cursos", { headers: cabeceras })
+        ]);
+
+        if (!respEstudiantes.ok || !respCursos.ok) {
+          throw new Error("El servidor respondió con error");
+        }
+
+        estudiantes = await respEstudiantes.json();
+        const cursos = await respCursos.json();
+
+        llenarFiltroCursos(cursos);
+        pintarTabla();
+
+      } catch (error) {
+        console.error(error);
+        mostrarError("No se pudo conectar con el servidor. Verifica que el backend esté encendido.");
+      }
+    }
+
+    function llenarFiltroCursos(cursos) {
+      const select = document.getElementById("filtroCurso");
+      cursos
+        .sort(function (a, b) { return String(a.grado || "").localeCompare(String(b.grado || "")); })
+        .forEach(function (c) {
+          const opcion = document.createElement("option");
+          opcion.value = c.idCurso;
+          opcion.textContent = c.grado + " - " + c.anio;
+          select.appendChild(opcion);
+        });
+    }
+
+    // ---- Render ----
+    function pintarTabla() {
+
+      const texto = document.getElementById("buscador").value.trim().toLowerCase();
+      const idCursoFiltro = document.getElementById("filtroCurso").value;
+
+      const filtrados = estudiantes.filter(function (e) {
+        if (idCursoFiltro && String(e.idCurso) !== idCursoFiltro) return false;
+        if (texto === "") return true;
+        const nombre = (e.nombre || "").toLowerCase();
+        const apellido = (e.apellido || "").toLowerCase();
+        const documento = (e.numeroDocumento || "").toLowerCase();
+        return nombre.includes(texto) || apellido.includes(texto) || documento.includes(texto);
+      });
+
+      const cuerpo = document.getElementById("cuerpoTabla");
+      document.getElementById("contador").textContent = filtrados.length + " registros";
+
+      if (filtrados.length === 0) {
+        cuerpo.innerHTML = '<tr><td colspan="9" class="pn-vacio">Sin resultados</td></tr>';
+        return;
+      }
+
+      cuerpo.innerHTML = filtrados.map(function (e, indice) {
+        return "<tr>" +
+          '<td data-label="#">' + (indice + 1) + "</td>" +
+          '<td data-label="Tipo doc.">' + limpiar(e.tipoDocumento) + "</td>" +
+          '<td data-label="Documento">' + limpiar(e.numeroDocumento) + "</td>" +
+          '<td data-label="Nombre">' + limpiar(e.nombre) + "</td>" +
+          '<td data-label="Apellido">' + limpiar(e.apellido) + "</td>" +
+          '<td data-label="Teléfono">' + limpiar(e.telefono) + "</td>" +
+          '<td data-label="Correo">' + limpiar(e.email) + "</td>" +
+          '<td data-label="Curso">' + chipCurso(e.cursoActual) + "</td>" +
+          '<td data-label="Acudiente">' + limpiar(e.acudienteNombre) + "</td>" +
+          "</tr>";
+      }).join("");
+    }
+
+    function chipCurso(valor) {
+      if (valor === null || valor === undefined || valor === "") return "—";
+      return '<ul class="pn-chips"><li>' + limpiar(valor) + "</li></ul>";
+    }
+
+    function mostrarCargando() {
+      document.getElementById("cuerpoTabla").innerHTML =
+        '<tr><td colspan="9" class="pn-vacio">Cargando...</td></tr>';
+    }
+
+    function mostrarError(mensaje) {
+      document.getElementById("cuerpoTabla").innerHTML =
+        '<tr><td colspan="9" class="pn-vacio pn-error">' + limpiar(mensaje) + "</td></tr>";
+      document.getElementById("contador").textContent = "0 registros";
+    }
+
+    // Evita inyectar HTML desde los datos
+    function limpiar(valor) {
+      if (valor === null || valor === undefined || valor === "") return "—";
+      return String(valor).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // ---- Eventos ----
+    document.getElementById("filtroCurso").addEventListener("change", pintarTabla);
+    document.getElementById("buscador").addEventListener("input", pintarTabla);
+
+    // ---- Inicio ----
+    cargarTodo();
+
+  })();
+  </script>
+
+</body>
+</html> 

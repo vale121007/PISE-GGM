@@ -1,160 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Matrículas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admisiones | Colegio Gabriel García Márquez</title>
 
-<style>
-body { 
-  font-family: Arial; 
-  margin:0;   
-  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
-  position: relative;
-}
-
-/* OSCURECER FONDO */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
-
-/* HEADER */
-header {
-  background: white;
-  padding: 15px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header h1 {
-  color: #285900;
-}
-
-nav a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-}
-
-nav a:hover {
-  color: #2e7d32;
-}
-
-/* CONTENIDO */
-.container {
-  padding:40px;
-  text-align:center;
-  color:white;
-}
-
-.container h1 {
-  margin-bottom: 20px;
-}
-
-/* FORMULARIO */
-.form-box {
-  background: rgba(255,255,255,0.9);
-  max-width: 500px;
-  margin: auto;
-  padding: 30px;
-  border-radius: 15px;
-  color: black;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-/* BOTÓN */
-button {
-  width: 100%;
-  padding: 12px;
-  background: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background: #1b5e20;
-}
-
-/* FOOTER */
-footer {
-  background: #29860a;
-  color: white;
-  text-align: center;
-  padding: 5px;
-  margin-top: 50px;
-}
-</style>
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="matriculas.css">
 </head>
-
 <body>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="oferta.html">Oferta Academica</a>
-    <a href="quienessomos.html">¿Quienes somos?</a>
-    <a href="calendario.html">Calendario</a>
-    <a href="matriculas.html">Matriculas</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="login.html">Login</a>
-  </nav>
-</header>
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
 
-<div class="container">
-  <h1>Formulario de Matrícula</h1>
-
-  <div class="form-box">
-    <form onsubmit="return enviarFormulario()">
-      
-      <input type="text" placeholder="Nombre completo" required>
-      <input type="text" placeholder="Documento" required>
-      <input type="email" placeholder="Correo electrónico" required>
-
-      <select required>
-        <option value="">Seleccione grado</option>
-        <option>Primaria</option>
-        <option>Secundaria</option>
-        <option>Bachillerato</option>
-      </select>
-
-      <input type="text" placeholder="Teléfono" required>
-
-      <button>Enviar solicitud</button>
-
-    </form>
+  <!-- BARRA SUPERIOR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <span><i class="bi bi-telephone-fill"></i>87472004</span>
+        <span><i class="bi bi-envelope-fill"></i>colggm@gmail.com</span>
+        <span><i class="bi bi-geo-alt-fill"></i>Tv. 3 #67-14, Tunja, Boyacá</span>
+      </div>
+      <div class="topbar-der">
+        <a href="noticias.html">Noticias</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="login.html">Campus virtual</a>
+        <a href="matriculas.html" class="tb-admision">ADMISIONES ABIERTAS</a>
+      </div>
+    </div>
   </div>
-</div>
 
-<footer>
-  <p>©2026 PISE-GGM</p>
-</footer>
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="index.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>Gabriel García<br>Márquez</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="quienessomos.html">¿Quiénes somos?</a>
+        <a href="oferta.html">Oferta académica</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="matriculas.html" class="activo">Aspirante</a>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a class="nav-cta" href="login.html">Ingresar</a>
+      </div>
+    </div>
+  </nav>
 
-<script>
-function enviarFormulario(){
-  alert("Matrícula enviada correctamente");
-  return false;
-}
-</script>
+  <!-- ENCABEZADO -->
+  <header class="pag-hero">
+    <div class="pag-hero-contenido">
+      <p class="pag-migas"><a href="index.html">Inicio</a> <i class="bi bi-chevron-right"></i> Admisiones</p>
+      <p class="pag-etiqueta">Admisiones 2027</p>
+      <h1>Todo lo que necesitas saber para <em>dar el primer paso</em>.</h1>
+      <p class="pag-lead">Aquí encuentras los requisitos, videos y contenido para conocer de cerca el proceso de admisión al Colegio Gabriel García Márquez.</p>
+    </div>
+  </header>
 
+  <!-- PASOS (atajos a cada sección) -->
+  <div class="pasos">
+    <div class="pasos-caja">
+      <a class="paso-item" href="#requisitos">
+        <span class="paso-num">1</span>
+        <div><h4>Requisitos</h4><p>Descarga el documento oficial</p></div>
+      </a>
+      <a class="paso-item" href="#videos">
+        <span class="paso-num">2</span>
+        <div><h4>Conoce el colegio</h4><p>Mira los videos del proceso</p></div>
+      </a>
+      <a class="paso-item" href="#contacto">
+        <span class="paso-num">3</span>
+        <div><h4>Contáctanos</h4><p>Resolvemos tus preguntas</p></div>
+      </a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- PASO 1: REQUISITOS -->
+    <section class="mat-seccion" id="requisitos" aria-labelledby="requisitos-titulo">
+      <div class="mat-caja req-grilla">
+        <div>
+          <p class="etiqueta">Paso 1</p>
+          <h2 id="requisitos-titulo">Requisitos de admisión</h2>
+          <p class="mat-intro">Todo comienza con los documentos. Descarga la guía oficial y reúne lo necesario antes de inscribirte.</p>
+        </div>
+
+        <div class="req-card">
+          <div class="req-icono"><i class="bi bi-file-earmark-pdf-fill" aria-hidden="true"></i></div>
+          <div>
+            <h3>Documento de requisitos 2026</h3>
+            <p>Descarga la lista completa de documentos y requisitos para conocer el proceso de admisión.</p>
+            <a href="PROCESO DE ADMISIÓN Y REQUISITOS 2026.pdf" class="boton boton-oscuro" download>
+              <i class="bi bi-download"></i> Descargar PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PASO 2: VIDEOS -->
+    <section class="mat-seccion suave" id="videos" aria-labelledby="videos-titulo">
+      <div class="mat-caja">
+        <div class="mat-encabezado">
+          <p class="etiqueta">Paso 2</p>
+          <h2 id="videos-titulo">Conoce el proceso en video</h2>
+          <p class="mat-intro">Dos videos cortos que te guían en lo esencial antes de inscribirte.</p>
+        </div>
+
+        <div class="videos-grilla">
+          <figure class="video-card">
+            <video controls preload="metadata">
+              <source src="VIDEOROBOTICA.mp4" type="video/mp4">
+              Tu navegador no soporta la reproducción de este video.
+            </video>
+            <figcaption><i class="bi bi-play-circle-fill"></i> ¿Sabías que en el GGM aprendemos robótica?</figcaption>
+          </figure>
+
+          <figure class="video-card">
+            <video controls preload="metadata">
+              <source src="VIDEOINSCRIPCION.mp4" type="video/mp4">
+              Tu navegador no soporta la reproducción de este video.
+            </video>
+            <figcaption><i class="bi bi-play-circle-fill"></i> Un vistazo a la vida escolar</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOTO: INSTALACIONES -->
+    <section class="foto-seccion despues-suave">
+      <figure class="foto-marco" style="--img:url('ADMISIONS.jpeg')">
+        <img src="ADMISIONS.jpeg" alt="Instalaciones del Colegio Gabriel García Márquez">
+        <figcaption><i class="bi bi-geo-alt-fill"></i> Nuestras instalaciones te esperan.</figcaption>
+      </figure>
+    </section>
+
+    <!-- INFORMACIÓN -->
+    <section class="mat-seccion suave" aria-labelledby="info-titulo">
+      <div class="mat-caja info-grilla">
+        <div class="info-texto">
+          <p class="etiqueta">Información</p>
+          <h2 id="info-titulo">Un colegio técnico en sistemas</h2>
+          <p>Somos un Colegio Técnico en Sistemas, del mismo modo, a partir del 2025 nuestros estudiantes se forman como PROGRAMADORES desde preescolar hasta bachillerato y serán certificados según los módulos cursados.</p>
+          <p class="info-saludo">Los esperamos!!, bendiciones.</p>
+          <p class="info-firma">Att. Área de admisión y administrativa, Colegio Gabriel García Márquez.</p>
+        </div>
+
+        <div class="info-datos">
+          <div class="dato"><i class="bi bi-pc-display-horizontal"></i><div><strong>Técnico en Sistemas</strong><span>Formación técnica en el colegio</span></div></div>
+          <div class="dato"><i class="bi bi-cpu"></i><div><strong>Programadores desde preescolar</strong><span>Hasta bachillerato, desde 2025</span></div></div>
+          <div class="dato"><i class="bi bi-patch-check-fill"></i><div><strong>Certificación por módulos</strong><span>Según los módulos cursados</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMUNIDAD: INSTAGRAM Y YOUTUBE -->
+    <section class="mat-seccion" aria-labelledby="comunidad-titulo">
+      <div class="mat-caja">
+        <div class="mat-encabezado">
+          <p class="etiqueta">Nuestra comunidad</p>
+          <h2 id="comunidad-titulo">Historias que nos enorgullecen</h2>
+        </div>
+
+        <div class="com-grilla">
+          <article class="com-card instagram">
+            <div class="com-icono"><i class="bi bi-instagram"></i></div>
+            <p class="etiqueta">Síguenos</p>
+            <h3>Orgullo GGM</h3>
+            <p>Con gran orgullo y profunda gratitud, compartimos las experiencias exitosas de algunos de nuestros queridos egresados, historias que validan nuestro compromiso con la excelencia. Conozca sus logros en este enlace:</p>
+            <a href="https://www.instagram.com/p/DQw10MokbQl/?igsh=OHpyaGs3bTcxNXB6" target="_blank" rel="noopener" class="boton boton-oscuro">
+              <i class="bi bi-instagram"></i> Síguenos en Instagram
+            </a>
+          </article>
+
+          <article class="com-card youtube">
+            <div class="com-icono"><i class="bi bi-youtube"></i></div>
+            <p class="etiqueta">Nuestro canal de YouTube</p>
+            <h3>Testimonio de algunas de nuestras Familias GGM</h3>
+            <p>Compartimos algunos testimonios de Padres e hijos que han formado parte de nuestro Colegio a lo largo de varios años, en el 2025 se han graduado con nosotros como Bachilleres con doble titulación.</p>
+            <a href="https://youtu.be/Lht5xq9c2VU?si=ww47QjHhousNIhcQ" target="_blank" rel="noopener" class="boton boton-oscuro">
+              <i class="bi bi-youtube"></i> Ver canal de YouTube
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOTO: GRANDES NOTICIAS -->
+    <section class="foto-seccion">
+      <figure class="foto-marco" style="--img:url('GRANDES NOTICIAS.jpeg')">
+        <img src="GRANDES NOTICIAS.jpeg" alt="Estudiantes del Colegio Gabriel García Márquez">
+        <figcaption><i class="bi bi-megaphone-fill"></i> Grandes noticias</figcaption>
+      </figure>
+    </section>
+
+    <!-- CTA -->
+    <section class="admision mat-cta" id="contacto" aria-label="Llamado a la acción">
+      <div class="admision-caja">
+        <i class="bi bi-whatsapp"></i>
+        <h2>¿Tienes más preguntas<br>sobre el proceso?</h2>
+        <p>Escríbenos y con gusto te acompañamos en cada paso de la admisión.</p>
+        <a href="https://wa.me/573143316222?text=Hola%2C%20quiero%20formar%20parte%20de" target="_blank" rel="noopener" class="boton boton-lleno">Contáctanos</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pie">
+    <div class="pie-enredadera" aria-hidden="true"></div>
+    <div class="contenedor pie-grilla">
+      <div>
+        <div class="pie-marca">
+          <img src="ESCUDOGGM.jpg" alt="Escudo Colegio Gabriel García Márquez">
+          <h3>Colegio Gabriel<br>García Márquez</h3>
+        </div>
+        <p class="pie-texto">Formamos niños y jóvenes de paz y bien, con rigor académico y valores.</p>
+        <div class="pie-social">
+          <a href="https://www.facebook.com/colggmtunja/?locale=es_LA" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Enlaces rápidos</h4>
+        <ul class="pie-enlaces">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="quienessomos.html">Nosotros</a></li>
+          <li><a href="oferta.html">Académico</a></li>
+          <li><a href="matriculas.html">Proceso de admisión</a></li>
+          <li><a href="login.html">Campus virtual</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Contacto</h4>
+        <ul class="pie-contacto">
+          <li><i class="bi bi-geo-alt-fill"></i><span>Tv. 3 #67-14, Tunja, Boyacá</span></li>
+          <li><i class="bi bi-telephone-fill"></i><span>87472004</span></li>
+          <li><i class="bi bi-envelope-fill"></i><span>colggm@gmail.com</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Boletín</h4>
+        <p class="pie-texto">Recibe noticias y novedades del colegio.</p>
+        <form class="pie-form" onsubmit="return false;">
+          <input type="email" placeholder="Tu correo" aria-label="Correo">
+          <button type="submit" aria-label="Enviar"><i class="bi bi-send-fill"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="contenedor">
+      <hr class="pie-divisor">
+      <div class="pie-inferior">
+        <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+        <div class="pie-legal">
+          <a href="#" onclick="return false;">Políticas de privacidad</a>
+          <a href="#" onclick="return false;">Términos de servicio</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="script.js"></script>
 </body>
 </html>

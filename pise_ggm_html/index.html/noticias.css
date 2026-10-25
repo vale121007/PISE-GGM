@@ -1,0 +1,114 @@
+/* ============================================================
+   PÁGINA DE NOTICIAS — se carga DESPUÉS de style.css
+   Usa las mismas variables (verde, amarillo, dorado, modo noche)
+============================================================ */
+
+/* Enlace activo del menú */
+.nav-links a.activo:not(.nav-cta) { color: var(--verde-700); }
+.nav-links a.activo:not(.nav-cta)::after { transform: scaleX(1); }
+:root[data-tema="noche"] .nav-links a.activo:not(.nav-cta) { color: var(--amarillo-300); }
+
+/* ---------- HERO ---------- */
+.pag-hero {
+  position: relative; color: #fff; overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(242,194,48,.22), transparent 45%),
+    linear-gradient(135deg, var(--verde-900), var(--verde-700));
+  padding: 48px 24px 56px;
+}
+.pag-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+  background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+}
+.pag-hero-contenido { position: relative; max-width: 1180px; margin: 0 auto; }
+.pag-migas { font-size: .85rem; color: #dfeee2; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+.pag-migas a { border-bottom: 1px dotted var(--amarillo-500); }
+.pag-migas a:hover { color: var(--amarillo-300); }
+.pag-migas i { font-size: .7rem; color: var(--amarillo-500); }
+.pag-etiqueta { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo-500); margin-bottom: 8px; }
+.pag-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.12; max-width: 680px; }
+.pag-hero h1 em { color: var(--amarillo-500); font-style: normal; }
+.pag-lead { margin-top: 16px; max-width: 560px; font-size: 1.05rem; color: #e8f1e9; }
+
+/* ---------- TARJETAS DE NOTICIAS ---------- */
+.nt-grilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+@media (max-width: 920px) { .nt-grilla { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) { .nt-grilla { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
+
+.nt-card {
+  display: flex; flex-direction: column; background: var(--blanco);
+  border: 1px solid var(--borde); border-radius: 6px 28px 6px 28px; overflow: hidden;
+  box-shadow: 0 6px 16px rgba(15,61,46,.07);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.nt-card:hover { transform: translateY(-6px); box-shadow: 0 16px 30px rgba(15,61,46,.15); }
+
+/* Marco fijo: la imagen completa se ve (contain) sobre un fondo difuminado de la misma foto */
+.nt-imagen {
+  position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--verde-900);
+  display: flex; align-items: center; justify-content: center;
+}
+.nt-imagen::before {
+  content: ""; position: absolute; inset: -20px; background: var(--img) center / cover no-repeat;
+  filter: blur(18px) brightness(.75); transform: scale(1.1);
+}
+.nt-imagen img {
+  position: relative; z-index: 1; max-width: 88%; max-height: 90%; width: auto; height: auto;
+  object-fit: contain; border-radius: 6px; box-shadow: 0 8px 22px rgba(0,0,0,.35);
+  transition: transform .5s ease;
+}
+.nt-card:hover .nt-imagen img { transform: scale(1.05); }
+.nt-chip {
+  z-index: 2; position: absolute; top: 14px; left: 14px; background: var(--amarillo-500); color: var(--verde-900);
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 3px 10px 3px 10px;
+}
+
+.nt-cuerpo { display: flex; flex-direction: column; flex: 1; padding: 18px 20px 20px; }
+.nt-cuerpo h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.08rem; line-height: 1.3; color: var(--verde-900); margin-bottom: 8px; }
+.nt-cuerpo p { font-size: .88rem; line-height: 1.55; color: var(--tinta-suave); margin-bottom: 6px; }
+.nt-cuerpo .nt-destacado { color: var(--dorado-600); font-weight: 700; }
+.nt-leer {
+  margin-top: auto; padding-top: 10px; display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: .9rem; color: var(--verde-700);
+}
+.nt-leer i { transition: transform .2s ease; }
+.nt-leer:hover { color: var(--verde-900); }
+.nt-leer:hover i { transform: translateX(5px); }
+
+:root[data-tema="noche"] .nt-cuerpo h3 { color: var(--amarillo-300); }
+:root[data-tema="noche"] .nt-leer { color: var(--amarillo-300); }
+:root[data-tema="noche"] .nt-leer:hover { color: var(--amarillo-500); }
+
+/* ---------- INSTAGRAM ---------- */
+.nt-instagram { background: var(--verde-100); }
+
+.ig-perfil {
+  display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
+  background: var(--blanco); border: 1px solid var(--borde); border-radius: 6px 28px 6px 28px;
+  padding: 24px 28px; margin-bottom: 26px; box-shadow: 0 6px 16px rgba(15,61,46,.07);
+}
+.ig-avatar { width: 78px; height: 78px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 3px solid var(--amarillo-500); }
+.ig-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.ig-info h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; margin-bottom: 2px; }
+.ig-info h3 a { color: var(--verde-900); }
+.ig-info h3 a:hover { color: var(--verde-700); }
+:root[data-tema="noche"] .ig-info h3 a { color: var(--amarillo-300); }
+.ig-sub { font-size: .85rem; font-weight: 700; color: var(--tinta); margin-bottom: 4px; }
+.ig-bio { font-size: .9rem; color: var(--tinta-suave); max-width: 560px; }
+
+.ig-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-width: 880px; margin: 0 auto; }
+.ig-post { position: relative; display: block; aspect-ratio: 1; border-radius: 6px 20px 6px 20px; overflow: hidden; background: var(--verde-900); }
+.ig-post img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.ig-post:hover img { transform: scale(1.08); }
+.ig-caption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 10px 10px; color: #fff;
+  font-size: .75rem; font-weight: 600; line-height: 1.3;
+  background: linear-gradient(0deg, rgba(10,30,22,.88), transparent);
+}
+@media (max-width: 900px) { .ig-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .ig-grid { grid-template-columns: repeat(2, 1fr); } .ig-perfil { padding: 20px; } }
+
+/* ---------- CTA ---------- */
+.admision { padding-top: 56px; }
+@media (max-width: 760px) { .pag-hero { padding: 40px 24px 48px; } }

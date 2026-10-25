@@ -1,0 +1,118 @@
+/* ============================================================
+   PANELES DE USUARIO (administrador, docente, estudiante, acudiente)
+   Se carga DESPUÉS de style.css. Colores, tipografía, menú y modo
+   noche vienen de style.css. Aquí solo va lo propio de los paneles.
+============================================================ */
+
+body.pn-body { background: var(--blanco); min-height: 100vh; display: flex; flex-direction: column; }
+.pn-main { flex: 1; }
+
+/* ---------- Barra superior del panel ---------- */
+.pn-usuario {
+  display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .92rem; color: var(--verde-900);
+  background: var(--verde-100); border: 1px solid var(--borde); padding: 7px 14px; border-radius: 4px 14px 4px 14px;
+}
+.pn-usuario i { color: var(--dorado-600); }
+:root[data-tema="noche"] .pn-usuario { color: var(--amarillo-300); }
+.pn-salir {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; font-family: inherit; font-size: .92rem; font-weight: 700;
+  background: var(--verde-700); color: #FFFDF8; padding: .6rem 1.2rem; border-radius: 30px; margin-left: 8px; transition: background .2s ease, transform .15s ease;
+}
+.pn-salir:hover { background: #8f2d2d; transform: translateY(-1px); }
+@media (max-width: 880px) { .pn-salir { margin: 10px 4px 0; align-self: flex-start; } .pn-usuario { margin: 6px 4px 0; align-self: flex-start; } }
+
+/* ---------- Bienvenida ---------- */
+.pn-hero {
+  position: relative; overflow: hidden; color: #fff; padding: 46px 24px 58px;
+  background: radial-gradient(circle at 88% 15%, rgba(242,194,48,.25), transparent 45%),
+              linear-gradient(135deg, var(--verde-900), var(--verde-700));
+}
+.pn-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+  background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+}
+.pn-hero-caja { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.pn-fecha { font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo-500); margin-bottom: 6px; }
+.pn-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.15; color: #fff; }
+.pn-hero h1 em { color: var(--amarillo-500); font-style: normal; }
+.pn-hero p.pn-sub { margin-top: 10px; max-width: 560px; color: #e8f1e9; }
+.pn-rol {
+  display: inline-flex; align-items: center; gap: 14px; padding: 16px 22px; background: rgba(255,253,248,.1);
+  border: 1px solid rgba(247,219,122,.4); border-radius: 6px 28px 6px 28px; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.pn-rol i { font-size: 2rem; color: var(--amarillo-500); }
+.pn-rol strong { display: block; font-family: var(--f-display); font-size: 1.15rem; color: var(--amarillo-300); line-height: 1.1; }
+.pn-rol span { font-size: .78rem; color: #cfe3d3; letter-spacing: .08em; text-transform: uppercase; }
+
+/* ---------- Contenido ---------- */
+.pn-contenido { max-width: 1180px; margin: 0 auto; padding: 44px 24px 70px; }
+
+/* Aviso de pendientes */
+.pn-aviso {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 36px; padding: 16px 22px;
+  background: #fff6f5; border: 1px solid #e8b4b0; border-left: 6px solid #c0392b; border-radius: 4px 22px 4px 22px;
+  box-shadow: 0 8px 20px rgba(192,57,43,.1); animation: pnSubir .5s ease both;
+}
+:root[data-tema="noche"] .pn-aviso { background: #2a1614; border-color: #6b2f2a; }
+.pn-aviso > i { font-size: 1.4rem; color: #c0392b; animation: pnCampana 2.6s ease-in-out infinite; transform-origin: 50% 0; }
+.pn-aviso-texto { flex: 1; min-width: 220px; color: var(--tinta); }
+.pn-aviso-texto strong { color: #c0392b; }
+:root[data-tema="noche"] .pn-aviso-texto strong { color: #ff9a8f; }
+.pn-aviso .boton { background: #c0392b; color: #fff; padding: .6rem 1.3rem; font-size: .9rem; }
+.pn-aviso .boton:hover { background: #a02e22; }
+@keyframes pnCampana { 0%,60%,100% { transform: rotate(0); } 66% { transform: rotate(14deg); } 72% { transform: rotate(-12deg); } 78% { transform: rotate(8deg); } 84% { transform: rotate(-4deg); } }
+@keyframes pnSubir { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* Grupos */
+.pn-grupo { margin-bottom: 46px; }
+.pn-grupo-titulo { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.pn-grupo-titulo h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.5rem; color: var(--verde-900); }
+:root[data-tema="noche"] .pn-grupo-titulo h2 { color: var(--amarillo-300); }
+.pn-grupo-titulo::after { content: ""; flex: 1; height: 4px; border-radius: 4px; background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 14px, var(--dorado-600) 14px 28px); opacity: .55; }
+.pn-grupo-titulo .etiqueta { margin: 0; }
+
+.pn-grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; }
+
+/* Tarjetas */
+.pn-card {
+  position: relative; display: flex; flex-direction: column; gap: 6px; padding: 26px 24px 22px; color: var(--tinta);
+  background: var(--blanco); border: 1px solid var(--borde); border-top: 5px solid var(--amarillo-500);
+  border-radius: 6px 30px 6px 30px; box-shadow: 0 8px 20px rgba(15,61,46,.08);
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  opacity: 0; animation: pnSubir .55s ease forwards;
+}
+.pn-card:nth-child(2) { animation-delay: .06s; } .pn-card:nth-child(3) { animation-delay: .12s; }
+.pn-card:nth-child(4) { animation-delay: .18s; } .pn-card:nth-child(5) { animation-delay: .24s; }
+.pn-card:hover { transform: translateY(-6px); box-shadow: 0 18px 34px rgba(15,61,46,.17); background: linear-gradient(180deg, var(--blanco), var(--verde-100)); }
+.pn-icono {
+  width: 56px; height: 56px; border-radius: 4px 20px 4px 20px; background: var(--verde-900); color: var(--amarillo-300);
+  display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 10px; transition: transform .25s ease, background .25s ease;
+}
+.pn-card:hover .pn-icono { transform: rotate(-8deg) scale(1.08); background: var(--verde-700); }
+.pn-card h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.2rem; color: var(--verde-900); }
+:root[data-tema="noche"] .pn-card h3 { color: var(--amarillo-300); }
+.pn-card p { color: var(--tinta-suave); font-size: .93rem; line-height: 1.55; flex: 1; }
+.pn-ir { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-weight: 700; font-size: .88rem; color: var(--verde-700); }
+:root[data-tema="noche"] .pn-ir { color: var(--amarillo-300); }
+.pn-ir i { transition: transform .2s ease; }
+.pn-card:hover .pn-ir i { transform: translateX(5px); }
+
+/* Número rojo de pendientes */
+.pn-badge {
+  position: absolute; top: 14px; right: 14px; min-width: 30px; height: 30px; padding: 0 9px; border-radius: 15px;
+  background: #c0392b; color: #fff; font-weight: 800; font-size: .85rem; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 4px rgba(192,57,43,.22); animation: pnPulso 1.8s ease-in-out infinite;
+}
+@keyframes pnPulso { 0%,100% { box-shadow: 0 0 0 3px rgba(192,57,43,.25); } 50% { box-shadow: 0 0 0 8px rgba(192,57,43,.08); } }
+
+/* ---------- Pie ---------- */
+.pn-pie { background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+
+@media (max-width: 600px) {
+  .pn-hero { padding: 36px 24px 50px; }
+  .pn-contenido { padding: 34px 20px 56px; }
+  .pn-grilla { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pn-card, .pn-aviso, .pn-aviso > i, .pn-badge { animation: none; opacity: 1; }
+}

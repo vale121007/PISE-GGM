@@ -1,62 +1,286 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Académico</title>
-<style>
-body { font-family: Arial; margin:0; }
- header {
-    background: white;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
- header h1 {
-    color: #285900;
-    font-size: 20px;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oferta académica | Colegio Gabriel García Márquez</title>
 
-nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-    }
-
-.container { padding:40px; text-align:center; }
-.card {
-  background:#f5f5f5;
-  padding:20px;
-  margin:10px;
-  border-radius:10px;
-}
-</style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="oferta.css">
 </head>
 <body>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-        <a href="index.html">Inicio</a>
-        <a href="quienessomos.html">¿Quienes somos?</a>
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <span><i class="bi bi-telephone-fill"></i>87472004</span>
+        <span><i class="bi bi-envelope-fill"></i>colggm@gmail.com</span>
+        <span><i class="bi bi-geo-alt-fill"></i>Tv. 3 #67-14, Tunja, Boyacá</span>
+      </div>
+      <div class="topbar-der">
         <a href="noticias.html">Noticias</a>
         <a href="calendario.html">Calendario</a>
-        <a href="matriculas.html">Matriculas</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="login.html">Login</a>
-        <main>
+        <a href="login.html">Campus virtual</a>
+        <a href="matriculas.html" class="tb-admision">ADMISIONES ABIERTAS</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="index.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>Gabriel García<br>Márquez</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="quienessomos.html">¿Quiénes somos?</a>
+        <a href="oferta.html" class="activo">Oferta académica</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="matriculas.html">Aspirante</a>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a class="nav-cta" href="login.html">Ingresar</a>
+      </div>
+    </div>
   </nav>
-</header>
 
-<div class="container">
-  <h1>Oferta Académica</h1>
+  <!-- ENCABEZADO -->
+  <header class="pag-hero">
+    <div class="pag-hero-contenido">
+      <p class="pag-migas"><a href="index.html">Inicio</a> <i class="bi bi-chevron-right"></i> Oferta académica</p>
+      <p class="pag-etiqueta">Formación académica</p>
+      <h1>Una oferta pensada para <em>cada etapa</em> de tu hij@.</h1>
+      <p class="pag-lead">Desde preescolar hasta bachillerato, acompañamos a cada estudiante con un modelo que combina rigor académico, bilingüismo real y formación en valores.</p>
+      <div class="of-atajos">
+        <a href="#preescolar"><i class="bi bi-balloon-heart"></i> Preescolar</a>
+        <a href="#primaria"><i class="bi bi-pencil"></i> Primaria</a>
+        <a href="#bachillerato"><i class="bi bi-mortarboard"></i> Bachillerato</a>
+      </div>
+    </div>
+  </header>
 
-  <div class="card">Primaria</div>
-  <div class="card">Secundaria</div>
-  <div class="card">Bachillerato</div>
-</div>
+  <main>
 
+    <!-- NIVELES -->
+    <section class="of-seccion" aria-labelledby="niveles-titulo">
+      <div class="of-caja">
+        <div class="of-titulo centrado">
+          <p class="etiqueta">Niveles educativos</p>
+          <h2 id="niveles-titulo">Un camino, tres etapas</h2>
+          <p>Cada nivel tiene su propio enfoque, pero comparte el mismo acompañamiento cercano.</p>
+        </div>
+
+        <div class="of-niveles">
+          <article class="of-nivel reveal" id="preescolar">
+            <div class="of-nivel-foto">
+              <img src="FOTO5.jpeg" alt="Estudiantes de preescolar" loading="lazy">
+              <span class="of-num">01</span>
+              <span class="of-icono"><i class="bi bi-balloon-heart"></i></span>
+            </div>
+            <div class="of-nivel-cuerpo">
+              <p class="etiqueta">Primeros pasos</p>
+              <h3>Preescolar</h3>
+              <p>Aprendizaje a través del juego, grupos pequeños y las bases del inglés desde transición.</p>
+              <ul class="of-chips">
+                <li><i class="bi bi-puzzle"></i> Aprender jugando</li>
+                <li><i class="bi bi-people"></i> Grupos pequeños</li>
+                <li><i class="bi bi-translate"></i> Inglés desde transición</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="of-nivel reveal" id="primaria">
+            <div class="of-nivel-foto">
+              <img src="FOTO8.jpeg" alt="Estudiantes de primaria" loading="lazy">
+              <span class="of-num">02</span>
+              <span class="of-icono"><i class="bi bi-pencil"></i></span>
+            </div>
+            <div class="of-nivel-cuerpo">
+              <p class="etiqueta">Bases sólidas</p>
+              <h3>Primaria</h3>
+              <p>Lectura crítica, pensamiento lógico-matemático y primeros proyectos de ciencia y tecnología.</p>
+              <ul class="of-chips">
+                <li><i class="bi bi-book"></i> Lectura crítica</li>
+                <li><i class="bi bi-calculator"></i> Lógico-matemático</li>
+                <li><i class="bi bi-lightbulb"></i> Ciencia y tecnología</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="of-nivel reveal" id="bachillerato">
+            <div class="of-nivel-foto">
+              <img src="FOTO6.jpeg" alt="Estudiantes de bachillerato" loading="lazy">
+              <span class="of-num">03</span>
+              <span class="of-icono"><i class="bi bi-mortarboard"></i></span>
+            </div>
+            <div class="of-nivel-cuerpo">
+              <p class="etiqueta">Rumbo al futuro</p>
+              <h3>Bachillerato</h3>
+              <p>Preparación para las Pruebas Saber 11° y articulación con universidades aliadas.</p>
+              <ul class="of-chips">
+                <li><i class="bi bi-graph-up-arrow"></i> Pruebas Saber 11°</li>
+                <li><i class="bi bi-bank"></i> Universidades aliadas</li>
+                <li><i class="bi bi-cpu"></i> Énfasis técnico</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RUTA -->
+    <section class="of-ruta-seccion" aria-label="Ruta de formación">
+      <div class="of-caja">
+        <ol class="of-ruta">
+          <li><span><i class="bi bi-balloon-heart"></i></span><strong>Preescolar</strong><small>Juego y exploración</small></li>
+          <li><span><i class="bi bi-pencil"></i></span><strong>Primaria</strong><small>Bases y proyectos</small></li>
+          <li><span><i class="bi bi-mortarboard"></i></span><strong>Bachillerato</strong><small>Saber 11° y énfasis</small></li>
+          <li><span><i class="bi bi-bank"></i></span><strong>Universidad</strong><small>Con convenios aliados</small></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- MODELO -->
+    <section class="of-seccion suave" aria-labelledby="modelo-titulo">
+      <div class="of-caja of-modelo">
+        <div class="of-modelo-foto reveal">
+          <img src="FOTO14.jpeg" alt="Estudiantes del Colegio Gabriel García Márquez en actividad de aula" loading="lazy">
+          <div class="of-sello"><i class="bi bi-stars"></i><span>Rigor y<br>cercanía</span></div>
+        </div>
+        <div>
+          <div class="of-titulo">
+            <p class="etiqueta">Nuestro enfoque</p>
+            <h2 id="modelo-titulo">Un modelo propio, con rigor y cercanía</h2>
+          </div>
+          <ul class="of-pilares">
+            <li class="reveal">
+              <i class="bi bi-book"></i>
+              <div><h4>Aprendizaje significativo</h4><p>Conectamos cada tema con la vida real del estudiante, para que lo aprendido perdure.</p></div>
+            </li>
+            <li class="reveal">
+              <i class="bi bi-translate"></i>
+              <div><h4>Bilingüismo desde temprana edad</h4><p>Inglés como segunda lengua, integrado en las asignaturas desde preescolar.</p></div>
+            </li>
+            <li class="reveal">
+              <i class="bi bi-puzzle"></i>
+              <div><h4>Aprendizaje basado en proyectos</h4><p>Los estudiantes resuelven retos reales y presentan resultados concretos.</p></div>
+            </li>
+            <li class="reveal">
+              <i class="bi bi-heart"></i>
+              <div><h4>Acompañamiento socioemocional</h4><p>Un equipo de orientación hace seguimiento cercano al bienestar de cada niño y joven.</p></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTACADOS -->
+    <section class="of-seccion" aria-labelledby="dest-titulo">
+      <div class="of-caja">
+        <div class="of-titulo centrado">
+          <p class="etiqueta">Convenios y énfasis</p>
+          <h2 id="dest-titulo">Lo que nos distingue</h2>
+        </div>
+        <div class="of-dest">
+          <div class="of-dest-item reveal"><i class="bi bi-cpu"></i><p>Énfasis técnico en sistemas y programación</p></div>
+          <div class="of-dest-item reveal"><i class="bi bi-music-note-beamed"></i><p>Formación musical y cultural</p></div>
+          <div class="of-dest-item reveal"><i class="bi bi-bank"></i><p>Convenios con UPTC, SENA y más</p></div>
+          <div class="of-dest-item reveal"><i class="bi bi-graph-up-arrow"></i><p>Entre los mejores ICFES de Tunja</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="admision" aria-label="Llamado a la acción">
+      <div class="admision-caja">
+        <i class="bi bi-calendar-check"></i>
+        <h2>¿List@ para conocer<br>más de nuestra oferta?</h2>
+        <p>Agenda una visita y resuelve todas tus dudas sobre el nivel que más le conviene a tu hij@.</p>
+        <a href="matriculas.html" class="boton boton-lleno">Agendar visita</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pie">
+    <div class="pie-enredadera" aria-hidden="true"></div>
+    <div class="contenedor pie-grilla">
+      <div>
+        <div class="pie-marca">
+          <img src="ESCUDOGGM.jpg" alt="Escudo Colegio Gabriel García Márquez">
+          <h3>Colegio Gabriel<br>García Márquez</h3>
+        </div>
+        <p class="pie-texto">Formamos niños y jóvenes de paz y bien, con rigor académico y valores.</p>
+        <div class="pie-social">
+          <a href="https://www.facebook.com/colggmtunja/?locale=es_LA" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Enlaces rápidos</h4>
+        <ul class="pie-enlaces">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="quienessomos.html">Nosotros</a></li>
+          <li><a href="oferta.html">Académico</a></li>
+          <li><a href="matriculas.html">Proceso de admisión</a></li>
+          <li><a href="manual-convivencia.html">Manual de convivencia</a></li>
+          <li><a href="login.html">Campus virtual</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Contacto</h4>
+        <ul class="pie-contacto">
+          <li><i class="bi bi-geo-alt-fill"></i><span>Tv. 3 #67-14, Tunja, Boyacá</span></li>
+          <li><i class="bi bi-telephone-fill"></i><span>87472004</span></li>
+          <li><i class="bi bi-envelope-fill"></i><span>colggm@gmail.com</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Boletín</h4>
+        <p class="pie-texto">Recibe noticias y novedades del colegio.</p>
+        <form class="pie-form" onsubmit="return false;">
+          <input type="email" placeholder="Tu correo" aria-label="Correo">
+          <button type="submit" aria-label="Enviar"><i class="bi bi-send-fill"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="contenedor">
+      <hr class="pie-divisor">
+      <div class="pie-inferior">
+        <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+        <div class="pie-legal">
+          <a href="#" onclick="return false;">Políticas de privacidad</a>
+          <a href="#" onclick="return false;">Términos de servicio</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="script.js"></script>
+  <script>
+  // Aparición suave al hacer scroll
+  (function () {
+    var items = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) { items.forEach(function (e) { e.classList.add("visible"); }); return; }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+    }, { threshold: .15 });
+    items.forEach(function (e, i) { e.style.transitionDelay = (i % 4) * 90 + "ms"; io.observe(e); });
+  })();
+  </script>
 </body>
 </html>

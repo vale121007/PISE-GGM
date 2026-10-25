@@ -1,172 +1,401 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Noticias</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noticias | Colegio Gabriel García Márquez</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+  /* ============================================================
+     PÁGINA DE NOTICIAS — estilo periódico
+     (estilos incluidos aquí para no depender de otro archivo)
+  ============================================================ */
+  .nav-links a.activo:not(.nav-cta) { color: var(--verde-700); }
+  .nav-links a.activo:not(.nav-cta)::after { transform: scaleX(1); }
+  :root[data-tema="noche"] .nav-links a.activo:not(.nav-cta) { color: var(--amarillo-300); }
+
+  /* ---------- Encabezado ---------- */
+  .pag-hero {
+    position: relative; color: #fff; overflow: hidden; padding: 44px 24px 52px;
+    background: radial-gradient(circle at 85% 20%, rgba(242,194,48,.22), transparent 45%),
+                linear-gradient(135deg, var(--verde-900), var(--verde-700));
+  }
+  .pag-hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px);
+  }
+  .pag-hero-contenido { max-width: 1180px; margin: 0 auto; }
+  .pag-migas { font-size: .85rem; color: #dfeee2; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .pag-migas a { border-bottom: 1px dotted var(--amarillo-500); }
+  .pag-migas i { font-size: .7rem; color: var(--amarillo-500); }
+  .pag-etiqueta { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo-500); margin-bottom: 6px; }
+  .pag-hero h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.12; max-width: 680px; color: #fff; }
+  .pag-hero h1 em { color: var(--amarillo-500); font-style: normal; }
+  .pag-lead { margin-top: 12px; max-width: 560px; font-size: 1rem; color: #e8f1e9; }
+
+  /* ---------- Periódico ---------- */
+  .periodico { padding: 40px 24px 56px; background: var(--blanco); }
+  .periodico-caja { max-width: 1180px; margin: 0 auto; }
+
+  .mastil {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    border-top: 4px double var(--verde-900); border-bottom: 1px solid var(--verde-900);
+    padding: 10px 2px; margin-bottom: 30px;
+    font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--verde-900);
+  }
+  .mastil span:first-child { color: var(--dorado-600); }
+  :root[data-tema="noche"] .mastil { border-color: var(--amarillo-300); color: var(--amarillo-300); }
+
+  .periodico-grilla { display: grid; grid-template-columns: 1fr 320px; gap: 44px; align-items: start; }
+
+  .seccion-titulo { font-family: var(--f-display); font-weight: 700; font-size: 1.7rem; color: var(--verde-900); margin-bottom: 4px; line-height: 1.2; }
+  :root[data-tema="noche"] .seccion-titulo { color: var(--amarillo-300); }
+
+  /* ---------- Noticia (imagen pequeña + texto) ---------- */
+  .noticia {
+    display: grid; grid-template-columns: 210px 1fr; gap: 22px; align-items: center;
+    padding: 24px 0; border-bottom: 1px solid var(--borde);
+  }
+  .noticia:last-child { border-bottom: 0; }
+
+  .noticia-foto {
+    position: relative; width: 210px; aspect-ratio: 4 / 3; overflow: hidden; background: var(--verde-900);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px 22px 4px 22px; border: 2px solid var(--amarillo-500);
+  }
+  .noticia-foto::before {
+    content: ""; position: absolute; inset: -16px; background: var(--img) center / cover no-repeat;
+    filter: blur(14px) brightness(.75);
+  }
+  .noticia-foto img {
+    position: relative; z-index: 1; max-width: 86%; max-height: 90%; width: auto; height: auto;
+    object-fit: contain; border-radius: 3px; box-shadow: 0 6px 16px rgba(0,0,0,.35);
+    transition: transform .4s ease;
+  }
+  .noticia:hover .noticia-foto img { transform: scale(1.06); }
+
+  .noticia-categoria { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--dorado-600); margin-bottom: 4px; }
+  .noticia h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; line-height: 1.25; color: var(--verde-900); margin-bottom: 8px; }
+  .noticia p { font-size: .95rem; line-height: 1.6; color: var(--tinta-suave); margin-bottom: 6px; }
+  .noticia p strong { color: var(--tinta); }
+  .noticia-leer { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font-weight: 700; font-size: .88rem; color: var(--verde-700); }
+  .noticia-leer i { transition: transform .2s ease; }
+  .noticia-leer:hover i { transform: translateX(5px); }
+  :root[data-tema="noche"] .noticia h3,
+  :root[data-tema="noche"] .noticia-leer { color: var(--amarillo-300); }
+
+  /* ---------- "Leer más" desplegable ---------- */
+  .noticia-leer { background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit; }
+  .noticia-leer:hover { color: var(--verde-900); }
+  .noticia-leer[aria-expanded="true"] i { transform: rotate(90deg); }
+  .noticia-extra {
+    margin: 4px 0 8px; padding: 12px 16px; background: var(--verde-100);
+    border-left: 4px solid var(--amarillo-500); border-radius: 4px 14px 4px 14px;
+    animation: despliegue .3s ease;
+  }
+  .noticia-extra[hidden] { display: none; }
+  .noticia-extra p { margin-bottom: 4px; }
+  .noticia-dato { font-size: .85rem !important; font-weight: 700; color: var(--verde-700) !important; }
+  .noticia-dato i { color: var(--dorado-600); margin: 0 2px; }
+  :root[data-tema="noche"] .noticia-dato { color: var(--amarillo-300) !important; }
+  @keyframes despliegue { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ---------- Barra lateral: Instagram ---------- */
+  .lateral { border-left: 1px solid var(--borde); padding-left: 32px; position: sticky; top: 96px; }
+  .lateral .seccion-titulo { font-size: 1.3rem; }
+
+  .ig-perfil { display: flex; align-items: center; gap: 12px; margin: 14px 0 12px; }
+  .ig-avatar { width: 54px; height: 54px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 3px solid var(--amarillo-500); }
+  .ig-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .ig-info h4 { font-family: var(--f-display); font-size: 1rem; line-height: 1.2; }
+  .ig-info h4 a { color: var(--verde-900); }
+  :root[data-tema="noche"] .ig-info h4 a { color: var(--amarillo-300); }
+  .ig-info span { font-size: .78rem; color: var(--tinta-suave); }
+  .ig-bio { font-size: .85rem; color: var(--tinta-suave); margin-bottom: 14px; }
+
+  .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 16px; }
+  .ig-post { position: relative; display: block; aspect-ratio: 1; border-radius: 4px 12px 4px 12px; overflow: hidden; background: var(--verde-900); }
+  .ig-post img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .ig-post:hover img { transform: scale(1.1); }
+  .ig-post span {
+    position: absolute; inset: auto 0 0 0; padding: 18px 6px 6px; color: #fff; font-size: .62rem; font-weight: 600; line-height: 1.2;
+    background: linear-gradient(0deg, rgba(10,30,22,.9), transparent); opacity: 0; transition: opacity .2s ease;
+  }
+  .ig-post:hover span { opacity: 1; }
+  .lateral .boton { width: 100%; text-align: center; }
+
+  .nota-seguir { margin-top: 26px; background: var(--verde-900); color: #fff; padding: 20px; border-radius: 6px 24px 6px 24px; }
+  .nota-seguir h4 { font-family: var(--f-display); color: var(--amarillo-300); font-size: 1.05rem; margin-bottom: 6px; }
+  .nota-seguir p { font-size: .85rem; color: #dfeee2; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .periodico-grilla { grid-template-columns: 1fr; gap: 36px; }
+    .lateral { border-left: 0; padding-left: 0; border-top: 4px double var(--verde-900); padding-top: 24px; position: static; }
+    .ig-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .noticia { grid-template-columns: 1fr; gap: 14px; }
+    .noticia-foto { width: 100%; max-width: 260px; }
+    .ig-grid { grid-template-columns: repeat(3, 1fr); }
+    .pag-hero { padding: 36px 24px 44px; }
+  }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-        <a href="index.html">Inicio</a>
-        <a href="oferta.html">Oferta Academica</a>
-        <a href="quienessomos.html">¿Quienes somos?</a>
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <span><i class="bi bi-telephone-fill"></i>87472004</span>
+        <span><i class="bi bi-envelope-fill"></i>colggm@gmail.com</span>
+        <span><i class="bi bi-geo-alt-fill"></i>Tv. 3 #67-14, Tunja, Boyacá</span>
+      </div>
+      <div class="topbar-der">
+        <a href="noticias.html">Noticias</a>
         <a href="calendario.html">Calendario</a>
-        <a href="matriculas.html">Matriculas</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="login.html">Login</a>
-        <main>
-  </nav>
-</header>
-
-<div class="container">
-  <h1>Noticias</h1>
-
-  <div class="news">
-    <div class="card">
-      <img src="banda.png" alt="Imagen de noticias sobre inscrpciones de banda">
-      <div class="card-content">
-        <h3>INSCRIPCIONES BANDA MARCIAL</h3>
-        <p>Recuerda que puedes inscribirte a la banda marcial, nuestras inscripciones estan abiertas.</p>
-        <p><strong>No te pierdas esta oportunidad</strong></p>
-        <a href="#" class="btn">Leer más</a>
+        <a href="login.html">Campus virtual</a>
+        <a href="matriculas.html" class="tb-admision">ADMISIONES ABIERTAS</a>
       </div>
     </div>
-    <div class="card">
-      <img src="micro (1).png" alt="Imagen de noticias sobre inscripciones microfutbol ">
-      <div class="card-content">
-        <h3>INSCRIPCIONES DE MICROFUTBOL</h3>
-        <p>¿Te gusta el microfutbol pero no sabes donde practicarlo?.</p>
-        <p>¿Nuestras inscripciones estan abiertas!</p>
-        <p><strong>No te pierdas esta oportunidad</strong></p>
-        <a href="#" class="btn">Leer más</a>
-      </div>
-    </div>
-    <div class="card">
-      <img src="voley.png" alt="Imagen de noticias sobre inscripciones voleibol">
-      <div class="card-content">
-         <h3>INSCRIPCIONES DE VOLEIBOL</h3>
-        <p>¿Te gusta el microfutbol pero no sabes donde practicarlo?.</p>
-        <p>¿Nuestras inscripciones estan abiertas!</p>
-        <p><strong>No te pierdas esta oportunidad</strong></p>
-        <a href="#" class="btn">Leer más</a>
-      </div>
-    </div>
-
   </div>
-</div>
-<footer>
-  <p>©2026 PISE-GGM</p>
-</footer>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="index.html">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>Gabriel García<br>Márquez</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="quienessomos.html">¿Quiénes somos?</a>
+        <a href="oferta.html">Oferta académica</a>
+        <a href="noticias.html" class="activo">Noticias</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="matriculas.html">Aspirante</a>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a class="nav-cta" href="login.html">Ingresar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ENCABEZADO -->
+  <header class="pag-hero">
+    <div class="pag-hero-contenido">
+      <p class="pag-migas"><a href="index.html">Inicio</a> <i class="bi bi-chevron-right"></i> Noticias</p>
+      <p class="pag-etiqueta">Al día con el colegio</p>
+      <h1>Lo último de nuestra <em>comunidad educativa</em>.</h1>
+      <p class="pag-lead">Inscripciones abiertas, actividades deportivas y culturales: todo lo que pasa en el Colegio Gabriel García Márquez.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="periodico" aria-labelledby="noticias-titulo">
+      <div class="periodico-caja">
+
+        <!-- Cabezote tipo periódico -->
+        <div class="mastil">
+          <span>Boletín informativo</span>
+          <span id="fechaHoy">Tunja, Boyacá</span>
+          <span>Colegio Gabriel García Márquez</span>
+        </div>
+
+        <div class="periodico-grilla">
+
+          <!-- NOTICIAS -->
+          <div>
+            <h2 class="seccion-titulo" id="noticias-titulo">Inscripciones y actividades abiertas</h2>
+
+            <article class="noticia">
+              <div class="noticia-foto" style="--img:url('banda.png')">
+                <img src="banda.png" alt="Inscripciones de banda marcial">
+              </div>
+              <div>
+                <p class="noticia-categoria">Banda</p>
+                <h3>Inscripciones banda marcial</h3>
+                <p>Recuerda que puedes inscribirte a la banda marcial, nuestras inscripciones están abiertas.</p>
+                <p><strong>No te pierdas esta oportunidad.</strong></p>
+                <div class="noticia-extra" id="mas-banda" hidden>
+                  <p>Acércate a nuestras instalaciones para obtener más información y no perderte esta oportunidad.</p>
+                  <p class="noticia-dato"><i class="bi bi-geo-alt-fill"></i> Tv. 3 #67-14, Tunja, Boyacá · <i class="bi bi-telephone-fill"></i> 87472004</p>
+                </div>
+                <button type="button" class="noticia-leer" aria-expanded="false" aria-controls="mas-banda">Leer más <i class="bi bi-arrow-right"></i></button>
+              </div>
+            </article>
+
+            <article class="noticia">
+              <div class="noticia-foto" style="--img:url('micro (1).png')">
+                <img src="micro (1).png" alt="Inscripciones de microfútbol">
+              </div>
+              <div>
+                <p class="noticia-categoria">Deportes</p>
+                <h3>Inscripciones de microfútbol</h3>
+                <p>¿Te gusta el microfútbol pero no sabes dónde practicarlo? Nuestras inscripciones están abiertas.</p>
+                <p><strong>No te pierdas esta oportunidad.</strong></p>
+                <div class="noticia-extra" id="mas-micro" hidden>
+                  <p>Acércate a nuestras instalaciones para obtener más información y no perderte esta oportunidad.</p>
+                  <p class="noticia-dato"><i class="bi bi-geo-alt-fill"></i> Tv. 3 #67-14, Tunja, Boyacá · <i class="bi bi-telephone-fill"></i> 87472004</p>
+                </div>
+                <button type="button" class="noticia-leer" aria-expanded="false" aria-controls="mas-micro">Leer más <i class="bi bi-arrow-right"></i></button>
+              </div>
+            </article>
+
+            <article class="noticia">
+              <div class="noticia-foto" style="--img:url('voley.png')">
+                <img src="voley.png" alt="Inscripciones de voleibol">
+              </div>
+              <div>
+                <p class="noticia-categoria">Deportes</p>
+                <h3>Inscripciones de voleibol</h3>
+                <p>¿Te gusta el voleibol pero no sabes dónde practicarlo? Nuestras inscripciones están abiertas.</p>
+                <p><strong>No te pierdas esta oportunidad.</strong></p>
+                <div class="noticia-extra" id="mas-voley" hidden>
+                  <p>Acércate a nuestras instalaciones para obtener más información y no perderte esta oportunidad.</p>
+                  <p class="noticia-dato"><i class="bi bi-geo-alt-fill"></i> Tv. 3 #67-14, Tunja, Boyacá · <i class="bi bi-telephone-fill"></i> 87472004</p>
+                </div>
+                <button type="button" class="noticia-leer" aria-expanded="false" aria-controls="mas-voley">Leer más <i class="bi bi-arrow-right"></i></button>
+              </div>
+            </article>
+          </div>
+
+          <!-- LATERAL: INSTAGRAM -->
+          <aside class="lateral" aria-labelledby="instagram-titulo">
+            <p class="etiqueta">Síguenos</p>
+            <h2 class="seccion-titulo" id="instagram-titulo">Nuestro Instagram</h2>
+
+            <div class="ig-perfil">
+              <div class="ig-avatar"><img src="ESCUDOGGM.jpg" alt="Perfil de Instagram del colegio"></div>
+              <div class="ig-info">
+                <h4><a href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener">@colggmtunja</a></h4>
+                <span>Tunja, Boyacá</span>
+              </div>
+            </div>
+            <p class="ig-bio">Educando con el realismo mágico de aprender. 26 años formando bachilleres · Colegio técnico en sistemas y programación.</p>
+
+            <!-- Reemplaza cada src por tus publicaciones reales y cada href por el link a la publicación -->
+            <div class="ig-grid">
+              <a class="ig-post" href="https://www.instagram.com/p/Db_YYp6Saem/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+                <img src="FOTO 3.jpeg" alt="Día con camisa de tu equipo de fútbol favorito"><span>Día con camisa de tu equipo de fútbol favorito</span>
+              </a>
+              <a class="ig-post" href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener">
+                <img src="FOTO4.jpeg" alt="Día del estudiante"><span>Día del estudiante en cine</span>
+              </a>
+              <a class="ig-post" href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener">
+                <img src="FOTO6.jpeg" alt="Banda"><span>Formación Musical</span>
+              </a>
+              <a class="ig-post" href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener">
+                <img src="FOTO5.jpeg" alt="INGRESO"><span>Bienvenida 2026</span>
+              </a>
+              <a class="ig-post" href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener">
+                <img src="FOTO8.jpeg" alt="Capacitación"><span>Capacitación Bomberos-Primaria</span>
+              </a>
+              <a class="ig-post" href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener">
+                <img src="foto7.jpeg" alt="MISA"><span>Eucaristía</span>
+              </a>
+            </div>
+
+            <a href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener" class="boton boton-oscuro"><i class="bi bi-instagram"></i> Ver más en Instagram</a>
+
+            <div class="nota-seguir">
+              <h4>¿No quieres perderte ninguna noticia?</h4>
+              <p>Síguenos en redes sociales y entérate primero de las próximas actividades.</p>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pie">
+    <div class="pie-enredadera" aria-hidden="true"></div>
+    <div class="contenedor pie-grilla">
+      <div>
+        <div class="pie-marca">
+          <img src="ESCUDOGGM.jpg" alt="Escudo Colegio Gabriel García Márquez">
+          <h3>Colegio Gabriel<br>García Márquez</h3>
+        </div>
+        <p class="pie-texto">Formamos niños y jóvenes de paz y bien, con rigor académico y valores.</p>
+        <div class="pie-social">
+          <a href="https://www.facebook.com/colggmtunja/?locale=es_LA" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/colggmtunja/" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Enlaces rápidos</h4>
+        <ul class="pie-enlaces">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="quienessomos.html">Nosotros</a></li>
+          <li><a href="oferta.html">Académico</a></li>
+          <li><a href="matriculas.html">Proceso de admisión</a></li>
+          <li><a href="login.html">Campus virtual</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Contacto</h4>
+        <ul class="pie-contacto">
+          <li><i class="bi bi-geo-alt-fill"></i><span>Tv. 3 #67-14, Tunja, Boyacá</span></li>
+          <li><i class="bi bi-telephone-fill"></i><span>87472004</span></li>
+          <li><i class="bi bi-envelope-fill"></i><span>colggm@gmail.com</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Boletín</h4>
+        <p class="pie-texto">Recibe noticias y novedades del colegio.</p>
+        <form class="pie-form" onsubmit="return false;">
+          <input type="email" placeholder="Tu correo" aria-label="Correo">
+          <button type="submit" aria-label="Enviar"><i class="bi bi-send-fill"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="contenedor">
+      <hr class="pie-divisor">
+      <div class="pie-inferior">
+        <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+        <div class="pie-legal">
+          <a href="#" onclick="return false;">Políticas de privacidad</a>
+          <a href="#" onclick="return false;">Términos de servicio</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
+
+  <script>
+    // Fecha de hoy en el cabezote del periódico
+    (function () {
+      var el = document.getElementById('fechaHoy');
+      if (!el) return;
+      var f = new Date().toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      el.textContent = f.charAt(0).toUpperCase() + f.slice(1);
+    })();
+  </script>
+  <script>
+    // "Leer más" / "Leer menos"
+    document.querySelectorAll('.noticia-leer').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var extra = document.getElementById(btn.getAttribute('aria-controls'));
+        var abierto = btn.getAttribute('aria-expanded') === 'true';
+        extra.hidden = abierto;
+        btn.setAttribute('aria-expanded', String(!abierto));
+        btn.firstChild.textContent = abierto ? 'Leer más ' : 'Leer menos ';
+      });
+    });
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
-<style>
-body { 
-  font-family: Arial; 
-  margin:0;   
-  background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
-  position: relative;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
-
- header {
-    background: white;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
- header h1 {
-    color: #285900;
-    font-size: 20px;
-}
-
-nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-    }
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-.container {
-  padding:40px;
-  text-align:center;
-}
-.container h1{
-    color: rgb(255, 255, 255);
-}
-
-.news {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:20px;
-  margin-top:30px;
-}
-
-
-.card {
-  background:white;
-  width:300px;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card img {
-   width:100%; 
-   height:300 
-  
-  }
-
-.card-content {
-  padding:15px;
-  text-align:left;
-}
-
-.card h3 {
-  color:#0a8621;
-}
-
-.card p {
-  font-size:14px;
-}
-
-.btn {
-  display:inline-block;
-  margin-top:10px;
-  background:#0a8625;
-  color:white;
-  padding:8px 12px;
-  border-radius:5px;
-  text-decoration:none;
-}
-footer {
-      background: #29860a;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      margin-top: 80px;
-    }
-</style>

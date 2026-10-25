@@ -3,175 +3,322 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PISE-GGM</title>
+  <title>Colegio Gabriel García Márquez | Tunja</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-  <h1>PISE-GGM</h1>
-  <nav>
-    <a href="quienessomos.html">¿Quienes somos?</a>
-        <a href="oferta.html">Oferta Academica</a>
+  <div id="barraProgreso" aria-hidden="true"><span id="barraProgresoRelleno"></span></div>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <span><i class="bi bi-telephone-fill"></i>87472004</span>
+        <span><i class="bi bi-envelope-fill"></i>colggm@gmail.com</span>
+        <span><i class="bi bi-geo-alt-fill"></i>Tv. 3 #67-14, Tunja, Boyacá</span>
+      </div>
+      <div class="topbar-der">
         <a href="noticias.html">Noticias</a>
         <a href="calendario.html">Calendario</a>
-        <a href="matriculas.html">Matriculas</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="login.html">Login</a>
-        <main>
+        <a href="login.html">Campus virtual</a>
+        <a href="matriculas.html" class="tb-admision">ADMISIONES ABIERTAS</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-marca" href="#inicio">
+        <img src="ESCUDOGGM.jpg" alt="Escudo del Colegio Gabriel García Márquez">
+        <span>Gabriel García<br>Márquez</span>
+      </a>
+      <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="quienessomos.html">¿Quiénes somos?</a>
+        <a href="oferta.html">Oferta académica</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="matriculas.html">Aspirante</a>
+        <button id="btnModoNoche" class="btn-modo-noche" aria-label="Cambiar a modo noche" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <a class="nav-cta" href="login.html">Ingresar</a>
+      </div>
+    </div>
   </nav>
-</header>
-<main>
-<section class="hero">
-  <div class="hero-content">
-    <p>Bienvenidos a la Plataforma de información y servicios educativos Colegio Gabriel García Márquez</p>
-    <h2>Formando niños y jovenes de Paz y Bien</h2>
-    <a href="contacto.html" class="btn">Solicitar información</a>
+
+  <!-- HERO SLIDER -->
+  <header class="slider" id="inicio">
+    <div class="slide activo" style="background-image:url('FOTO10.jpeg')">
+      <div class="slide-texto">
+        <h1>Aquí cada estudiante escribe <em>su propia</em> historia.</h1>
+        <p>Formamos niños y jóvenes de paz y bien, con rigor académico y un acompañamiento que los conoce por su nombre.</p>
+        <div class="slide-botones">
+          <a href="matriculas.html" class="boton boton-lleno">Solicitar información</a>
+          <a href="oferta.html" class="boton boton-linea">Ver oferta académica</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide" style="background-image:url('FOTO11.jpeg')">
+      <div class="slide-texto">
+        <h1>Bilingüismo real, <em>desde preescolar</em>.</h1>
+        <p>El inglés se integra en las asignaturas desde transición hasta bachillerato.</p>
+        <div class="slide-botones">
+          <a href="oferta.html" class="boton boton-lleno">Conocer más</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide" style="background-image:url('FOTO12.jpeg')">
+      <div class="slide-texto">
+        <h1>Formamos niños y jóvenes <em>programadores</em>.</h1>
+        <p>Proyectos de ciencia y tecnología que preparan para la universidad y la vida.</p>
+        <div class="slide-botones">
+          <a href="matriculas.html" class="boton boton-lleno">Inscríbete ahora</a>
+        </div>
+      </div>
+    </div>
+
+    <button class="slider-flecha prev" id="sliderPrev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
+    <button class="slider-flecha next" id="sliderNext" aria-label="Siguiente"><i class="bi bi-chevron-right"></i></button>
+    <div class="slider-puntos">
+      <button class="activo" aria-label="Diapositiva 1"></button>
+      <button aria-label="Diapositiva 2"></button>
+      <button aria-label="Diapositiva 3"></button>
+    </div>
+  </header>
+
+  <!-- FRANJA DE 5 ÍTEMS -->
+  <div class="franja">
+    <div class="franja-caja">
+      <div class="franja-item"><i class="bi bi-translate"></i><div><h4>Bilingüismo</h4><p>Inglés desde preescolar</p></div></div>
+      <div class="franja-item"><i class="bi bi-cpu"></i><div><h4>Programación</h4><p>Niños y jóvenes programadores</p></div></div>
+      <div class="franja-item"><i class="bi bi-heart"></i><div><h4>Acompañamiento</h4><p>Orientación socioemocional</p></div></div>
+      <div class="franja-item"><i class="bi bi-graph-up-arrow"></i><div><h4>Clasificación A+</h4><p>Máxima categoria ICFES</p></div></div>
+      <div class="franja-item"><i class="bi bi-bank"></i><div><h4>Somos un Colegio:</h4><p>Técnico en sistemas y Técnico en Programación. En articulación con el SENA.</p></div></div>
+    </div>
   </div>
-</section>
 
-<section class="cards">
-  <div class="card">
-    <h3>Excelencia Académica</h3>
-    <p>Educación de alta calidad con enfoque moderno.
-        "Educación de alta calidad con enfoque moderno."
+  <main>
 
-Este pilar representa el compromiso del colegio con el rigor intelectual y la innovación pedagógica. No se trata solo de transmitir conocimientos, sino de transformar la manera en que los estudiantes aprenden:
+    <!-- BIENVENIDA -->
+    <section class="seccion">
+      <div class="contenedor bienvenida-grilla">
+        <img src="FOTO13.jpeg" alt="Estudiantes del Colegio Gabriel García Márquez">
+        <div class="bienvenida-texto">
+          <p class="etiqueta">Bienvenidos a</p>
+          <h2>Colegio Gabriel García Márquez</h2>
+          <p>Somos una institución dedicada a formar ciudadanos seguros, compasivos y responsables. Combinamos excelencia académica con formación en valores para preparar a cada estudiante para un futuro exitoso.</p>
+          <div class="stats">
+            <div><strong>27</strong><span>Años de experiencia</span></div>
+            <div><strong>Bilingüe</strong><span>Desde preescolar</span></div>
+            <div><strong>ICFES</strong><span>Entre los mejores</span></div>
+          </div>
+          <a href="quienessomos.html" class="boton boton-oscuro">Conocer más sobre nosotros</a>
+        </div>
+      </div>
+    </section>
 
-Metodologías Activas: Implementamos enfoques modernos donde el estudiante es el protagonista de su aprendizaje, fomentando el pensamiento crítico y la resolución de problemas.
+    <!-- ACADÉMICO -->
+    <section class="seccion">
+      <div class="contenedor acad-grilla">
+        <div>
+          <p class="etiqueta">Académico</p>
+          <h2>Explora. Aprende. Sobresale.</h2>
+          <div class="tarjetas4">
+            <article class="tarjeta"><i class="bi bi-book"></i><h4>Aprendizaje significativo</h4><p>Conectamos cada tema con la vida real del estudiante.</p></article>
+            <article class="tarjeta"><i class="bi bi-translate"></i><h4>Bilingüismo</h4><p>Inglés integrado en varias asignaturas.</p></article>
+            <article class="tarjeta"><i class="bi bi-puzzle"></i><h4>Aprendizaje por proyectos</h4><p>Retos reales con resultados concretos.</p></article>
+            <article class="tarjeta"><i class="bi bi-heart"></i><h4>Acompañamiento</h4><p>Seguimiento cercano al bienestar de cada niño y joven.</p></article>
+          </div>
+        </div>
+        <div class="circulo">
+          <img src="FOTO8.jpeg" alt="Estudiantes en capacitación">
+          <div><strong>Crecimiento integral</strong><span>Mente · Cuerpo · Valores</span></div>
+        </div>
+      </div>
+    </section>
 
-Vanguardia Tecnológica: Integramos herramientas digitales y recursos actualizados que preparan a los alumnos para los retos de un mundo globalizado.
+    <!-- ETAPAS CON FOTO -->
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="cabecera">
+          <div><p class="etiqueta">Nuestro colegio</p><h2>Una etapa para cada momento</h2></div>
+          <a href="oferta.html" class="boton-contorno">VER OFERTA COMPLETA →</a>
+        </div>
+        <div class="cards-foto">
+          <article class="card-foto"><img src="FOTO5.jpeg" alt="Preescolar"><span class="card-foto-icono"><i class="bi bi-balloon-heart"></i></span><div class="card-foto-cuerpo"><h4>Preescolar</h4><p>Aprendizaje a través del juego y grupos pequeños.</p></div></article>
+          <article class="card-foto"><img src="FOTO8.jpeg" alt="Primaria"><span class="card-foto-icono"><i class="bi bi-pencil"></i></span><div class="card-foto-cuerpo"><h4>Primaria</h4><p>Proyectos de ciencia y tecnología con orientación permanente.</p></div></article>
+          <article class="card-foto"><img src="FOTO6.jpeg" alt="Bachillerato"><span class="card-foto-icono"><i class="bi bi-mortarboard"></i></span><div class="card-foto-cuerpo"><h4>Bachillerato</h4><p>Preparación para Pruebas Saber 11° y convenios universitarios.</p></div></article>
+          <article class="card-foto"><img src="foto7.jpeg" alt="Formación en valores"><span class="card-foto-icono"><i class="bi bi-people"></i></span><div class="card-foto-cuerpo"><h4>Valores y comunidad</h4><p>Respeto, responsabilidad y convivencia dentro y fuera del aula.</p></div></article>
+        </div>
+      </div>
+    </section>
 
-Resultados Tangibles: Buscamos que cada estudiante alcance su máximo potencial académico, garantizando una base sólida para su futura formación profesional.
-    </p>
+    <!-- VIDA ESTUDIANTIL -->
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="cabecera">
+          <div><p class="etiqueta">Vida estudiantil</p><h2>Aprendiendo más allá del aula</h2></div>
+          <a href="https://www.instagram.com/colggmtunja/" class="boton-contorno">VER GALERÍA →</a>
+        </div>
+        <div class="tira">
+          <img src="FOTO 3.jpeg" alt="Día del mundial">
+          <img src="FOTO4.jpeg" alt="Día del estudiante en el cine">
+          <img src="foto9.jpeg" alt="Día de cometas">
+          <img src="FOTO6.jpeg" alt="Banda marcial">
+          <img src="foto7.jpeg" alt="Eucaristía">
+        </div>
+      </div>
+    </section>
+    <!-- CONVENIOS + VIDEO -->
+    <section class="seccion convenios" aria-labelledby="convenios-titulo">
+      <div class="contenedor">
+        <div class="titulo-seccion">
+          <h2 id="convenios-titulo">Convenios institucionales</h2>
+          <p>Instituciones que acompañan la formación académica y el futuro de nuestros estudiantes.</p>
+        </div>
+
+        <div class="convenios-layout">
+
+          <div class="convenios-grilla">
+            <div class="convenio-tarjeta">
+              <div class="convenio-marco"><img src="UPTC.jpg" alt="Logo Universidad Pedagógica y Tecnológica de Colombia"></div>
+              <h4>UPTC</h4>
+              <p>Articulación con programas técnicos y acceso a educación superior.</p>
+            </div>
+            <div class="convenio-tarjeta">
+              <div class="convenio-marco"><img src="logosena.png" alt="Logo SENA"></div>
+              <h4>SENA Boyacá</h4>
+              <p>Formación técnica complementaria para estudiantes de bachillerato.</p>
+            </div>
+            <div class="convenio-tarjeta">
+              <div class="convenio-marco"><img src="logo-uniboyaca.png" alt="Logo Universidad de Boyacá"></div>
+              <h4>Universidad de Boyacá</h4>
+              <p>Programas de orientación vocacional y emprendimiento escolar.</p>
+            </div>
+            <div class="convenio-tarjeta">
+              <div class="convenio-marco"><img src="SANTOTOMAS.jpg" alt="Logo Universidad Santo Tomás"></div>
+              <h4>Universidad Santo Tomás</h4>
+              <p>Certificación y acompañamiento a la calidad educativa institucional.</p>
+            </div>
+          </div>
+
+          <div class="convenio-video">
+            <video autoplay muted loop playsinline controls preload="metadata">
+              <source src="VIDEONIÑOPROGRAMACION.mp4" type="video/mp4">
+              Tu navegador no soporta la reproducción de este video.
+            </video>
+            <p class="convenio-video-leyenda"><i class="bi bi-play-circle-fill"></i> Feria de Robótica</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- BANNER ADMISIONES -->
+    <section class="admision">
+      <div class="admision-caja">
+        <i class="bi bi-mortarboard"></i>
+        <h2>Admisiones abiertas<br>para 2027</h2>
+        <p>Dale a tu hij@ el mejor comienzo para un futuro brillante.</p>
+        <a href="matriculas.html" class="boton boton-lleno">Solicitar información</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pie">
+    <div class="pie-enredadera" aria-hidden="true"></div>
+    <div class="contenedor pie-grilla">
+      <div>
+        <div class="pie-marca">
+          <img src="ESCUDOGGM.jpg" alt="Escudo Colegio Gabriel García Márquez">
+          <h3>Colegio Gabriel<br>García Márquez</h3>
+        </div>
+        <p class="pie-texto">Formamos niños y jóvenes de paz y bien, con rigor académico y valores.</p>
+        <div class="pie-social">
+          <a href="#" aria-label="Facebook" onclick="return false;"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/colggmtunja/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Enlaces rápidos</h4>
+        <ul class="pie-enlaces">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="quienessomos.html">Nosotros</a></li>
+          <li><a href="oferta.html">Académico</a></li>
+          <li><a href="matriculas.html">Proceso de admisión</a></li>
+          <li><a href="login.html">Campus virtual</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Contacto</h4>
+        <ul class="pie-contacto">
+          <li><i class="bi bi-geo-alt-fill"></i><span>Tv. 3 #67-14, Tunja, Boyacá</span></li>
+          <li><i class="bi bi-telephone-fill"></i><span>87472004</span></li>
+          <li><i class="bi bi-envelope-fill"></i><span>colggm@gmail.com</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie-titulo">Boletín</h4>
+        <p class="pie-texto">Recibe noticias y novedades del colegio.</p>
+        <form class="pie-form" onsubmit="return false;">
+          <input type="email" placeholder="Tu correo" aria-label="Correo">
+          <button type="submit" aria-label="Enviar"><i class="bi bi-send-fill"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="contenedor">
+      <hr class="pie-divisor">
+      <div class="pie-inferior">
+        <p>© 2026 Colegio Gabriel García Márquez. Todos los derechos reservados.</p>
+        <div class="pie-legal">
+          <a href="#" onclick="return false;">Políticas de privacidad</a>
+          <a href="#" onclick="return false;">Términos de servicio</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos" hidden>
+    <button class="lightbox-cerrar" id="lightboxCerrar" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button>
+    <button class="lightbox-flecha prev" id="lightboxPrev" aria-label="Foto anterior"><i class="bi bi-chevron-left"></i></button>
+    <figure><img id="lightboxImg" src="" alt=""><figcaption id="lightboxCaption"></figcaption></figure>
+    <button class="lightbox-flecha next" id="lightboxNext" aria-label="Foto siguiente"><i class="bi bi-chevron-right"></i></button>
   </div>
-  <div class="card">
-    <h3>Valores y Comunidad</h3>
-    <p>Formamos estudiantes con principios y valores.
-        Para nosotros, la educación va más allá de los libros; se trata de construir el carácter. Este cuadro destaca el tejido humano que sostiene a nuestra institución:
 
-Ética y Responsabilidad: Trabajamos diariamente en cultivar la honestidad, el respeto y la solidaridad como pilares de la convivencia ciudadana.
+  <button id="topBtn" aria-label="Subir al inicio"><i class="bi bi-arrow-up"></i></button>
 
-Sentido de Pertenencia: Creamos un ambiente seguro y acogedor donde cada estudiante, docente y padre de familia se siente parte de una gran familia.
+  <!-- Slider del hero -->
+  <script>
+  (function () {
+    const slides = document.querySelectorAll('.slide');
+    const puntos = document.querySelectorAll('.slider-puntos button');
+    if (!slides.length) return;
+    let i = 0, t;
+    function ir(n) {
+      slides[i].classList.remove('activo'); puntos[i].classList.remove('activo');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('activo'); puntos[i].classList.add('activo');
+    }
+    function auto() { clearInterval(t); t = setInterval(() => ir(i + 1), 6000); }
+    document.getElementById('sliderPrev').onclick = () => { ir(i - 1); auto(); };
+    document.getElementById('sliderNext').onclick = () => { ir(i + 1); auto(); };
+    puntos.forEach((p, n) => p.onclick = () => { ir(n); auto(); });
+    auto();
+  })();
+  </script>
 
-Impacto Social: Incentivamos a los jóvenes a ser agentes de cambio positivos en su entorno, entendiendo que sus acciones tienen un impacto directo en la sociedad.
-    </p>
-  </div>
-  <div class="card">
-    <h3>Desarrollo Integral</h3>
-    <p>Impulsamos habilidades académicas y personales.
-        "Impulsamos habilidades académicas y personales."
-
-Creemos que un estudiante exitoso es aquel que logra un equilibrio entre su mente, su cuerpo y sus emociones. Este enfoque busca una formación 360°:
-
-Inteligencia Emocional: Brindamos herramientas para que los alumnos reconozcan y gestionen sus emociones, desarrollando resiliencia y empatía.
-
-Talento y Creatividad: Fomentamos el arte, el deporte y la expresión personal, permitiendo que cada niño o joven descubra sus pasiones más allá del aula.
-
-Habilidades para la Vida (Soft Skills): Potenciamos la comunicación asertiva, el liderazgo y el trabajo en equipo, capacidades esenciales para el éxito personal en el siglo XXI.
-    </p>
-  </div>
-</section>
-</main> 
-<footer>
-  <p>©2026 PISE-GGM</p>
-</footer>
-
+  <script src="script.js"></script>
 </body>
 </html>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-    }
-
-    header {
-      background: white;
-      padding: 15px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    header h1 {
-      color: #285900;
-      font-size: 20px;
-    }
-
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-    }
-
-    .hero {
-    background: url(ANIMADOCOLGGM.png) no-repeat center center/cover;
-      color: white;
-      padding: 200px 100px;
-      position: relative;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.537);
-    }
-
-    .hero-content {
-      position: relative;
-      max-width: 600px;
-    }
-
-    .hero h2 {
-      font-size: 32px;
-    }
-
-    .hero .btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: rgb(8, 152, 13);
-      border: none;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .cards {
-      display: flex;
-      gap: 20px;
-      padding: 40px;
-      justify-content: center;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      width: 250px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .card h3 {
-      margin-top: 10px;
-    }
-
-    footer {
-      background: #29860a;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      margin-top: 80px;
-    }
-
-    @media(max-width: 768px) {
-      .cards {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-  </style>

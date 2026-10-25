@@ -1,0 +1,146 @@
+/* ============================================================
+   LOGIN PISE-GGM — se carga DESPUÉS de style.css
+   Colores, tipografía (Playfair Display), menú y modo noche
+   vienen de style.css. Aquí solo va lo propio del login.
+============================================================ */
+
+/* ---------- Página y fondo ---------- */
+.lg-pagina {
+  position: relative; overflow: hidden; background: var(--blanco);
+  min-height: calc(100vh - 106px); padding: 56px 24px 64px;
+  display: flex; align-items: center;
+}
+/* Foto del colegio, casi transparente */
+.lg-pagina::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: url("ANIMADOCOLGGM.png") center / cover no-repeat;
+  opacity: .11; filter: saturate(.85);
+}
+/* Velo de color suave encima */
+.lg-pagina::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(247,219,122,.30), transparent 45%),
+    radial-gradient(circle at 82% 72%, rgba(45,139,87,.20), transparent 50%);
+}
+:root[data-tema="noche"] .lg-pagina::before { opacity: .09; }
+
+.lg-contenedor {
+  position: relative; z-index: 1; width: 100%; max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(340px, 430px) 1fr; gap: 48px; align-items: center;
+}
+
+/* ---------- Tarjeta de ingreso ---------- */
+@keyframes lgSubir { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+.lg-card {
+  position: relative; padding: 38px 36px 32px; color: #FFFDF8;
+  background: linear-gradient(160deg, rgba(15,61,46,.93), rgba(31,107,69,.88));
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(247,219,122,.35); border-radius: 6px 44px 6px 44px;
+  box-shadow: 0 24px 50px rgba(15,61,46,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+  animation: lgSubir .6s ease both;
+}
+.lg-card::before {
+  content: ""; position: absolute; top: 0; left: 36px; right: 36px; height: 5px;
+  background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 18px, var(--dorado-600) 18px 36px);
+  border-radius: 0 0 6px 6px;
+}
+
+.lg-marca { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.lg-marca img { width: 62px; height: 62px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,.35)); }
+.lg-marca strong { display: block; font-family: var(--f-display); font-size: 1.5rem; line-height: 1.1; color: #FFFDF8; letter-spacing: .02em; }
+.lg-marca span { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo-300); }
+
+.lg-card h1 { font-family: var(--f-display); font-weight: 700; font-size: 1.9rem; line-height: 1.15; color: #FFFDF8; margin-bottom: 4px; }
+.lg-sub { font-size: .95rem; color: #cfe3d3; margin-bottom: 22px; }
+
+/* ---------- Campos ---------- */
+.lg-campo { margin-bottom: 14px; }
+.lg-campo label { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: #dfeee2; margin-bottom: 6px; }
+.lg-input { position: relative; }
+.lg-input > i.lg-ico { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--verde-700); font-size: 1.05rem; pointer-events: none; }
+.lg-input input, .lg-input select {
+  width: 100%; padding: 13px 14px 13px 42px; border-radius: 4px 16px 4px 16px;
+  border: 2px solid transparent; background: rgba(255,253,248,.95); color: #17241B;
+  font-family: inherit; font-size: .95rem; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.lg-input select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 40px; }
+.lg-input .lg-flecha { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--verde-700); pointer-events: none; font-size: .85rem; }
+.lg-input input::placeholder { color: #6b7a6e; }
+.lg-input input:focus, .lg-input select:focus {
+  outline: none; background: #fff; border-color: var(--amarillo-500); box-shadow: 0 0 0 4px rgba(242,194,48,.28);
+}
+.lg-ojo {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border: 0; border-radius: 50%;
+  background: transparent; color: var(--verde-700); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+}
+.lg-ojo:hover { background: rgba(31,107,69,.12); }
+.lg-input input.tiene-ojo { padding-right: 48px; }
+
+.lg-olvido { display: block; text-align: right; font-size: .82rem; color: var(--amarillo-300); margin: -4px 0 18px; }
+.lg-olvido:hover { color: #fff; text-decoration: underline; }
+
+/* ---------- Botón ---------- */
+.lg-enviar { width: 100%; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; letter-spacing: .06em; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.lg-enviar:disabled { background: #8a958c; color: #fff; cursor: not-allowed; transform: none; }
+
+/* ---------- Mensaje ---------- */
+.lg-mensaje { margin-top: 14px; padding: 10px 14px; border-radius: 4px 14px 4px 14px; font-size: .9rem; font-weight: 600; text-align: center; }
+.lg-mensaje:empty { display: none; }
+.lg-mensaje.exito { background: rgba(144,238,144,.16); color: #c6f6cf; border: 1px solid rgba(144,238,144,.4); }
+.lg-mensaje.error { background: rgba(255,120,120,.16); color: #ffd0d0; border: 1px solid rgba(255,140,140,.45); }
+
+/* ---------- Pie de la tarjeta ---------- */
+.lg-registro { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); text-align: center; font-size: .9rem; color: #cfe3d3; }
+.lg-registro a { color: var(--amarillo-300); font-weight: 700; }
+.lg-registro a:hover { color: #fff; text-decoration: underline; }
+
+/* ---------- Escena con personajes ---------- */
+.lg-escena { width: 100%; max-width: 580px; justify-self: center; }
+.lg-escena svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+.flota   { animation: lgFlotar 4s ease-in-out infinite; }
+.flota.lento { animation-duration: 5.6s; }
+.rebota  { animation: lgRebotar 1.7s ease-in-out infinite; }
+.saluda  { transform-origin: 183px 264px; animation: lgSaludar 1.2s ease-in-out infinite; }
+.saluda2 { transform-origin: 424px 254px; animation: lgSaludar 1.5s ease-in-out infinite reverse; }
+.cabecea { transform-origin: 300px 246px; animation: lgCabecear 3.6s ease-in-out infinite; }
+.lee     { animation: lgLeer 2.8s ease-in-out infinite; }
+.parpadea { transform-box: fill-box; transform-origin: center; animation: lgParpadear 4.6s infinite; }
+.pulsa   { transform-box: fill-box; transform-origin: center; animation: lgPulsar 1.7s ease-in-out infinite; }
+.titila  { transform-box: fill-box; transform-origin: center; animation: lgTitilar 2.4s ease-in-out infinite; }
+.burbuja { transform-box: fill-box; transform-origin: 50% 100%; animation: lgBurbuja 7s ease-in-out infinite; }
+.sombra  { transform-box: fill-box; transform-origin: center; animation: lgSombra 4s ease-in-out infinite; }
+.llama   { transform-box: fill-box; transform-origin: 50% 0; animation: lgLlama .45s ease-in-out infinite alternate; }
+
+@keyframes lgFlotar   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes lgRebotar  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes lgSaludar  { 0%,100% { transform: rotate(-14deg); } 50% { transform: rotate(20deg); } }
+@keyframes lgCabecear { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes lgLeer     { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes lgParpadear { 0%,92%,100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+@keyframes lgPulsar   { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: .6; } }
+@keyframes lgTitilar  { 0%,100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(.6) rotate(25deg); opacity: .5; } }
+@keyframes lgBurbuja  { 0%,6% { opacity: 0; transform: scale(.5); } 14%,68% { opacity: 1; transform: scale(1); } 78%,100% { opacity: 0; transform: scale(.8); } }
+@keyframes lgSombra   { 0%,100% { transform: scaleX(1); opacity: .5; } 50% { transform: scaleX(.8); opacity: .3; } }
+@keyframes lgLlama    { from { transform: scale(1, .8); opacity: .9; } to { transform: scale(.9, 1.3); opacity: .6; } }
+
+/* ---------- Pie ---------- */
+.lg-pie { position: relative; z-index: 1; background: var(--verde-900); color: #9fbfa4; text-align: center; font-size: .85rem; padding: 16px 20px; border-top: 5px solid var(--amarillo-500); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .lg-contenedor { grid-template-columns: 1fr; gap: 36px; max-width: 460px; }
+  .lg-escena { max-width: 400px; }
+  .lg-pagina { padding: 40px 20px 48px; }
+}
+@media (max-width: 480px) {
+  .lg-card { padding: 34px 22px 26px; border-radius: 6px 34px 6px 34px; }
+  .lg-card::before { left: 22px; right: 22px; }
+  .lg-card h1 { font-size: 1.65rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg-card, .flota, .rebota, .saluda, .saluda2, .cabecea, .lee, .parpadea, .pulsa, .titila, .burbuja, .sombra, .llama { animation: none; }
+  .burbuja { opacity: 1; }
+}
