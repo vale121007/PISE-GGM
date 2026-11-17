@@ -222,6 +222,7 @@
   .libro-controles { gap: 12px; }
   .libro-estado { min-width: 0; flex: 1; font-size: .92rem; }
 }
+.pie-grilla { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
 @media (prefers-reduced-motion: reduce) {
   .pagina.sale-der, .pagina.entra-izq, .pagina.sale-izq, .pagina.entra-der, .pliego.activo { animation: none; }
 }

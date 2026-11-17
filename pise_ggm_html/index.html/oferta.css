@@ -171,6 +171,7 @@ html { scroll-padding-top: 90px; }
   .of-ruta-seccion { padding: 0 20px 60px; }
   .of-pilares, .of-dest { grid-template-columns: 1fr; }
 }
+.pie-grilla { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .of-nivel, .of-nivel-foto img, .of-pilares li, .of-dest-item, .of-dest-item i, .of-ruta li span { transition: none; }

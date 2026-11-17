@@ -18,7 +18,7 @@ class LoginResult {
 class ApiService {
   // IP de tu PC en la red WiFi (la ves con "ipconfig", campo "Dirección IPv4").
   // Cámbiala solo aquí, es el único lugar donde se usa.
-  static const String servidor = "192.168.137.43";
+ static const String servidor = "192.168.1.4";
   static const String puerto = "8081";
 
   static const String baseUrl = "http://$servidor:$puerto/api/auth";

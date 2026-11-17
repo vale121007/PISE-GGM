@@ -108,7 +108,8 @@
 }
 @media (max-width: 900px) { .ig-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 560px) { .ig-grid { grid-template-columns: repeat(2, 1fr); } .ig-perfil { padding: 20px; } }
-
+.pie-grilla { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
 /* ---------- CTA ---------- */
 .admision { padding-top: 56px; }
 @media (max-width: 760px) { .pag-hero { padding: 40px 24px 48px; } }
+.pie-grilla { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }

@@ -8,7 +8,7 @@ import 'estudiante_home_screen.dart';
 import 'acudiente_home_screen.dart';
 import 'placeholder_screen.dart';
 import '../services/sesion.dart';
-
+import 'recuperar_screen.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -282,9 +282,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-              ],
+                            ],
 
-              const SizedBox(height: 22),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const RecuperarScreen()),
+                  ),
+                  child: Text(
+                    '¿Olvidaste tu contraseña?',
+                    style: GoogleFonts.workSans(
+                        color: AppColors.amarillo300, fontSize: 13),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

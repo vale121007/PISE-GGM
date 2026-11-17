@@ -17,14 +17,11 @@
   <div class="topbar">
     <div class="topbar-inner">
       <div>
-        <span><i class="bi bi-telephone-fill"></i>87472004</span>
+        <span><i class="bi bi-telephone-fill"></i>314 3316222</span>
         <span><i class="bi bi-envelope-fill"></i>colggm@gmail.com</span>
         <span><i class="bi bi-geo-alt-fill"></i>Tv. 3 #67-14, Tunja, Boyacá</span>
       </div>
       <div class="topbar-der">
-        <a href="noticias.html">Noticias</a>
-        <a href="calendario.html">Calendario</a>
-        <a href="login.html">Campus virtual</a>
         <a href="matriculas.html" class="tb-admision">ADMISIONES ABIERTAS</a>
       </div>
     </div>
@@ -244,50 +241,82 @@
     © 2026 Colegio Gabriel García Márquez · Plataforma PISE-GGM
   </footer>
 
-  <script>
+    <script>
   /* =====================================================
-     LOGIN PISE-GGM
+     LOGIN PISE-GGM — lógica del formulario de ingreso
+  =====================================================
+
+     ¿QUÉ HACE?
+     1. Valida que se llenen documento, contraseña y rol.
+     2. Envía los datos al servidor (backend) para verificarlos.
+     3. Si son correctos, guarda la sesión en el navegador y
+        lleva al usuario a su panel según su rol.
+     4. Si no, muestra un mensaje de error en la tarjeta.
+
+     ¿QUÉ SE EDITA CON MÁS FRECUENCIA?
+     - La dirección del servidor: constante API_LOGIN (abajo).
+       Cuando el sitio se publique en internet, hay que cambiar
+       "http://localhost:8081" por la dirección real del servidor.
+     - Las páginas de destino de cada rol: bloque "switch".
+
+     DATOS QUE SE GUARDAN EN EL NAVEGADOR (localStorage):
+       token    → "llave" que el servidor entrega al ingresar
+       usuario  → datos de la persona (nombre, rol, correo...)
+       idPerfil → número de su perfil (estudiante, docente...)
+     Los paneles leen estos datos; al cerrar sesión se borran.
   ===================================================== */
+
+  // ► DIRECCIÓN DEL SERVIDOR (cámbiala al publicar el sitio)
   const API_LOGIN = "http://localhost:8081/api/auth/login";
 
-  const loginForm = document.getElementById("loginForm");
-  const mensaje = document.getElementById("mensaje");
-  const btnIngresar = document.getElementById("btnIngresar");
+  // Elementos de la página con los que trabaja este script
+  const loginForm = document.getElementById("loginForm");     // el formulario
+  const mensaje = document.getElementById("mensaje");         // caja de avisos
+  const btnIngresar = document.getElementById("btnIngresar"); // botón INGRESAR
 
-  /* Mostrar / ocultar contraseña */
+  /* ---------- Mostrar / ocultar contraseña (icono del ojo) ---------- */
   const inputPassword = document.getElementById("password");
   const btnVer = document.getElementById("verPassword");
   btnVer.addEventListener("click", function () {
     const oculta = inputPassword.type === "password";
+    // Cambia el campo entre "password" (puntos) y "text" (visible)
     inputPassword.type = oculta ? "text" : "password";
+    // Cambia el icono: ojo tachado cuando la contraseña está visible
     btnVer.innerHTML = oculta ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
     btnVer.setAttribute("aria-label", oculta ? "Ocultar contraseña" : "Mostrar contraseña");
   });
 
+  /* ---------- Envío del formulario (botón INGRESAR) ---------- */
   loginForm.addEventListener("submit", async function (event) {
 
+    // Evita que el navegador recargue la página al enviar
     event.preventDefault();
 
-    const documento = document.getElementById("documento").value.trim();
+    // Lee lo que escribió la persona
+    const documento = document.getElementById("documento").value.trim(); // trim() quita espacios sobrantes
     const password = document.getElementById("password").value;
     const rol = document.getElementById("rol").value;
 
+    // Paso 1: validar que no haya campos vacíos
     if (documento === "" || password === "" || rol === "") {
       mostrarMensaje("Por favor completa todos los campos.", "error");
       return;
     }
 
+    // Datos que se enviarán al servidor
     const datosLogin = {
       documento: documento,
       password: password,
       rol: rol
     };
 
+    // Bloquea el botón mientras se verifica (evita enviar dos veces)
     btnIngresar.disabled = true;
     btnIngresar.textContent = "VERIFICANDO...";
 
     try {
 
+      // Paso 2: enviar los datos al servidor
       const respuesta = await fetch(API_LOGIN, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -301,6 +330,8 @@
       */
       const datos = await respuesta.json();
 
+      // Si el servidor respondió con error (ej. clave incorrecta),
+      // se lanza un error que lo captura el bloque "catch" de abajo
       if (!respuesta.ok) {
         throw new Error(datos.error || "Datos incorrectos.");
       }
@@ -314,7 +345,7 @@
       const token = datos.token;
       const idPerfil = datos.idPerfil;
 
-      /* GUARDAR SESIÓN (el token se usa en las siguientes peticiones) */
+      /* Paso 3: GUARDAR SESIÓN (el token se usa en las siguientes peticiones) */
       localStorage.setItem("token", token);
       localStorage.setItem("usuario", JSON.stringify(usuario));
       localStorage.setItem("idPerfil", idPerfil);
@@ -324,8 +355,11 @@
       /* EL ROL VIENE ANIDADO: usuario.rol.nombreRol */
       const nombreRol = (usuario.rol && usuario.rol.nombreRol) || "";
 
+      // Espera 0,8 segundos (800 ms) para que se alcance a leer el
+      // saludo y luego redirige al panel correspondiente
       setTimeout(function () {
 
+        // Paso 4: cada rol va a su propio panel
         switch (nombreRol.toUpperCase()) {
 
           case "ADMINISTRADOR":
@@ -347,6 +381,7 @@
             window.location.href = "acudiente.html";
             break;
 
+          // Si el servidor devuelve un rol que no está en la lista
           default:
             alert("Rol no reconocido.");
         }
@@ -355,9 +390,10 @@
 
     }
 
+    // Si algo falló (clave incorrecta, servidor apagado...) se avisa
     catch (error) {
 
-      console.error("Error:", error);
+      console.error("Error:", error); // detalle técnico (consola del navegador)
 
       mostrarMensaje(
         error.message || "No fue posible iniciar sesión.",
@@ -366,6 +402,7 @@
 
     }
 
+    // Pase lo que pase, al terminar se vuelve a habilitar el botón
     finally {
       btnIngresar.disabled = false;
       btnIngresar.textContent = "INGRESAR";
@@ -373,6 +410,9 @@
 
   });
 
+  /* ---------- Caja de avisos de la tarjeta ----------
+     tipo "exito" → fondo verde  |  tipo "error" → fondo rojo
+     (los colores están en login.css, sección "Mensaje")   */
   function mostrarMensaje(texto, tipo) {
     mensaje.textContent = texto;
     mensaje.className = "lg-mensaje " + (tipo === "exito" ? "exito" : "error");

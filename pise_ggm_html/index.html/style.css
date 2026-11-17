@@ -1,28 +1,89 @@
 /* ============================================================
-   COLEGIO GABRIEL GARCÍA MÁRQUEZ — Rediseño
+   COLEGIO GABRIEL GARCÍA MÁRQUEZ — PISE-GGM
+   HOJA DE ESTILOS GENERAL (style.css)
    Verde selva boyacense + amarillo + blanco + dorado
+============================================================
+
+   ¿PARA QUÉ SIRVE ESTE ARCHIVO?
+   Es la hoja de estilos COMPARTIDA: casi todas las páginas del
+   sitio la cargan. Aquí vive la "identidad visual" (colores,
+   tipografía, botones, barra superior, menú, pie de página).
+   Si cambias algo aquí, cambia en TODO el sitio.
+
+   GUÍA RÁPIDA — ¿QUÉ QUIERO CAMBIAR?
+   ┌────────────────────────────────┬─────────────────────────────┐
+   │ Quiero cambiar...              │ Busca esta sección          │
+   ├────────────────────────────────┼─────────────────────────────┤
+   │ La letra de TODO el sitio      │ 1. TIPOGRAFÍA               │
+   │ Los colores del colegio        │ 2. COLORES                  │
+   │ El modo noche                  │ 3. MODO NOCHE               │
+   │ Botones                        │ BOTONES                     │
+   │ Teléfono/correo de arriba      │ (está en el HTML, no aquí)  │
+   │ Menú de navegación             │ NAV                         │
+   │ Pie de página                  │ FOOTER                      │
+   └────────────────────────────────┴─────────────────────────────┘
+
+   REGLAS DE ORO
+   - No borres las variables que empiezan por "--" (verde-900,
+     f-display, etc.): otras hojas (login.css, oferta.css...) las usan.
+   - Para cambiar un color o la letra, edítalo UNA sola vez en
+     :root (secciones 1 y 2) y se actualiza todo el sitio.
+   - Los comentarios (esto que estás leyendo) no afectan al sitio.
 ============================================================ */
 
+
+/* ============================================================
+   1. TIPOGRAFÍA (la letra del sitio)
+   ------------------------------------------------------------
+   Todo el sitio usa UNA sola familia: Playfair Display.
+   Esta línea la descarga de Google Fonts (necesita internet).
+
+   ► PARA CAMBIAR LA LETRA DE TODO EL SITIO:
+     1) Elige otra fuente en https://fonts.google.com
+     2) Cambia el nombre en el @import de abajo
+     3) Cambia el nombre en las 3 variables --f-... de :root
+============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-:root {
-  --verde-900: #0F3D2E;
-  --verde-700: #1F6B45;
-  --verde-500: #2D8B57;
-  --verde-100: #E9F3E7;
-  --amarillo-500: #F2C230;
-  --amarillo-300: #F7DB7A;
-  --dorado-600: #B8860B;
-  --blanco: #FFFDF8;
-  --tinta: #17241B;
-  --tinta-suave: #4B5C4E;
-  --borde: rgba(23,36,27,0.12);
 
-  --f-display: 'Playfair Display', serif;
-  --f-hero: 'Playfair Display', serif;
-  --f-cuerpo: 'Playfair Display',serif;
+:root {
+  /* ----------------------------------------------------------
+     2. COLORES (paleta oficial del colegio)
+     Úsalos así en cualquier CSS:  color: var(--verde-900);
+  ---------------------------------------------------------- */
+  --verde-900: #0F3D2E;   /* Verde muy oscuro: fondos de barras, títulos */
+  --verde-700: #1F6B45;   /* Verde medio: botones, iconos               */
+  --verde-500: #2D8B57;   /* Verde claro: detalles                      */
+  --verde-100: #E9F3E7;   /* Verde casi blanco: fondos suaves           */
+  --amarillo-500: #F2C230; /* Amarillo fuerte: acentos y llamados       */
+  --amarillo-300: #F7DB7A; /* Amarillo suave: textos sobre verde oscuro */
+  --dorado-600: #B8860B;  /* Dorado: etiquetas pequeñas                 */
+  --blanco: #FFFDF8;      /* Blanco cálido: fondo de las páginas        */
+  --tinta: #17241B;       /* Color del texto principal                  */
+  --tinta-suave: #4B5C4E; /* Color del texto secundario (descripciones) */
+  --borde: rgba(23,36,27,0.12); /* Líneas y bordes finos                */
+
+  /* ----------------------------------------------------------
+     1. TIPOGRAFÍA — variables de fuente
+     Se usan con:  font-family: var(--f-display);
+     Las tres apuntan a la MISMA fuente para que todo el sitio
+     se vea igual. Georgia/serif son "plan B" si no hay internet.
+       --f-display → títulos y nombres destacados
+       --f-hero    → título grande de portada (hero) y frases
+       --f-cuerpo  → texto normal de la página
+  ---------------------------------------------------------- */
+  --f-display: 'Playfair Display', Georgia, serif;
+  --f-hero: 'Playfair Display', Georgia, serif;
+  --f-cuerpo: 'Playfair Display', Georgia, serif;
 }
 
+
+/* ============================================================
+   3. MODO NOCHE
+   Cuando el usuario pulsa el botón de la luna, script.js pone
+   data-tema="noche" en la etiqueta <html> y estos colores
+   reemplazan a los de arriba (fondo oscuro, texto claro).
+============================================================ */
 :root[data-tema="noche"] {
   --blanco: #0E1B13;
   --tinta: #F2EFE3;
@@ -31,33 +92,61 @@
   --borde: rgba(242,239,227,0.14);
 }
 
+
+/* ============================================================
+   4. BASE (reglas generales para todas las páginas)
+============================================================ */
+/* Quita márgenes por defecto y hace que el ancho incluya el relleno */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+/* Al pulsar un enlace interno (#algo) la página se desliza suave */
 html { scroll-behavior: smooth; }
 
+/* Letra, fondo y color base de todo el sitio */
 body {
   font-family: var(--f-cuerpo);
   background: var(--blanco);
   color: var(--tinta);
   line-height: 1.6;
   overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.4s ease, color 0.4s ease; /* suaviza el cambio a modo noche */
 }
 
+/* Los enlaces heredan el color del texto y no llevan subrayado */
 a { color: inherit; text-decoration: none; }
+/* Las imágenes nunca se salen de su contenedor */
 img { max-width: 100%; display: block; }
+
+/* IMPORTANTE (tipografía): por defecto el navegador pinta campos de
+   formulario y botones con su propia letra del sistema. Con esta regla
+   TODOS heredan la letra del sitio (Playfair Display). */
+input, button, select, textarea { font-family: inherit; }
+
+/* Caja centrada que limita el ancho del contenido (1180 px máximo) */
 .contenedor { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+/* Separación vertical estándar entre secciones */
 section { padding: 96px 20px; }
 
+/* Contorno amarillo visible al navegar con teclado (accesibilidad) */
 a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); outline-offset: 2px; }
+
 
 /* ============================================================
    BARRA DE PROGRESO
+   Línea amarilla fina arriba de la pantalla que se llena
+   mientras se baja por la página. El ancho lo controla script.js.
 ============================================================ */
 #barraProgreso { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 2000; background: transparent; }
 #barraProgresoRelleno { display: block; height: 100%; width: 0%; background: var(--amarillo-500); transition: width 0.1s linear; }
 
+
 /* ============================================================
    BOTONES
+   Uso en el HTML:  <a class="boton boton-lleno">Texto</a>
+     .boton        → forma base (esquinas diagonales)
+     .boton-lleno  → amarillo, el principal
+     .boton-linea  → solo contorno blanco (sobre fondos oscuros)
+     .boton-oscuro → verde oscuro con texto amarillo
+     .boton-contorno → contorno verde, pequeño
 ============================================================ */
 .boton {
   display: inline-block; font-weight: 600; padding: 0.85rem 1.7rem;
@@ -78,8 +167,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .boton-contorno:hover { background: var(--verde-900); color: var(--amarillo-300); }
 :root[data-tema="noche"] .boton-contorno { border-color: var(--amarillo-300); color: var(--amarillo-300); }
 
+
 /* ============================================================
-   BARRA SUPERIOR
+   BARRA SUPERIOR (teléfono, correo, dirección y accesos rápidos)
+   Los textos se cambian en el HTML (bloque <div class="topbar">).
+   En pantallas menores a 860 px se ocultan los enlaces de la derecha.
 ============================================================ */
 .topbar { background: var(--verde-900); color: #dfeee2; font-size: .8rem; }
 .topbar-inner { max-width: 1180px; margin: 0 auto; padding: 8px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -90,17 +182,22 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .topbar-der .tb-admision { background: var(--amarillo-500); color: var(--verde-900); font-weight: 700; padding: 5px 14px; border-radius: 3px; }
 @media (max-width: 860px) { .topbar-der { display: none; } }
 
+
 /* ============================================================
-   NAV
+   NAV (menú de navegación principal)
+   Queda fijo arriba al hacer scroll (sticky). En celular se
+   convierte en menú hamburguesa (ver @media al final del bloque).
 ============================================================ */
 .nav { position: sticky; top: 0; z-index: 900; background: var(--blanco); border-bottom: 1px solid var(--borde); }
 .nav-inner { max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
 
+/* Escudo + nombre del colegio (izquierda) */
 .nav-marca { display: flex; align-items: center; gap: 12px; }
 .nav-marca img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
 .nav-marca span { font-family: var(--f-display); font-weight: 700; font-size: 0.95rem; line-height: 1.15; color: var(--verde-900); }
 :root[data-tema="noche"] .nav-marca span { color: var(--amarillo-300); }
 
+/* Enlaces del menú; la rayita amarilla aparece al pasar el mouse */
 .nav-links { display: flex; align-items: center; gap: 4px; }
 .nav-links a:not(.nav-cta) { font-weight: 600; font-size: 0.95rem; color: var(--tinta); padding: 8px 14px; position: relative; }
 .nav-links a:not(.nav-cta)::after {
@@ -109,9 +206,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 }
 .nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
 
+/* Botón destacado del menú (ej. "Ingresar") */
 .nav-cta { background: var(--verde-700); color: #FFFDF8 !important; font-weight: 700; padding: 0.6rem 1.4rem; border-radius: 30px; margin-left: 8px; }
 .nav-cta:hover { background: var(--verde-900); }
 
+/* Botón redondo de la luna (modo noche) */
 .btn-modo-noche {
   background: none; border: 1px solid var(--borde); color: var(--verde-700);
   width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -120,10 +219,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 :root[data-tema="noche"] .btn-modo-noche { color: var(--amarillo-300); }
 .btn-modo-noche:hover { background: var(--verde-100); transform: rotate(-14deg); }
 
+/* Botón hamburguesa (las 3 rayitas): solo se ve en celular */
 .nav-hamburguesa { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
 .nav-hamburguesa span { width: 24px; height: 2px; background: var(--verde-900); border-radius: 2px; }
 :root[data-tema="noche"] .nav-hamburguesa span { background: var(--amarillo-300); }
 
+/* CELULAR / TABLET (hasta 880 px): el menú baja como cortina.
+   La clase .abierto la agrega script.js al pulsar la hamburguesa. */
 @media (max-width: 880px) {
   .nav-hamburguesa { display: flex; }
   .nav-links {
@@ -137,19 +239,25 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
   .nav-cta, .btn-modo-noche { margin: 10px 4px 0; align-self: flex-start; }
 }
 
+
 /* ============================================================
-   HERO SLIDER
+   HERO SLIDER (portada con fotos que cambian)
+   Cada .slide es una diapositiva; la que tiene .activo es la
+   visible (script.js las va rotando). La foto de fondo se
+   define en el HTML de cada slide.
 ============================================================ */
 .slider { position: relative; height: min(74vh, 540px); background: var(--verde-900); overflow: hidden; color: #fff; }
 .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .8s ease; background-size: cover; background-position: center; }
 .slide.activo { opacity: 1; z-index: 1; }
+/* Degradado oscuro a la izquierda para que el texto se lea sobre la foto */
 .slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,30,22,.9) 0%, rgba(10,30,22,.55) 45%, rgba(10,30,22,0) 85%); }
 .slide-texto { position: relative; max-width: 1180px; margin: 0 auto; height: 100%; padding: 0 90px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
 .slide h1 { font-family: var(--f-hero); font-weight: 700; font-size: clamp(2rem, 4.6vw, 3.6rem); line-height: 1.1; max-width: 580px; }
-.slide h1 em { color: var(--amarillo-500); font-style: normal; }
+.slide h1 em { color: var(--amarillo-500); font-style: normal; }  /* palabra resaltada en amarillo */
 .slide p { margin: 16px 0 28px; max-width: 470px; font-size: 1.05rem; }
 .slide-botones { display: flex; gap: 14px; flex-wrap: wrap; }
 
+/* Flechas laterales y puntitos de navegación del slider */
 .slider-flecha { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 42px; height: 42px; border-radius: 50%; border: 2px solid rgba(255,255,255,.8); background: rgba(0,0,0,.15); color: #fff; cursor: pointer; transition: .2s; }
 .slider-flecha:hover { background: var(--amarillo-500); color: var(--verde-900); border-color: var(--amarillo-500); }
 .slider-flecha.prev { left: 22px; }
@@ -157,10 +265,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .slider-puntos { position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 8px; }
 .slider-puntos button { width: 9px; height: 9px; border-radius: 50%; border: none; background: rgba(255,255,255,.5); cursor: pointer; padding: 0; }
 .slider-puntos button.activo { background: var(--amarillo-500); }
+/* En celular: menos margen lateral y sin flechas */
 @media (max-width: 700px) { .slide-texto { padding: 0 24px; } .slider-flecha { display: none; } }
 
+
 /* ============================================================
-   FRANJA DE 5 ÍTEMS
+   FRANJA DE 5 ÍTEMS (cinta de datos que "flota" bajo el slider)
+   En pantallas medianas pasa a 2 columnas y en celular a 1.
 ============================================================ */
 .franja { position: relative; z-index: 5; max-width: 1180px; margin: -64px auto 0; padding: 0 24px; }
 .franja-caja { background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px; box-shadow: 0 12px 34px rgba(15,61,46,.16); display: grid; grid-template-columns: repeat(5, 1fr); }
@@ -171,13 +282,18 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 @media (max-width: 960px) { .franja-caja { grid-template-columns: repeat(2, 1fr); } .franja-item { border-bottom: 1px solid var(--borde); } }
 @media (max-width: 520px) { .franja-caja { grid-template-columns: 1fr; } }
 
+
 /* ============================================================
-   TÍTULOS COMUNES
+   TÍTULOS COMUNES (se repiten en varias secciones)
+     .seccion  → bloque de sección con su espacio
+     .etiqueta → palabrita pequeña dorada sobre el título
+     .cabecera → fila con título a la izquierda y botón a la derecha
 ============================================================ */
 .seccion { padding: 56px 24px; background: var(--blanco); }
 .etiqueta { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dorado-600); margin-bottom: 6px; }
 .seccion h2 { font-family: var(--f-display); font-weight: 700; color: var(--verde-900); font-size: 2.4rem;line-height: 1.2; margin-bottom: 22px; }
 .franja-item h4, .tarjeta h4, .card-foto h4, .stats strong { font-family: var(--f-display); color: var(--verde-900); }
+/* En modo noche los títulos verdes pasan a amarillo suave para no perderse */
 :root[data-tema="noche"] .seccion h2,
 :root[data-tema="noche"] .franja-item h4,
 :root[data-tema="noche"] .tarjeta h4,
@@ -186,19 +302,23 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .cabecera { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
 .cabecera h2 { margin-bottom: 0; }
 
+
 /* ============================================================
-   BIENVENIDA
+   BIENVENIDA (foto a un lado, texto y cifras al otro)
 ============================================================ */
 .bienvenida-grilla { display: grid; grid-template-columns: 1.1fr .9fr; gap: 44px; align-items: center; }
 .bienvenida-grilla > img { width: 100%; height: 340px; object-fit: cover; border-radius: 6px 40px 6px 40px; }
 .bienvenida-texto > p:not(.etiqueta) { color: var(--tinta-suave); font-size: 1.25rem; line-height: 1.8;}
+/* Cifras destacadas (ej. "25 años", "A+ ICFES") */
 .stats { display: flex; gap: 30px; flex-wrap: wrap; margin: 24px 0; }
 .stats strong { display: block; font-size: 1.5rem; }
 .stats span { font-size: .78rem; color: var(--tinta-suave); }
+/* En celular las dos columnas (bienvenida y académico) pasan a una sola */
 @media (max-width: 800px) { .bienvenida-grilla, .acad-grilla { grid-template-columns: 1fr; } }
 
+
 /* ============================================================
-   ACADÉMICO
+   ACADÉMICO (4 tarjetas + círculo con foto)
 ============================================================ */
 .acad-grilla { display: grid; grid-template-columns: 1.7fr 1fr; gap: 36px; align-items: center; }
 .tarjetas4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; align-items: stretch;}
@@ -207,14 +327,18 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .tarjeta h4 { font-size: 1.2rem; margin-bottom: 10px; }
 .tarjeta p { font-size: 1rem; line-height: 1.6; color: var(--tinta-suave); }
 
+/* Foto circular con borde amarillo y cartel verde debajo */
 .circulo { position: relative; max-width: 300px; width: 100%; margin: 0 auto 40px; }
 .circulo img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 4px solid var(--amarillo-500); }
 .circulo div { position: absolute; left: 4%; right: 4%; bottom: -38px; background: var(--verde-900); color: #fff; text-align: center; padding: 12px; border-radius: 10px; }
 .circulo strong { display: block; font-family: var(--f-hero); font-style: italic; font-size: 1.3rem; }
 .circulo span { font-size: .82rem; }
 
+
 /* ============================================================
    TARJETAS CON FOTO
+   Se acomodan solas: caben tantas como permita el ancho
+   (mínimo 220 px cada una).
 ============================================================ */
 .cards-foto { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
 .card-foto { position: relative; background: var(--blanco); border: 1px solid var(--borde); border-radius: 8px; overflow: hidden; box-shadow: 0 6px 16px rgba(15,61,46,.07); }
@@ -224,15 +348,17 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .card-foto h4 { font-size: .98rem; margin-bottom: 4px; }
 .card-foto p { font-size: .85rem; color: var(--tinta-suave); }
 
+
 /* ============================================================
-   TIRA DE FOTOS
+   TIRA DE FOTOS (galería de 5 fotos en fila; 2 por fila en celular)
 ============================================================ */
 .tira { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
 .tira img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 6px; }
 @media (max-width: 760px) { .tira { grid-template-columns: repeat(2, 1fr); } }
 
+
 /* ============================================================
-   BANNER ADMISIONES
+   BANNER ADMISIONES (caja verde con llamado a inscribirse)
 ============================================================ */
 .admision { padding: 0 24px 56px; background: var(--blanco); }
 .admision-caja { max-width: 1180px; margin: 0 auto; background: var(--verde-900); border-radius: 8px; padding: 28px 36px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; color: #fff; }
@@ -240,10 +366,17 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .admision-caja h2 { font-family: var(--f-hero); font-weight: 600; color: var(--amarillo-300); font-size: 1.6rem; line-height: 1.2; }
 .admision-caja p { flex: 1; min-width: 200px; border-left: 1px solid rgba(255,255,255,.3); padding-left: 28px; }
 
+
 /* ============================================================
-   FOOTER
+   FOOTER (pie de página, 4 columnas; 1 columna en celular)
+     .pie-marca    → escudo y nombre
+     .pie-enlaces  → lista de enlaces rápidos
+     .pie-contacto → teléfono, correo, dirección
+     .pie-form     → casilla de correo (suscripción)
+     .pie-inferior → derechos reservados / enlaces legales
 ============================================================ */
 .pie { position: relative; background: var(--verde-900); color: #cfe3d3; padding: 60px 20px 30px; overflow: hidden; }
+/* Franja decorativa amarilla y dorada en el borde superior */
 .pie-enredadera { position: absolute; top: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--amarillo-500) 0 22px, var(--dorado-600) 22px 44px); }
 .pie-grilla { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 30px; }
 .pie-marca { display: flex; align-items: center; gap: 14px; margin-bottom: 15px; }
@@ -270,8 +403,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
   .pie-legal a { margin: 0 8px; }
 }
 
+
 /* ============================================================
-   BOTÓN SUBIR
+   BOTÓN SUBIR (flecha flotante abajo a la derecha)
+   Está oculto (display: none); script.js lo muestra cuando el
+   usuario ya bajó bastante en la página.
 ============================================================ */
 #topBtn {
   position: fixed; bottom: 24px; right: 24px; background: var(--verde-700); color: #FFFDF8; border: none;
@@ -280,8 +416,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 }
 #topBtn:hover { background: var(--amarillo-500); color: var(--verde-900); }
 
+
 /* ============================================================
-   LIGHTBOX (visor de fotos)
+   LIGHTBOX (visor de fotos a pantalla completa)
+   Aparece al hacer clic en una foto de la galería. Mientras
+   tenga el atributo "hidden" permanece oculto.
 ============================================================ */
 .lightbox { position: fixed; inset: 0; z-index: 3000; background: rgba(15,61,46,0.95); display: flex; align-items: center; justify-content: center; padding: 40px; }
 .lightbox[hidden] { display: none; }
@@ -293,8 +432,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 .lightbox-flecha:hover { background: var(--amarillo-500); color: var(--verde-900); }
 .lightbox-flecha.prev { left: 26px; }
 .lightbox-flecha.next { right: 26px; }
+
+
 /* ============================================================
    CONVENIOS + VIDEO
+   Izquierda: tarjetas con el logo de cada institución aliada
+   (UPTC, SENA, etc.). Derecha: video institucional.
+   Los logos salen en gris y se colorean al pasar el mouse.
 ============================================================ */
 .convenios { background: var(--verde-100); }
 .titulo-seccion { max-width: 600px; margin-bottom: 36px; }
@@ -317,6 +461,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 :root[data-tema="noche"] .convenio-tarjeta h4 { color: var(--amarillo-300); }
 .convenio-tarjeta p { font-size: .84rem; color: var(--tinta-suave); }
 
+/* Marco del video (esquinas diagonales + borde amarillo) */
 .convenio-video {
   position: relative; border-radius: 6px 40px 6px 40px; overflow: hidden;
   background: var(--verde-900); min-height: 320px; box-shadow: 0 12px 28px rgba(15,61,46,.2);
@@ -330,6 +475,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--amarillo-500); 
 }
 .convenio-video-leyenda i { color: var(--amarillo-500); }
 
+/* Tablet: video debajo de las tarjetas. Celular: tarjetas en 1 columna */
 @media (max-width: 900px) {
   .convenios-layout { grid-template-columns: 1fr; }
   .convenio-video { min-height: 0; aspect-ratio: 16 / 9; }

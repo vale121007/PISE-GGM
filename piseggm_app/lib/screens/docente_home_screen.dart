@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/usuario.dart';
 import '../widgets/panel_scaffold.dart';
-import 'placeholder_screen.dart';
+import 'docente_asignaciones_screen.dart';
+import 'docente_estudiantes_screen.dart';
+import 'docente_notas_screen.dart';
+import 'docente_periodos_screen.dart';
 
 class DocenteHomeScreen extends StatelessWidget {
   final Usuario usuario;
@@ -11,31 +14,31 @@ class DocenteHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PanelScaffold(
       usuario: usuario,
-      tituloPanel: "Panel del Docente",
+      tituloPanel: 'Panel del Docente',
       items: [
         PanelCardData(
           icon: Icons.account_tree,
-          title: "Mis Asignaciones",
-          subtitle: "Ver mis cursos y asignaturas/dimensiones a cargo",
-          destino: () => const PlaceholderScreen(titulo: "Mis Asignaciones"),
+          title: 'Mis Asignaciones',
+          subtitle: 'Mis cursos y asignaturas o dimensiones a cargo',
+          destino: () => const DocenteAsignacionesScreen(),
         ),
         PanelCardData(
           icon: Icons.school,
-          title: "Mis Estudiantes",
-          subtitle: "Ver estudiantes de mis cursos",
-          destino: () => const PlaceholderScreen(titulo: "Mis Estudiantes"),
+          title: 'Mis Estudiantes',
+          subtitle: 'Ver los estudiantes de mis cursos',
+          destino: () => const DocenteEstudiantesScreen(),
         ),
         PanelCardData(
-          icon: Icons.assessment,
-          title: "Registrar Notas",
-          subtitle: "Ingresar y actualizar notas de mis estudiantes",
-          destino: () => const PlaceholderScreen(titulo: "Registrar Notas"),
+          icon: Icons.edit_note,
+          title: 'Registrar Notas',
+          subtitle: 'Subir promedio y observación de mis estudiantes',
+          destino: () => const DocenteNotasScreen(),
         ),
         PanelCardData(
           icon: Icons.calendar_month,
-          title: "Periodo Académico",
-          subtitle: "Consultar el periodo académico actual",
-          destino: () => const PlaceholderScreen(titulo: "Periodo Académico"),
+          title: 'Periodo Académico',
+          subtitle: 'Ver y describir los periodos del año',
+          destino: () => const DocentePeriodosScreen(),
         ),
       ],
     );

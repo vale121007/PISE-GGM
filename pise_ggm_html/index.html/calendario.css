@@ -136,4 +136,5 @@
   .pag-hero { padding: 36px 24px 90px; }
   .ahora-card { padding: 18px; }
 }
+.pie-grilla { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
 @media (prefers-reduced-motion: reduce) { .evento { opacity: 1; transform: none; transition: none; } .evento.en-curso .ev-punto { animation: none; } }
